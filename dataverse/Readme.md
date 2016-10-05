@@ -59,4 +59,4 @@ This project makes use of [Project Lombok](https://projectlombok.org) which grea
 
 ### Coding standards
 
-Please make sure tests pass before committing, and to add new tests for new additions.
+Please make sure tests pass before committing, and to add new tests for new additions. 
