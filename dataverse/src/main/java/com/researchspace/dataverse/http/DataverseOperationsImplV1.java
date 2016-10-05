@@ -45,41 +45,47 @@ import com.researchspace.springrest.ext.LoggingResponseErrorHandler;
 import com.researchspace.springrest.ext.RestUtil;
 
 import lombok.extern.slf4j.Slf4j;
-/**  Copyright 2016 ResearchSpace
 
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-    http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License. 
-
-*/
+/**
+ * Copyright 2016 ResearchSpace
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License. You may obtain a copy of
+ * the License at
+ * 
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations under
+ * the License.
+ * 
+ */
 @Slf4j
 public class DataverseOperationsImplV1 implements DatasetOperations, MetadataOperations, DataverseOperations {
 
 	private String apiKey = "";
 	private String serverURL = "";
-	 String serverAPIURL = serverURL +"/api/v1";
+	String serverAPIURL = serverURL + "/api/v1";
 
 	final String apiHeader = "X-Dataverse-key";
+
 	public void setApiKey(String apiKey) {
 		this.apiKey = apiKey;
 	}
 
 	public void setServerURL(String serverURL) {
 		this.serverURL = serverURL;
-		this.serverAPIURL = this.serverURL +"/api/v1";
+		this.serverAPIURL = this.serverURL + "/api/v1";
 	}
 
-
-	/* (non-Javadoc)
-	 * @see com.researchspace.dataverse.http.DataverseAPI#getDataverseById(java.lang.String)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.researchspace.dataverse.http.DataverseAPI#getDataverseById(java.lang.
+	 * String)
 	 */
 	@Override
 	public Dataverse getDataverseById(String dataverseAlias) {
@@ -93,26 +99,26 @@ public class DataverseOperationsImplV1 implements DatasetOperations, MetadataOpe
 		log.debug(resp.getBody().toString());
 		return resp.getBody().getData();
 	}
-	
+
 	@Override
 	public DataverseResponse<DvMessage> deleteDataverse(String dataverseAlias) {
 		String url = serverAPIURL + "/dataverses/" + dataverseAlias;
 		log.debug(url);
 		RestTemplate template = createTemplate();
 		HttpEntity<String> entity = createHttpEntity("");
-		ParameterizedTypeReference<DataverseResponse<DvMessage>> type =
-				new ParameterizedTypeReference<DataverseResponse<DvMessage>>() {};
+		ParameterizedTypeReference<DataverseResponse<DvMessage>> type = new ParameterizedTypeReference<DataverseResponse<DvMessage>>() {
+		};
 		ResponseEntity<DataverseResponse<DvMessage>> resp = template.exchange(url, HttpMethod.DELETE, entity, type);
 		log.debug(resp.getBody().toString());
 		return resp.getBody();
-		
+
 	}
-	
+
 	@Override
 	public DataverseResponse<Dataverse> createNewDataverse(String parentDv, Dataverse toCreate) {
 		isTrue(!isEmpty(toCreate.getAlias()), "Alias must be specified");
 		isTrue(!isEmpty(toCreate.getName()), "Name must be specified");
-		noNullElements(toCreate.getDataverseContacts(), "At least 1 email contact must be provided"); 
+		noNullElements(toCreate.getDataverseContacts(), "At least 1 email contact must be provided");
 		isTrue(!isEmpty(toCreate.getAlias()), "Alias must be specified");
 		String url = serverAPIURL + "/dataverses/" + parentDv;
 
@@ -125,14 +131,16 @@ public class DataverseOperationsImplV1 implements DatasetOperations, MetadataOpe
 		log.debug(resp.getBody().toString());
 		handleError(resp);
 		return resp.getBody();
-		
 	}
 
-	/* (non-Javadoc)
-	 * @see com.researchspace.dataverse.http.DataverseAPI#createDataset(com.researchspace.dataverse.entities.facade.DatasetFacade, java.lang.String)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.researchspace.dataverse.http.DataverseAPI#createDataset(com.
+	 * researchspace.dataverse.entities.facade.DatasetFacade, java.lang.String)
 	 */
 	@Override
-	public Identifier createDataset(DatasetFacade facade, String dataverseAlias)  {
+	public Identifier createDataset(DatasetFacade facade, String dataverseAlias) {
 		String url = serverAPIURL + "/dataverses/" + dataverseAlias + "/datasets";
 		RestTemplate template = createTemplate();
 
@@ -145,31 +153,37 @@ public class DataverseOperationsImplV1 implements DatasetOperations, MetadataOpe
 		handleError(resp);
 		return resp.getBody().getData();
 	}
-	
-	
-	/* (non-Javadoc)
-	 * @see com.researchspace.dataverse.http.DataverseAPI#updateDataset(com.researchspace.dataverse.entities.facade.DatasetFacade, com.researchspace.dataverse.entities.Identifier)
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.researchspace.dataverse.http.DataverseAPI#updateDataset(com.
+	 * researchspace.dataverse.entities.facade.DatasetFacade,
+	 * com.researchspace.dataverse.entities.Identifier)
 	 */
 	@Override
 	public DatasetVersion updateDataset(DatasetFacade facade, Identifier id) {
 		String url = serverAPIURL + "/datasets/" + id.getId() + "/versions/:draft";
-		
+
 		Dataset ds = new DatasetBuilder().build(facade);
 		String json = marshalDataset(ds.getDatasetVersion());
 		RestTemplate template = createTemplate();
-		
+
 		HttpEntity<String> entity = createHttpEntity(json);
 		ParameterizedTypeReference<DataverseResponse<DatasetVersion>> type = new ParameterizedTypeReference<DataverseResponse<DatasetVersion>>() {
 		};
-		ResponseEntity<DataverseResponse<DatasetVersion>> resp = template.exchange(url, HttpMethod.PUT, entity,type);
-		
+		ResponseEntity<DataverseResponse<DatasetVersion>> resp = template.exchange(url, HttpMethod.PUT, entity, type);
+
 		handleError(resp);
 		return resp.getBody().getData();
-		
+
 	}
-	
-	/* (non-Javadoc)
-	 * @see com.researchspace.dataverse.http.DataverseAPI#getDataset(com.researchspace.dataverse.entities.Identifier)
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.researchspace.dataverse.http.DataverseAPI#getDataset(com.
+	 * researchspace.dataverse.entities.Identifier)
 	 */
 	@Override
 	public Dataset getDataset(Identifier dsIdentifier) {
@@ -182,39 +196,50 @@ public class DataverseOperationsImplV1 implements DatasetOperations, MetadataOpe
 		handleError(resp);
 		return resp.getBody().getData();
 	}
-	
-	/* (non-Javadoc)
-	 * @see com.researchspace.dataverse.http.DataverseAPI#getDatasetVersions(com.researchspace.dataverse.entities.Identifier)
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.researchspace.dataverse.http.DataverseAPI#getDatasetVersions(com.
+	 * researchspace.dataverse.entities.Identifier)
 	 */
 	@Override
-	public List<DatasetVersion> getDatasetVersions (Identifier dsIdentifier) {
-		String url = serverAPIURL + "/datasets/" + dsIdentifier.getId() +"/versions";
+	public List<DatasetVersion> getDatasetVersions(Identifier dsIdentifier) {
+		String url = serverAPIURL + "/datasets/" + dsIdentifier.getId() + "/versions";
 		RestTemplate template = createTemplate();
 		HttpEntity<String> entity = createHttpEntity("");
 		ParameterizedTypeReference<DataverseResponse<List<DatasetVersion>>> type = new ParameterizedTypeReference<DataverseResponse<List<DatasetVersion>>>() {
 		};
-		ResponseEntity<DataverseResponse<List<DatasetVersion>>> resp = template.exchange(url, HttpMethod.GET, entity, type);
+		ResponseEntity<DataverseResponse<List<DatasetVersion>>> resp = template.exchange(url, HttpMethod.GET, entity,
+				type);
 		log.debug("{}", resp.getBody());
 		handleError(resp);
 		return resp.getBody().getData();
 	}
-	
-	/* (non-Javadoc)
-	 * @see com.researchspace.dataverse.http.DataverseAPI#uploadFile(java.lang.String, java.io.File)
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.researchspace.dataverse.http.DataverseAPI#uploadFile(java.lang.
+	 * String, java.io.File)
 	 */
 	@Override
-	public void uploadFile (String doi, File file) {
+	public void uploadFile(String doi, File file) {
 		FileUploader uploader = new FileUploader();
 		try {
 			uploader.deposit(file, apiKey, new URI(serverURL), doi);
-		} catch (IOException | SWORDClientException | SWORDError | ProtocolViolationException | URISyntaxException e) {		
+		} catch (IOException | SWORDClientException | SWORDError | ProtocolViolationException | URISyntaxException e) {
 			log.error("Couldn't upload file {} with doi {} : {}", file.getName(), doi.toString(), e.getMessage());
 			throw new RestClientException(e.getMessage());
 		}
 	}
 
-	/* (non-Javadoc)
-	 * @see com.researchspace.dataverse.http.DataverseAPI#deleteDataset(com.researchspace.dataverse.entities.Identifier)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.researchspace.dataverse.http.DataverseAPI#deleteDataset(com.
+	 * researchspace.dataverse.entities.Identifier)
 	 */
 	@Override
 	public DvMessage deleteDataset(Identifier dsIdentifier) {
@@ -251,8 +276,12 @@ public class DataverseOperationsImplV1 implements DatasetOperations, MetadataOpe
 		return json;
 	}
 
-	/* (non-Javadoc)
-	 * @see com.researchspace.dataverse.http.DataverseAPI#getDataverseContents(java.lang.String)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.researchspace.dataverse.http.DataverseAPI#getDataverseContents(java.
+	 * lang.String)
 	 */
 	@Override
 	public List<DataverseObject> getDataverseContents(String dataverseAlias) {
@@ -280,7 +309,9 @@ public class DataverseOperationsImplV1 implements DatasetOperations, MetadataOpe
 		return headers;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.researchspace.dataverse.http.DataverseAPI#getMetadataBLockInfo()
 	 */
 	@Override
@@ -297,8 +328,12 @@ public class DataverseOperationsImplV1 implements DatasetOperations, MetadataOpe
 		return resp.getBody().getData();
 	}
 
-	/* (non-Javadoc)
-	 * @see com.researchspace.dataverse.http.DataverseAPI#getMetadataById(java.lang.String)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.researchspace.dataverse.http.DataverseAPI#getMetadataById(java.lang.
+	 * String)
 	 */
 	@Override
 	public MetadataBlock getMetadataById(String name) {
@@ -310,7 +345,6 @@ public class DataverseOperationsImplV1 implements DatasetOperations, MetadataOpe
 		};
 		ResponseEntity<DataverseResponse<MetadataBlock>> resp = template.exchange(url, HttpMethod.GET, entity, type);
 		handleError(resp);
-
 		return resp.getBody().getData();
 	}
 
@@ -322,7 +356,6 @@ public class DataverseOperationsImplV1 implements DatasetOperations, MetadataOpe
 			log.error(msg);
 			throw new RestClientException(msg);
 		}
-
 	}
 
 	RestTemplate createTemplate() {
@@ -331,26 +364,31 @@ public class DataverseOperationsImplV1 implements DatasetOperations, MetadataOpe
 		return template;
 	}
 
-	/* (non-Javadoc)
-	 * @see com.researchspace.dataverse.http.DataverseAPI#publishDataset(com.researchspace.dataverse.entities.Identifier, com.researchspace.dataverse.entities.Version)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.researchspace.dataverse.http.DataverseAPI#publishDataset(com.
+	 * researchspace.dataverse.entities.Identifier,
+	 * com.researchspace.dataverse.entities.Version)
 	 */
 	@Override
 	public void publishDataset(Identifier dsIdentifier, Version version) {
-		String url = serverAPIURL + "/datasets/" + dsIdentifier.getId() +"/actions/:publish?type=" + version.name().toLowerCase();
+		String url = serverAPIURL + "/datasets/" + dsIdentifier.getId() + "/actions/:publish?type="
+				+ version.name().toLowerCase();
 		RestTemplate template = createTemplate();
 		HttpEntity<String> entity = createHttpEntity("");
-//		ParameterizedTypeReference<DataverseResponse<DvMessage>> type = new ParameterizedTypeReference<DataverseResponse<DvMessage>>() {
-//		};
+		// ParameterizedTypeReference<DataverseResponse<DvMessage>> type = new
+		// ParameterizedTypeReference<DataverseResponse<DvMessage>>() {
+		// };
 		ResponseEntity<String> resp = template.exchange(url, HttpMethod.GET, entity, String.class);
 		log.debug(resp.getBody());
-     	//handleError(resp);
-//		return resp.getBody().getData();
-		
+		// handleError(resp);
+		// return resp.getBody().getData();
 	}
 
 	@Override
 	public DataverseResponse<Dataverse> publishDataverse(String dvName) {
-		String url =  serverAPIURL +"/dataverses/" + dvName + "/actions/:publish";
+		String url = serverAPIURL + "/dataverses/" + dvName + "/actions/:publish";
 		RestTemplate template = createTemplate();
 		HttpEntity<String> entity = createHttpEntity("");
 		ParameterizedTypeReference<DataverseResponse<Dataverse>> type = new ParameterizedTypeReference<DataverseResponse<Dataverse>>() {
@@ -358,6 +396,5 @@ public class DataverseOperationsImplV1 implements DatasetOperations, MetadataOpe
 		ResponseEntity<DataverseResponse<Dataverse>> resp = template.exchange(url, HttpMethod.POST, entity, type);
 		log.debug(resp.getBody().toString());
 		return resp.getBody();
-		
-	}	
+	}
 }
