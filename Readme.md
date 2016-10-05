@@ -32,7 +32,7 @@ As a minimum, you'll need to specify an API key on the command line to run the t
 
     ./gradlew clean test -DdataverseApiKey=xxx-xxxx-xxxx
 
-You can also override the Dataverse server URL and Id by setting them on the command line:
+You can also override the Dataverse server URL and Id with your own settings by setting them on the command line:
 
     ./gradlew clean test  -DdataverseServerURL=https://demo.dataverse.org -DdataverseApiKey=xxx-xxx-xxx -DdataverseAlias=rspace-demo
     
