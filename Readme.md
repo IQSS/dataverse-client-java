@@ -14,7 +14,7 @@ The Sword client library is included in this project as a jar file as it is not 
 
 ### Building 
 
-This project is built using Gradle. You can build straight away:
+This project is built using Gradle. You can build straight away without needing to install anything:
 
     ./gradlew clean build -x test
    
