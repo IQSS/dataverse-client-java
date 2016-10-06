@@ -11,6 +11,7 @@ import java.net.URISyntaxException;
 import java.util.Arrays;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.Validate;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
@@ -83,7 +84,7 @@ public class DataverseOperationsImplV1 implements DatasetOperations, MetadataOpe
 	 */
 	@Override
 	public Dataverse getDataverseById(String dataverseAlias) {
-		String url = serverAPIURL + "/dataverses/" + dataverseAlias;
+		String url = createUrl("dataverses" , dataverseAlias);
 		log.debug(url);
 		RestTemplate template = createTemplate();
 		HttpEntity<String> entity = createHttpEntity("");
@@ -93,10 +94,16 @@ public class DataverseOperationsImplV1 implements DatasetOperations, MetadataOpe
 		log.debug(resp.getBody().toString());
 		return resp.getBody().getData();
 	}
+
+	private String createUrl(String ... pathComponents) {
+		String url = serverAPIURL + "/" + StringUtils.join(pathComponents, "/") ;
+		log.info("URL is {}", url);
+		return url;
+	}
 	
 	@Override
 	public DataverseResponse<DvMessage> deleteDataverse(String dataverseAlias) {
-		String url = serverAPIURL + "/dataverses/" + dataverseAlias;
+		String url = createUrl("dataverses", dataverseAlias);
 		log.debug(url);
 		RestTemplate template = createTemplate();
 		HttpEntity<String> entity = createHttpEntity("");
@@ -114,7 +121,7 @@ public class DataverseOperationsImplV1 implements DatasetOperations, MetadataOpe
 		isTrue(!isEmpty(toCreate.getName()), "Name must be specified");
 		noNullElements(toCreate.getDataverseContacts(), "At least 1 email contact must be provided"); 
 		isTrue(!isEmpty(toCreate.getAlias()), "Alias must be specified");
-		String url = serverAPIURL + "/dataverses/" + parentDv;
+		String url = createUrl("dataverses", parentDv);
 
 		RestTemplate template = createTemplate();
 		String json = marshalDataset(toCreate);
@@ -133,7 +140,7 @@ public class DataverseOperationsImplV1 implements DatasetOperations, MetadataOpe
 	 */
 	@Override
 	public Identifier createDataset(DatasetFacade facade, String dataverseAlias)  {
-		String url = serverAPIURL + "/dataverses/" + dataverseAlias + "/datasets";
+		String url = createUrl("dataverses", dataverseAlias,"datasets");
 		RestTemplate template = createTemplate();
 
 		String json = getJsonFromFacade(facade);
@@ -152,7 +159,7 @@ public class DataverseOperationsImplV1 implements DatasetOperations, MetadataOpe
 	 */
 	@Override
 	public DatasetVersion updateDataset(DatasetFacade facade, Identifier id) {
-		String url = serverAPIURL + "/datasets/" + id.getId() + "/versions/:draft";
+		String url = createUrl("datasets",  id.getId() +"", "versions",":draft");
 		
 		Dataset ds = new DatasetBuilder().build(facade);
 		String json = marshalDataset(ds.getDatasetVersion());
@@ -173,7 +180,7 @@ public class DataverseOperationsImplV1 implements DatasetOperations, MetadataOpe
 	 */
 	@Override
 	public Dataset getDataset(Identifier dsIdentifier) {
-		String url = serverAPIURL + "/datasets/" + dsIdentifier.getId();
+		String url = createUrl("datasets",  dsIdentifier.getId() +"");
 		RestTemplate template = createTemplate();
 		HttpEntity<String> entity = createHttpEntity("");
 		ParameterizedTypeReference<DataverseResponse<Dataset>> type = new ParameterizedTypeReference<DataverseResponse<Dataset>>() {
@@ -188,7 +195,7 @@ public class DataverseOperationsImplV1 implements DatasetOperations, MetadataOpe
 	 */
 	@Override
 	public List<DatasetVersion> getDatasetVersions (Identifier dsIdentifier) {
-		String url = serverAPIURL + "/datasets/" + dsIdentifier.getId() +"/versions";
+		String url = createUrl("datasets",  dsIdentifier.getId() +"", "versions");
 		RestTemplate template = createTemplate();
 		HttpEntity<String> entity = createHttpEntity("");
 		ParameterizedTypeReference<DataverseResponse<List<DatasetVersion>>> type = new ParameterizedTypeReference<DataverseResponse<List<DatasetVersion>>>() {
@@ -218,7 +225,7 @@ public class DataverseOperationsImplV1 implements DatasetOperations, MetadataOpe
 	 */
 	@Override
 	public DvMessage deleteDataset(Identifier dsIdentifier) {
-		String url = serverAPIURL + "/datasets/" + dsIdentifier.getId();
+		String url = createUrl("datasets",  dsIdentifier.getId() +"" );
 		RestTemplate template = createTemplate();
 		HttpEntity<String> entity = createHttpEntity("");
 		ParameterizedTypeReference<DataverseResponse<DvMessage>> type = new ParameterizedTypeReference<DataverseResponse<DvMessage>>() {
@@ -256,7 +263,7 @@ public class DataverseOperationsImplV1 implements DatasetOperations, MetadataOpe
 	 */
 	@Override
 	public List<DataverseObject> getDataverseContents(String dataverseAlias) {
-		String url = serverAPIURL + "/dataverses/" + dataverseAlias + "/contents";
+		String url = createUrl("dataverses", dataverseAlias, "contents" );
 		RestTemplate template = createTemplate();
 		HttpEntity<String> entity = createHttpEntity("");
 		ParameterizedTypeReference<DataverseResponse<List<DataverseObject>>> type = new ParameterizedTypeReference<DataverseResponse<List<DataverseObject>>>() {
@@ -285,7 +292,7 @@ public class DataverseOperationsImplV1 implements DatasetOperations, MetadataOpe
 	 */
 	@Override
 	public List<MetadataBlock> getMetadataBlockInfo() {
-		String url = serverAPIURL + "/metadatablocks";
+		String url = createUrl("metadatablocks" );
 		RestTemplate template = createTemplate();
 		HttpHeaders headers = addAPIKeyToHeader();
 		HttpEntity<String> entity = new HttpEntity<String>("parameters", headers);
@@ -302,7 +309,7 @@ public class DataverseOperationsImplV1 implements DatasetOperations, MetadataOpe
 	 */
 	@Override
 	public MetadataBlock getMetadataById(String name) {
-		String url = serverAPIURL + "/metadatablocks/" + name;
+		String url = createUrl("metadatablocks", name );
 		RestTemplate template = createTemplate();
 		HttpHeaders headers = addAPIKeyToHeader();
 		HttpEntity<String> entity = new HttpEntity<String>("parameters", headers);
@@ -336,7 +343,8 @@ public class DataverseOperationsImplV1 implements DatasetOperations, MetadataOpe
 	 */
 	@Override
 	public void publishDataset(Identifier dsIdentifier, Version version) {
-		String url = serverAPIURL + "/datasets/" + dsIdentifier.getId() +"/actions/:publish?type=" + version.name().toLowerCase();
+		String url = createUrl("datasets", dsIdentifier.getId() + "", "actions", ":publish") + "?type="
+				+ version.name().toLowerCase();
 		RestTemplate template = createTemplate();
 		HttpEntity<String> entity = createHttpEntity("");
 //		ParameterizedTypeReference<DataverseResponse<DvMessage>> type = new ParameterizedTypeReference<DataverseResponse<DvMessage>>() {
@@ -350,7 +358,7 @@ public class DataverseOperationsImplV1 implements DatasetOperations, MetadataOpe
 
 	@Override
 	public DataverseResponse<Dataverse> publishDataverse(String dvName) {
-		String url =  serverAPIURL +"/dataverses/" + dvName + "/actions/:publish";
+		String url = createUrl("dataverses", dvName, "actions", ":publish");
 		RestTemplate template = createTemplate();
 		HttpEntity<String> entity = createHttpEntity("");
 		ParameterizedTypeReference<DataverseResponse<Dataverse>> type = new ParameterizedTypeReference<DataverseResponse<Dataverse>>() {
