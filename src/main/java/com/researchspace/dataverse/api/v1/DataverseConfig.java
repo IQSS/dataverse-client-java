@@ -7,7 +7,8 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
 /**
- *  *  Copyright 2016 ResearchSpace
+ <pre>
+  Copyright 2016 ResearchSpace
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -20,6 +21,7 @@ import lombok.ToString;
    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
    See the License for the specific language governing permissions and
    limitations under the License.
+ </pre>
  * Configures the server, apikey and root dataverse alias
  * @author rspace
  *

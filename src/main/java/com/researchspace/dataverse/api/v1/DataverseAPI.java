@@ -1,6 +1,7 @@
 package com.researchspace.dataverse.api.v1;
 
 /**
+ * <pre>
   Copyright 2016 ResearchSpace
 
    Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,7 +15,7 @@ package com.researchspace.dataverse.api.v1;
    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
    See the License for the specific language governing permissions and
    limitations under the License.
- 
+ </pre>
  Top-level entry point into the Dataverse Level1 API
  * @author rspace
  *
