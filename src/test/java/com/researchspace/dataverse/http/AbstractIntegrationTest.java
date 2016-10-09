@@ -17,6 +17,7 @@ import com.researchspace.dataverse.api.v1.DatasetOperations;
 import com.researchspace.dataverse.api.v1.DataverseAPI;
 import com.researchspace.dataverse.api.v1.DataverseConfig;
 import com.researchspace.dataverse.api.v1.DataverseOperations;
+import com.researchspace.dataverse.api.v1.InfoOperations;
 import com.researchspace.dataverse.api.v1.MetadataOperations;
 import com.researchspace.dataverse.spring.config.DataverseSpringConfig;
 
@@ -30,6 +31,7 @@ public class AbstractIntegrationTest extends AbstractJUnit4SpringContextTests {
 	DatasetOperations datasetOps;
 	DataverseOperations dataverseOps;
 	MetadataOperations metadataOPs;
+	InfoOperations infoOps;
 	@Autowired
 	DataverseAPI dataverseAPI;
 	@Value("#{systemProperties['dataverseAlias']}")
@@ -56,6 +58,7 @@ public class AbstractIntegrationTest extends AbstractJUnit4SpringContextTests {
 		datasetOps = dataverseAPI.getDatasetOperations();
 		dataverseOps = dataverseAPI.getDataverseOperations();
 		metadataOPs = dataverseAPI.getMetadataOperations();
+		infoOps = dataverseAPI.getInfoOperations();
 	}
 
 	private void validateServerCredentials() {
@@ -67,10 +70,4 @@ public class AbstractIntegrationTest extends AbstractJUnit4SpringContextTests {
 		Validate.notEmpty(serverURL,
 				"Dataverse server URL must be set via command line -DdataverseServerURL option or in test.properties)");
 	}
-
-	@Test
-	public void test() {
-		assertTrue(1 == 1);// stop complaints about no methods
-	}
-
 }

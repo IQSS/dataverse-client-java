@@ -44,6 +44,8 @@ public interface DataverseAPI {
 	 * @param config
 	 */
 	void configure (DataverseConfig config);
+	
+	InfoOperations getInfoOperations();
 
 
 }
