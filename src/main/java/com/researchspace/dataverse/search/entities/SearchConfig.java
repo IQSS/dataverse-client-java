@@ -7,7 +7,13 @@ import org.apache.commons.lang.Validate;
 import lombok.Builder;
 import lombok.NonNull;
 import lombok.Value;
-
+/**
+ * Read-only search configuration object. <br/>
+ * Use the <code>builder()</code> method to return a new SearchConfigBuilder to 
+ *  build a search configuration in a Fluent style. 
+ * @author rspace
+ *
+ */
 @Builder(toBuilder = true)
 @Value
 public class SearchConfig {

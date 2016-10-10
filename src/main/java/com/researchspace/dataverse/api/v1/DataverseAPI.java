@@ -48,7 +48,10 @@ public interface DataverseAPI {
 	
 	InfoOperations getInfoOperations();
 	
-	
+	/**
+	 * Accesses the Search API
+	 * @return
+	 */
 	SearchOperations getSearchOperations();
 
 

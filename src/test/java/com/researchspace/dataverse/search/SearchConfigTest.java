@@ -1,5 +1,6 @@
 package com.researchspace.dataverse.search;
 
+import static com.researchspace.dataverse.search.entities.SearchConfig.MAX_RESULTS_PER_PAGE;
 import static org.junit.Assert.assertEquals;
 
 import org.junit.After;
@@ -37,8 +38,9 @@ public class SearchConfigTest {
 
 	@Test
 	public void perPageHas1000Maximum() {
-		SearchConfig cfg = SearchConfig.builder().q("any").perPage(1000000).build();
-		assertEquals(SearchConfig.MAX_RESULTS_PER_PAGE, cfg.getPerPage());
+		final int MORE_THAN_MAX = 1000000;
+		SearchConfig cfg = SearchConfig.builder().q("any").perPage(MORE_THAN_MAX).build();
+		assertEquals(MAX_RESULTS_PER_PAGE, cfg.getPerPage());
 	}
 
 }
