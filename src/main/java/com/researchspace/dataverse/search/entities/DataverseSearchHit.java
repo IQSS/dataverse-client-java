@@ -7,14 +7,14 @@ import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 @Data
-@EqualsAndHashCode(callSuper=true)
-@ToString(callSuper=true)
+@EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
 public class DataverseSearchHit extends SearchHit {
 	String identifier;
 	@JsonProperty("published_at")
 	String publishedAt;
-	
-	public String getType (){
+
+	public String getType() {
 		return "dataverse";
 	}
 

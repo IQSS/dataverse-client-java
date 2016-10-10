@@ -7,10 +7,12 @@ import org.apache.commons.lang.Validate;
 import lombok.Builder;
 import lombok.NonNull;
 import lombok.Value;
+
 /**
  * Read-only search configuration object. <br/>
- * Use the <code>builder()</code> method to return a new SearchConfigBuilder to 
- *  build a search configuration in a Fluent style. 
+ * Use the <code>builder()</code> method to return a new SearchConfigBuilder to
+ * build a search configuration in a Fluent style.
+ * 
  * @author rspace
  *
  */
@@ -19,6 +21,7 @@ import lombok.Value;
 public class SearchConfig {
 	/**
 	 * Builder for configuring search via fluent API
+	 * 
 	 * @author rspace
 	 *
 	 */
@@ -55,8 +58,9 @@ public class SearchConfig {
 			this.start = start;
 			return this;
 		}
-		
+
 	}
+
 	public static final int MAX_RESULTS_PER_PAGE = 1000;
 	private EnumSet<SearchType> type;
 	private @NonNull String q;

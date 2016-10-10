@@ -14,14 +14,15 @@ import com.researchspace.dataverse.search.entities.SearchConfig.SearchConfigBuil
 import com.researchspace.dataverse.search.entities.SearchResults;
 
 import lombok.extern.slf4j.Slf4j;
+
 @Slf4j
 public class SearchOperationsImplV1 extends AbstractOpsImplV1 implements SearchOperations {
-	
+
 	private SearchURLBuilder urlBuilder = new SearchURLBuilder();
 
 	@Override
 	public SearchConfigBuilder builder() {
-		return SearchConfig.builder();		
+		return SearchConfig.builder();
 	}
 
 	@Override
@@ -32,8 +33,8 @@ public class SearchOperationsImplV1 extends AbstractOpsImplV1 implements SearchO
 		HttpHeaders headers = addAPIKeyToHeader();
 		HttpEntity<String> entity = new HttpEntity<String>("", headers);
 		ParameterizedTypeReference<DataverseResponse<SearchResults>> type = new ParameterizedTypeReference<DataverseResponse<SearchResults>>() {
-		};		
-		ResponseEntity<DataverseResponse< SearchResults>> resp = template.exchange(url, HttpMethod.GET, entity, type);
+		};
+		ResponseEntity<DataverseResponse<SearchResults>> resp = template.exchange(url, HttpMethod.GET, entity, type);
 		log.debug(resp.getBody().getData().toString());
 		return resp.getBody();
 	}

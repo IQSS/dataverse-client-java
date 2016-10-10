@@ -14,11 +14,11 @@ public class DatasetSearchHit extends SearchHit {
 	private @JsonProperty("global_id") String globalId;
 	private @JsonProperty("published_at") String publishedAt;
 	private String description, citation, citationHtml;
-	
-	public String getType (){
+
+	public String getType() {
 		return "file";
 	}
-	
+
 	@Override
 	DatasetSearchHit asSubtype() {
 		return this;
