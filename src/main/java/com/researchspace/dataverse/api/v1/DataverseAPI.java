@@ -47,6 +47,9 @@ public interface DataverseAPI {
 	void configure (DataverseConfig config);
 	
 	InfoOperations getInfoOperations();
+	
+	
+	SearchOperations getSearchOperations();
 
 
 }

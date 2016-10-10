@@ -33,5 +33,4 @@ public class InfoOperationsTest extends AbstractIntegrationTest {
 	    assertTrue("Originl text was not restored", response.getData().toString().contains(originalText.getMessage()));		
 	}
 
-
 }

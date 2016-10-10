@@ -19,6 +19,7 @@ import com.researchspace.dataverse.api.v1.DataverseConfig;
 import com.researchspace.dataverse.api.v1.DataverseOperations;
 import com.researchspace.dataverse.api.v1.InfoOperations;
 import com.researchspace.dataverse.api.v1.MetadataOperations;
+import com.researchspace.dataverse.api.v1.SearchOperations;
 import com.researchspace.dataverse.spring.config.DataverseSpringConfig;
 
 import lombok.extern.slf4j.Slf4j;
@@ -32,6 +33,7 @@ public class AbstractIntegrationTest extends AbstractJUnit4SpringContextTests {
 	DataverseOperations dataverseOps;
 	MetadataOperations metadataOPs;
 	InfoOperations infoOps;
+	SearchOperations searchOps;
 	@Autowired
 	DataverseAPI dataverseAPI;
 	@Value("#{systemProperties['dataverseAlias']}")
@@ -59,6 +61,7 @@ public class AbstractIntegrationTest extends AbstractJUnit4SpringContextTests {
 		dataverseOps = dataverseAPI.getDataverseOperations();
 		metadataOPs = dataverseAPI.getMetadataOperations();
 		infoOps = dataverseAPI.getInfoOperations();
+		searchOps = dataverseAPI.getSearchOperations();
 	}
 
 	private void validateServerCredentials() {

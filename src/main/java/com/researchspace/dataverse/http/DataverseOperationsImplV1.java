@@ -8,16 +8,12 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.Arrays;
 import java.util.List;
 
-import org.apache.commons.lang.StringUtils;
-import org.apache.commons.lang.Validate;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
@@ -43,8 +39,6 @@ import com.researchspace.dataverse.entities.Version;
 import com.researchspace.dataverse.entities.facade.DatasetBuilder;
 import com.researchspace.dataverse.entities.facade.DatasetFacade;
 import com.researchspace.dataverse.sword.FileUploader;
-import com.researchspace.springrest.ext.LoggingResponseErrorHandler;
-import com.researchspace.springrest.ext.RestUtil;
 
 import lombok.extern.slf4j.Slf4j;
 /**  Copyright 2016 ResearchSpace
@@ -63,23 +57,9 @@ limitations under the License.
 
 */
 @Slf4j
-public class DataverseOperationsImplV1 implements DatasetOperations, MetadataOperations, InfoOperations, DataverseOperations {
+public class DataverseOperationsImplV1 extends AbstractOpsImplV1 implements DatasetOperations, MetadataOperations, InfoOperations, DataverseOperations {
 
-	private String apiKey = "";
-	private String serverURL = "";
-	String serverAPIURL = serverURL +"/api";
-	String serverAPIv1URL = serverAPIURL +"/v1";
-
-	final String apiHeader = "X-Dataverse-key";
-	public void setApiKey(String apiKey) {
-		this.apiKey = apiKey;
-	}
-
-	public void setServerURL(String serverURL) {
-		this.serverURL = serverURL;
-		this.serverAPIURL = serverURL + "/api";
-		this.serverAPIv1URL = this.serverAPIURL +"/v1";
-	}
+	
 
 
 	/* (non-Javadoc)
@@ -98,16 +78,7 @@ public class DataverseOperationsImplV1 implements DatasetOperations, MetadataOpe
 		return resp.getBody().getData();
 	}
 
-	private String createV1Url(String ... pathComponents) {
-		String url = serverAPIv1URL + "/" + StringUtils.join(pathComponents, "/") ;
-		log.info("URL is {}", url);
-		return url;
-	}
-	private String createAdminUrl(String ... pathComponents) {
-		String url = serverAPIURL + "/" + StringUtils.join(pathComponents, "/") ;
-		log.info("URL is {}", url);
-		return url;
-	}
+	
 	
 	@Override
 	public DataverseResponse<DvMessage> deleteDataverse(String dataverseAlias) {
@@ -288,13 +259,6 @@ public class DataverseOperationsImplV1 implements DatasetOperations, MetadataOpe
 		return dv.getData();
 	}
 
-	private HttpHeaders addAPIKeyToHeader() {
-		HttpHeaders headers = new HttpHeaders();
-		headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
-		headers.add(apiHeader, apiKey);
-		return headers;
-	}
-
 	/* (non-Javadoc)
 	 * @see com.researchspace.dataverse.http.DataverseAPI#getMetadataBLockInfo()
 	 */
@@ -329,22 +293,7 @@ public class DataverseOperationsImplV1 implements DatasetOperations, MetadataOpe
 		return resp.getBody().getData();
 	}
 
-	private <T> void handleError(ResponseEntity<DataverseResponse<T>> resp) {
-		log.debug("{}", resp.getBody());
-		if (RestUtil.isError(resp.getStatusCode())) {
-			String msg = String.format("Error  code returned %d with message [%s]", resp.getStatusCodeValue(),
-					resp.getBody().getMessage());
-			log.error(msg);
-			throw new RestClientException(msg);
-		}
-
-	}
-
-	RestTemplate createTemplate() {
-		RestTemplate template = new RestTemplate();
-		template.setErrorHandler(new LoggingResponseErrorHandler());
-		return template;
-	}
+	
 
 	/* (non-Javadoc)
 	 * @see com.researchspace.dataverse.http.DataverseAPI#publishDataset(com.researchspace.dataverse.entities.Identifier, com.researchspace.dataverse.entities.Version)

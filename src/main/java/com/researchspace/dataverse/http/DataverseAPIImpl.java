@@ -6,6 +6,7 @@ import com.researchspace.dataverse.api.v1.DataverseConfig;
 import com.researchspace.dataverse.api.v1.DataverseOperations;
 import com.researchspace.dataverse.api.v1.InfoOperations;
 import com.researchspace.dataverse.api.v1.MetadataOperations;
+import com.researchspace.dataverse.api.v1.SearchOperations;
 /**  Copyright 2016 ResearchSpace
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -21,8 +22,9 @@ See the License for the specific language governing permissions and
 limitations under the License. 
 
 */
-public class DataverseAPIImpl implements DataverseAPI {
+public class DataverseAPIImpl  implements DataverseAPI {
 	private DataverseOperationsImplV1 dvOperationsImpl = new DataverseOperationsImplV1();
+	private SearchOperationsImplV1 searchOperationsImpl = new SearchOperationsImplV1();
 
 	@Override
 	public DatasetOperations getDatasetOperations() {
@@ -41,12 +43,17 @@ public class DataverseAPIImpl implements DataverseAPI {
 
 	@Override
 	public void configure(DataverseConfig config) {
-		dvOperationsImpl.setApiKey(config.getApiKey());
-		dvOperationsImpl.setServerURL(config.getServerURL().toString());		
+		dvOperationsImpl.configure(config);
+		searchOperationsImpl.configure(config);
 	}
 
 	@Override
 	public InfoOperations getInfoOperations() {
 		return dvOperationsImpl;
+	}
+
+	@Override
+	public SearchOperations getSearchOperations() {
+		return searchOperationsImpl;
 	}
 }
