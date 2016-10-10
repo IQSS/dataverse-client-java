@@ -1,0 +1,17 @@
+{
+  "name" : "Samba Wild Park",
+  "city" : "Paz",
+  "animals" : [ {
+    "@class" : "com.researchspace.dataverse.search.Lion",
+    "name" : "Simba",
+    "sound" : "Roar",
+    "type" : "carnivorous",
+    "endangered" : true
+  }, {
+    "@class" : "com.researchspace.dataverse.search.Elephant",
+    "name" : "Manny",
+    "sound" : "trumpet",
+    "type" : "herbivorous",
+    "endangered" : false
+  } ]
+}
