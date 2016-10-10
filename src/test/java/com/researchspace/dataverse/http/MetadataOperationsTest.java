@@ -1,6 +1,6 @@
 package com.researchspace.dataverse.http;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
 

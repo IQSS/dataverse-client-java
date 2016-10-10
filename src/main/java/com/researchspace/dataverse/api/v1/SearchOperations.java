@@ -1,6 +1,9 @@
 package com.researchspace.dataverse.api.v1;
 
-import com.researchspace.dataverse.api.v1.SearchConfig.SearchConfigBuilder;
+import com.researchspace.dataverse.entities.DataverseResponse;
+import com.researchspace.dataverse.search.entities.SearchConfig;
+import com.researchspace.dataverse.search.entities.SearchConfig.SearchConfigBuilder;
+import com.researchspace.dataverse.search.entities.SearchResults;
 
 /**
  * <pre>
@@ -23,9 +26,17 @@ import com.researchspace.dataverse.api.v1.SearchConfig.SearchConfigBuilder;
  *
  */
 public interface SearchOperations {
-	
+	/**
+	 * Gets a new instance of a SearchConfigBuilder to configure a search query
+	 * @return
+	 */
 	SearchConfigBuilder builder();
 
-	void search(SearchConfig cfg);
+	/**
+	 * Perform a search 
+	 * @param cfg A {@link SearchConfig} object generated from a {@link SearchConfigBuilder}
+	 * @return
+	 */
+	DataverseResponse<SearchResults> search(SearchConfig cfg);
 
 }
