@@ -48,6 +48,8 @@ to install into a local repository and generate a pom.xml file for calculating d
 
 The best way to explore the bindings currently is by examining unit tests, especially those extending from `AbstractIntegrationTest`.
 
+
+
 ### Synchronisation and thread-safety
 
 There is no explicit synchronisation performed in this library. The Dataverse configuration is stored in the 
@@ -60,3 +62,10 @@ This project makes use of [Project Lombok](https://projectlombok.org) which grea
 ### Coding standards
 
 Please make sure tests pass before committing, and to add new tests for new additions.
+
+## Progress
+
+API | Endpoint | URL | Implemented ?| Notes 
+------|----------|-----|--------------|-------
+Native|Dataverses |POST `http://$SERVER/api/dataverses/$id?key=$apiKey` | Y| - 
+-     | -         | GET `http://$SERVER/api/dataverses/$id` | Y | -
