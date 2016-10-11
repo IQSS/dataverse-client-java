@@ -34,8 +34,13 @@ public class SearchOperationsImplV1 extends AbstractOpsImplV1 implements SearchO
 		HttpEntity<String> entity = new HttpEntity<String>("", headers);
 		ParameterizedTypeReference<DataverseResponse<SearchResults>> type = new ParameterizedTypeReference<DataverseResponse<SearchResults>>() {
 		};
-		ResponseEntity<DataverseResponse<SearchResults>> resp = template.exchange(url, HttpMethod.GET, entity, type);
+		ResponseEntity<DataverseResponse<SearchResults>> resp = performRequest(url, template, entity, type);
 		log.debug(resp.getBody().getData().toString());
 		return resp.getBody();
+	}
+
+	protected ResponseEntity<DataverseResponse<SearchResults>> performRequest(String url, RestTemplate template,
+			HttpEntity<String> entity, ParameterizedTypeReference<DataverseResponse<SearchResults>> type) {
+		return template.exchange(url, HttpMethod.GET, entity, type);
 	}
 }

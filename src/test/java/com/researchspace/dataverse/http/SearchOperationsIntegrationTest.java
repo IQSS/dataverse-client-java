@@ -16,7 +16,7 @@ import com.researchspace.dataverse.search.entities.SortOrder;
  * @author rspace
  *
  */
-public class SearchOperationsTest extends AbstractIntegrationTest {
+public class SearchOperationsIntegrationTest extends AbstractIntegrationTest {
 
 	private static final String FILE_SEARCH_TERM = "documentSchema.xsd";
 	private static final String NEW_TEXT = "Do you want to publish";
