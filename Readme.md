@@ -48,6 +48,17 @@ to install into a local repository and generate a pom.xml file for calculating d
 
 The best way to explore the bindings currently is by examining unit tests, especially those extending from `AbstractIntegrationTest`.
 
+Very briefly....
+
+```java
+ DataverseAPI api = new DataverseAPIImpl();
+ //must set in serverURL and apiKey first.
+ DataverseConfig config = new DataverseConfig(serverURL, apiKey, dataverseAlias);
+ api.configure(config);
+ // now you can call
+ api.getDataverseOperations().getDataverseById(dataverseAlias);
+```
+
 
 
 ### Synchronisation and thread-safety
