@@ -1,0 +1,739 @@
+{
+  "status": "OK",
+  "data": {
+    "id": 7508,
+    "identifier": "YJMBUN",
+    "persistentUrl": "http://dx.doi.org/10.5072/FK2/YJMBUN",
+    "protocol": "doi",
+    "authority": "10.5072/FK2",
+    "publisher": "Demo Dataverse",
+    "publicationDate": "2016-10-12",
+    "latestVersion": {
+      "id": 2991,
+      "versionNumber": 2,
+      "versionMinorNumber": 1,
+      "versionState": "RELEASED",
+      "distributionDate": "2016-10-19",
+      "productionDate": "Production Date",
+      "lastUpdateTime": "2016-10-12T21:13:39Z",
+      "releaseTime": "2016-10-12T21:13:39Z",
+      "createTime": "2016-10-12T21:11:18Z",
+      "license": "NONE",
+      "metadataBlocks": {
+        "citation": {
+          "displayName": "Citation Metadata",
+          "fields": [
+            {
+              "typeName": "title",
+              "multiple": false,
+              "typeClass": "primitive",
+              "value": "FullMetaDataExample"
+            },
+            {
+              "typeName": "subtitle",
+              "multiple": false,
+              "typeClass": "primitive",
+              "value": "subtitle"
+            },
+            {
+              "typeName": "alternativeTitle",
+              "multiple": false,
+              "typeClass": "primitive",
+              "value": "Alternative title"
+            },
+            {
+              "typeName": "alternativeURL",
+              "multiple": false,
+              "typeClass": "primitive",
+              "value": "http://www.bbc.co.uk"
+            },
+            {
+              "typeName": "otherId",
+              "multiple": true,
+              "typeClass": "compound",
+              "value": [
+                {
+                  "otherIdAgency": {
+                    "typeName": "otherIdAgency",
+                    "multiple": false,
+                    "typeClass": "primitive",
+                    "value": "SWISSPROT"
+                  },
+                  "otherIdValue": {
+                    "typeName": "otherIdValue",
+                    "multiple": false,
+                    "typeClass": "primitive",
+                    "value": "12345"
+                  }
+                }
+              ]
+            },
+            {
+              "typeName": "author",
+              "multiple": true,
+              "typeClass": "compound",
+              "value": [
+                {
+                  "authorName": {
+                    "typeName": "authorName",
+                    "multiple": false,
+                    "typeClass": "primitive",
+                    "value": "Fred Blogs"
+                  },
+                  "authorAffiliation": {
+                    "typeName": "authorAffiliation",
+                    "multiple": false,
+                    "typeClass": "primitive",
+                    "value": "ResearchSpace"
+                  },
+                  "authorIdentifierScheme": {
+                    "typeName": "authorIdentifierScheme",
+                    "multiple": false,
+                    "typeClass": "controlledVocabulary",
+                    "value": "ORCID"
+                  },
+                  "authorIdentifier": {
+                    "typeName": "authorIdentifier",
+                    "multiple": false,
+                    "typeClass": "primitive",
+                    "value": "0000-0003-1501-0941"
+                  }
+                },
+                {
+                  "authorName": {
+                    "typeName": "authorName",
+                    "multiple": false,
+                    "typeClass": "primitive",
+                    "value": "John Smith"
+                  },
+                  "authorAffiliation": {
+                    "typeName": "authorAffiliation",
+                    "multiple": false,
+                    "typeClass": "primitive",
+                    "value": "AnotherCompany"
+                  },
+                  "authorIdentifierScheme": {
+                    "typeName": "authorIdentifierScheme",
+                    "multiple": false,
+                    "typeClass": "controlledVocabulary",
+                    "value": "ISNI"
+                  },
+                  "authorIdentifier": {
+                    "typeName": "authorIdentifier",
+                    "multiple": false,
+                    "typeClass": "primitive",
+                    "value": "12345"
+                  }
+                }
+              ]
+            },
+            {
+              "typeName": "datasetContact",
+              "multiple": true,
+              "typeClass": "compound",
+              "value": [
+                {
+                  "datasetContactName": {
+                    "typeName": "datasetContactName",
+                    "multiple": false,
+                    "typeClass": "primitive",
+                    "value": "Contact name"
+                  },
+                  "datasetContactAffiliation": {
+                    "typeName": "datasetContactAffiliation",
+                    "multiple": false,
+                    "typeClass": "primitive",
+                    "value": "Contact affiliation"
+                  },
+                  "datasetContactEmail": {
+                    "typeName": "datasetContactEmail",
+                    "multiple": false,
+                    "typeClass": "primitive",
+                    "value": "fred@blogs.com"
+                  }
+                }
+              ]
+            },
+            {
+              "typeName": "dsDescription",
+              "multiple": true,
+              "typeClass": "compound",
+              "value": [
+                {
+                  "dsDescriptionValue": {
+                    "typeName": "dsDescriptionValue",
+                    "multiple": false,
+                    "typeClass": "primitive",
+                    "value": "some description"
+                  },
+                  "dsDescriptionDate": {
+                    "typeName": "dsDescriptionDate",
+                    "multiple": false,
+                    "typeClass": "primitive",
+                    "value": "2016-01-12"
+                  }
+                }
+              ]
+            },
+            {
+              "typeName": "subject",
+              "multiple": true,
+              "typeClass": "controlledVocabulary",
+              "value": [
+                "Astronomy and Astrophysics",
+                "Business and Management",
+                "Chemistry"
+              ]
+            },
+            {
+              "typeName": "keyword",
+              "multiple": true,
+              "typeClass": "compound",
+              "value": [
+                {
+                  "keywordValue": {
+                    "typeName": "keywordValue",
+                    "multiple": false,
+                    "typeClass": "primitive",
+                    "value": "tag1, tag2"
+                  },
+                  "keywordVocabulary": {
+                    "typeName": "keywordVocabulary",
+                    "multiple": false,
+                    "typeClass": "primitive",
+                    "value": "KeywordVocabularyName"
+                  },
+                  "keywordVocabularyURI": {
+                    "typeName": "keywordVocabularyURI",
+                    "multiple": false,
+                    "typeClass": "primitive",
+                    "value": "http://KeywordvocabURL.com"
+                  }
+                }
+              ]
+            },
+            {
+              "typeName": "topicClassification",
+              "multiple": true,
+              "typeClass": "compound",
+              "value": [
+                {
+                  "topicClassValue": {
+                    "typeName": "topicClassValue",
+                    "multiple": false,
+                    "typeClass": "primitive",
+                    "value": "topicTerm"
+                  },
+                  "topicClassVocab": {
+                    "typeName": "topicClassVocab",
+                    "multiple": false,
+                    "typeClass": "primitive",
+                    "value": "TopicVocabulary1"
+                  },
+                  "topicClassVocabURI": {
+                    "typeName": "topicClassVocabURI",
+                    "multiple": false,
+                    "typeClass": "primitive",
+                    "value": "http://TopicVocabulary1.com"
+                  }
+                },
+                {
+                  "topicClassValue": {
+                    "typeName": "topicClassValue",
+                    "multiple": false,
+                    "typeClass": "primitive",
+                    "value": "topicTerm2"
+                  },
+                  "topicClassVocab": {
+                    "typeName": "topicClassVocab",
+                    "multiple": false,
+                    "typeClass": "primitive",
+                    "value": "TopicVocabulary2"
+                  },
+                  "topicClassVocabURI": {
+                    "typeName": "topicClassVocabURI",
+                    "multiple": false,
+                    "typeClass": "primitive",
+                    "value": "http://TopicVocabulary2.com"
+                  }
+                }
+              ]
+            },
+            {
+              "typeName": "publication",
+              "multiple": true,
+              "typeClass": "compound",
+              "value": [
+                {
+                  "publicationCitation": {
+                    "typeName": "publicationCitation",
+                    "multiple": false,
+                    "typeClass": "primitive",
+                    "value": "some citation"
+                  },
+                  "publicationIDType": {
+                    "typeName": "publicationIDType",
+                    "multiple": false,
+                    "typeClass": "controlledVocabulary",
+                    "value": "ark"
+                  },
+                  "publicationIDNumber": {
+                    "typeName": "publicationIDNumber",
+                    "multiple": false,
+                    "typeClass": "primitive",
+                    "value": "123"
+                  },
+                  "publicationURL": {
+                    "typeName": "publicationURL",
+                    "multiple": false,
+                    "typeClass": "primitive",
+                    "value": "http://publicationURL.com"
+                  }
+                }
+              ]
+            },
+            {
+              "typeName": "notesText",
+              "multiple": false,
+              "typeClass": "primitive",
+              "value": "Notes on this"
+            },
+            {
+              "typeName": "language",
+              "multiple": true,
+              "typeClass": "controlledVocabulary",
+              "value": [
+                "Azerbaijani",
+                "Bambara"
+              ]
+            },
+            {
+              "typeName": "producer",
+              "multiple": true,
+              "typeClass": "compound",
+              "value": [
+                {
+                  "producerName": {
+                    "typeName": "producerName",
+                    "multiple": false,
+                    "typeClass": "primitive",
+                    "value": "Producer name"
+                  },
+                  "producerAffiliation": {
+                    "typeName": "producerAffiliation",
+                    "multiple": false,
+                    "typeClass": "primitive",
+                    "value": "UoE"
+                  },
+                  "producerAbbreviation": {
+                    "typeName": "producerAbbreviation",
+                    "multiple": false,
+                    "typeClass": "primitive",
+                    "value": "Abbrev"
+                  },
+                  "producerURL": {
+                    "typeName": "producerURL",
+                    "multiple": false,
+                    "typeClass": "primitive",
+                    "value": "http://producer.url"
+                  },
+                  "producerLogoURL": {
+                    "typeName": "producerLogoURL",
+                    "multiple": false,
+                    "typeClass": "primitive",
+                    "value": "http://producer.image.url"
+                  }
+                }
+              ]
+            },
+            {
+              "typeName": "productionDate",
+              "multiple": false,
+              "typeClass": "primitive",
+              "value": "2016-10-14"
+            },
+            {
+              "typeName": "productionPlace",
+              "multiple": false,
+              "typeClass": "primitive",
+              "value": "Edinburgh, UK"
+            },
+            {
+              "typeName": "contributor",
+              "multiple": true,
+              "typeClass": "compound",
+              "value": [
+                {
+                  "contributorType": {
+                    "typeName": "contributorType",
+                    "multiple": false,
+                    "typeClass": "controlledVocabulary",
+                    "value": "Funder"
+                  },
+                  "contributorName": {
+                    "typeName": "contributorName",
+                    "multiple": false,
+                    "typeClass": "primitive",
+                    "value": "ContributorNAme"
+                  }
+                }
+              ]
+            },
+            {
+              "typeName": "grantNumber",
+              "multiple": true,
+              "typeClass": "compound",
+              "value": [
+                {
+                  "grantNumberAgency": {
+                    "typeName": "grantNumberAgency",
+                    "multiple": false,
+                    "typeClass": "primitive",
+                    "value": "MRC"
+                  },
+                  "grantNumberValue": {
+                    "typeName": "grantNumberValue",
+                    "multiple": false,
+                    "typeClass": "primitive",
+                    "value": "1234-5678"
+                  }
+                },
+                {
+                  "grantNumberAgency": {
+                    "typeName": "grantNumberAgency",
+                    "multiple": false,
+                    "typeClass": "primitive",
+                    "value": "Wellcome"
+                  },
+                  "grantNumberValue": {
+                    "typeName": "grantNumberValue",
+                    "multiple": false,
+                    "typeClass": "primitive",
+                    "value": "Grant2"
+                  }
+                }
+              ]
+            },
+            {
+              "typeName": "distributor",
+              "multiple": true,
+              "typeClass": "compound",
+              "value": [
+                {
+                  "distributorName": {
+                    "typeName": "distributorName",
+                    "multiple": false,
+                    "typeClass": "primitive",
+                    "value": "DistributorName"
+                  },
+                  "distributorAffiliation": {
+                    "typeName": "distributorAffiliation",
+                    "multiple": false,
+                    "typeClass": "primitive",
+                    "value": "DistributorCorps"
+                  },
+                  "distributorAbbreviation": {
+                    "typeName": "distributorAbbreviation",
+                    "multiple": false,
+                    "typeClass": "primitive",
+                    "value": "DC"
+                  },
+                  "distributorURL": {
+                    "typeName": "distributorURL",
+                    "multiple": false,
+                    "typeClass": "primitive",
+                    "value": "http://www.distributor.com"
+                  },
+                  "distributorLogoURL": {
+                    "typeName": "distributorLogoURL",
+                    "multiple": false,
+                    "typeClass": "primitive",
+                    "value": "http://www.distributor.logo.com"
+                  }
+                }
+              ]
+            },
+            {
+              "typeName": "distributionDate",
+              "multiple": false,
+              "typeClass": "primitive",
+              "value": "2016-10-19"
+            },
+            {
+              "typeName": "depositor",
+              "multiple": false,
+              "typeClass": "primitive",
+              "value": "a Depositor"
+            },
+            {
+              "typeName": "dateOfDeposit",
+              "multiple": false,
+              "typeClass": "primitive",
+              "value": "2016-10-12"
+            },
+            {
+              "typeName": "timePeriodCovered",
+              "multiple": true,
+              "typeClass": "compound",
+              "value": [
+                {
+                  "timePeriodCoveredStart": {
+                    "typeName": "timePeriodCoveredStart",
+                    "multiple": false,
+                    "typeClass": "primitive",
+                    "value": "2016-06-19"
+                  },
+                  "timePeriodCoveredEnd": {
+                    "typeName": "timePeriodCoveredEnd",
+                    "multiple": false,
+                    "typeClass": "primitive",
+                    "value": "2016-08-19"
+                  }
+                }
+              ]
+            },
+            {
+              "typeName": "dateOfCollection",
+              "multiple": true,
+              "typeClass": "compound",
+              "value": [
+                {
+                  "dateOfCollectionStart": {
+                    "typeName": "dateOfCollectionStart",
+                    "multiple": false,
+                    "typeClass": "primitive",
+                    "value": "2016-06-22"
+                  },
+                  "dateOfCollectionEnd": {
+                    "typeName": "dateOfCollectionEnd",
+                    "multiple": false,
+                    "typeClass": "primitive",
+                    "value": "2016-07-19"
+                  }
+                }
+              ]
+            },
+            {
+              "typeName": "kindOfData",
+              "multiple": true,
+              "typeClass": "primitive",
+              "value": [
+                "Example"
+              ]
+            },
+            {
+              "typeName": "series",
+              "multiple": false,
+              "typeClass": "compound",
+              "value": {
+                "seriesName": {
+                  "typeName": "seriesName",
+                  "multiple": false,
+                  "typeClass": "primitive",
+                  "value": "SeriesName"
+                },
+                "seriesInformation": {
+                  "typeName": "seriesInformation",
+                  "multiple": false,
+                  "typeClass": "primitive",
+                  "value": "SeriesInformation"
+                }
+              }
+            },
+            {
+              "typeName": "software",
+              "multiple": true,
+              "typeClass": "compound",
+              "value": [
+                {
+                  "softwareName": {
+                    "typeName": "softwareName",
+                    "multiple": false,
+                    "typeClass": "primitive",
+                    "value": "RSpace"
+                  },
+                  "softwareVersion": {
+                    "typeName": "softwareVersion",
+                    "multiple": false,
+                    "typeClass": "primitive",
+                    "value": "1.38"
+                  }
+                },
+                {
+                  "softwareName": {
+                    "typeName": "softwareName",
+                    "multiple": false,
+                    "typeClass": "primitive",
+                    "value": "DataverseAPI"
+                  },
+                  "softwareVersion": {
+                    "typeName": "softwareVersion",
+                    "multiple": false,
+                    "typeClass": "primitive",
+                    "value": "0.11"
+                  }
+                }
+              ]
+            },
+            {
+              "typeName": "relatedMaterial",
+              "multiple": true,
+              "typeClass": "primitive",
+              "value": [
+                "Some related material"
+              ]
+            },
+            {
+              "typeName": "relatedDatasets",
+              "multiple": true,
+              "typeClass": "primitive",
+              "value": [
+                "Dataset1, Dataset2"
+              ]
+            },
+            {
+              "typeName": "otherReferences",
+              "multiple": true,
+              "typeClass": "primitive",
+              "value": [
+                "Ref1",
+                "Ref2"
+              ]
+            },
+            {
+              "typeName": "dataSources",
+              "multiple": true,
+              "typeClass": "primitive",
+              "value": [
+                "DataSource1",
+                "Datasource2"
+              ]
+            },
+            {
+              "typeName": "originOfSources",
+              "multiple": false,
+              "typeClass": "primitive",
+              "value": "SourceOrigin"
+            },
+            {
+              "typeName": "characteristicOfSources",
+              "multiple": false,
+              "typeClass": "primitive",
+              "value": " A characteristic"
+            },
+            {
+              "typeName": "accessToSources",
+              "multiple": false,
+              "typeClass": "primitive",
+              "value": "All on Github"
+            }
+          ]
+        },
+        "geospatial": {
+          "displayName": "Geospatial Metadata",
+          "fields": []
+        },
+        "biomedical": {
+          "displayName": "Life Sciences Metadata",
+          "fields": [
+            {
+              "typeName": "studyDesignType",
+              "multiple": true,
+              "typeClass": "controlledVocabulary",
+              "value": [
+                "Cross Sectional",
+                "Not Specified"
+              ]
+            },
+            {
+              "typeName": "studyFactorType",
+              "multiple": true,
+              "typeClass": "controlledVocabulary",
+              "value": [
+                "Biomarkers"
+              ]
+            },
+            {
+              "typeName": "studyAssayOrganism",
+              "multiple": true,
+              "typeClass": "controlledVocabulary",
+              "value": [
+                "Dictyostelium discoideum"
+              ]
+            },
+            {
+              "typeName": "studyAssayMeasurementType",
+              "multiple": true,
+              "typeClass": "controlledVocabulary",
+              "value": [
+                "metagenome sequencing"
+              ]
+            },
+            {
+              "typeName": "studyAssayOtherMeasurmentType",
+              "multiple": true,
+              "typeClass": "primitive",
+              "value": [
+                "RTPCR"
+              ]
+            },
+            {
+              "typeName": "studyAssayTechnologyType",
+              "multiple": true,
+              "typeClass": "controlledVocabulary",
+              "value": [
+                "DNA microarray"
+              ]
+            },
+            {
+              "typeName": "studyAssayPlatform",
+              "multiple": true,
+              "typeClass": "controlledVocabulary",
+              "value": [
+                "Bactiflow (Chemunex SA)"
+              ]
+            },
+            {
+              "typeName": "studyAssayCellType",
+              "multiple": true,
+              "typeClass": "primitive",
+              "value": [
+                "Hela"
+              ]
+            }
+          ]
+        }
+      },
+      "files": [
+        {
+          "label": "26389480647-545788359-ticket.pdf",
+          "version": 1,
+          "datasetVersionId": 2991,
+          "dataFile": {
+            "id": 7511,
+            "filename": "26389480647-545788359-ticket.pdf",
+            "contentType": "application/pdf",
+            "storageIdentifier": "157ba8df2af-a3cc63fe72a4",
+            "originalFormatLabel": "UNKNOWN",
+            "md5": "0b14b424013345303c90a477226d54b5"
+          }
+        },
+        {
+          "description": "",
+          "label": "ResizablePng.png",
+          "version": 1,
+          "datasetVersionId": 2991,
+          "dataFile": {
+            "id": 7509,
+            "filename": "ResizablePng.png",
+            "contentType": "image/png",
+            "storageIdentifier": "157b7ef6c06-0d851539ad8b",
+            "originalFormatLabel": "UNKNOWN",
+            "md5": "10598ff4d0ae0dba31c787e4ad576d7e",
+            "description": ""
+          }
+        }
+      ]
+    }
+  }
+}
