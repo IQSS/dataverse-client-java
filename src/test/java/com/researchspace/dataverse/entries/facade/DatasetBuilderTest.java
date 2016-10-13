@@ -1,5 +1,7 @@
 package com.researchspace.dataverse.entries.facade;
 
+import static com.researchspace.dataverse.entries.facade.DatasetTestFactory.*;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -28,12 +30,11 @@ public class DatasetBuilderTest {
 		DatasetFacade facade = createFacade();
 		ObjectWriter mapper = new ObjectMapper().writerWithDefaultPrettyPrinter();
 		Dataset dversion = builder.build(facade);
-	   String json =   mapper.writeValueAsString(dversion);
+	    String json =   mapper.writeValueAsString(dversion);
+	    System.out.println(json);
 		
 	}
 
-	public static DatasetFacade createFacade() {
-		return new DatasetFacade("title1", "Fred Blogs", "Som admin", "fred@blogs.com", " some desc", "Chemistry", "a Depositor");
-	}
+	
 
 }

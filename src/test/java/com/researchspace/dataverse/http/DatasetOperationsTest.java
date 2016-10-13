@@ -1,5 +1,6 @@
 package com.researchspace.dataverse.http;
 
+import static com.researchspace.dataverse.entries.facade.DatasetTestFactory.createFacade;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
@@ -19,7 +20,6 @@ import com.researchspace.dataverse.entities.DataverseObject;
 import com.researchspace.dataverse.entities.Identifier;
 import com.researchspace.dataverse.entities.Version;
 import com.researchspace.dataverse.entities.facade.DatasetFacade;
-import com.researchspace.dataverse.entries.facade.DatasetBuilderTest;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -41,7 +41,7 @@ public class DatasetOperationsTest extends AbstractIntegrationTest {
 
 	@Test
 	public void testPostGetDeleteDataset() throws IOException, InterruptedException, URISyntaxException {
-		DatasetFacade facade = DatasetBuilderTest.createFacade();
+		DatasetFacade facade = createFacade();
 		Identifier id = dataverseOps.createDataset(facade, dataverseAlias);
 		assertNotNull(id.getId());
 		Dataset ds = datasetOps.getDataset(id);
