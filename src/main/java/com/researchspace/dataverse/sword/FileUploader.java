@@ -60,7 +60,9 @@ public class FileUploader {
 		dep.setFile(new FileInputStream(file));
 		dep.setMimeType(APPLICATION_ZIP);
 		dep.setPackaging(ZIP_PACKAGING);
+		
 		AuthCredentials cred = new AuthCredentials(apiKey, "");
+	
 		String depositURI = dataverseServer.toString() + "/dvn/api/data-deposit/v1.1/swordv2/edit-media/study/doi:"
 				+ doi;
 		DepositReceipt rct = cli.deposit(depositURI, dep, cred);

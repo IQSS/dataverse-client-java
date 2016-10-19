@@ -2,6 +2,8 @@ package com.researchspace.dataverse.entries.facade;
 
 import static com.researchspace.dataverse.entries.facade.DatasetTestFactory.*;
 
+import java.net.MalformedURLException;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -26,15 +28,11 @@ public class DatasetBuilderTest {
 	}
 
 	@Test
-	public void test() throws JsonProcessingException {
+	public void test() throws JsonProcessingException, MalformedURLException {
 		DatasetFacade facade = createFacade();
 		ObjectWriter mapper = new ObjectMapper().writerWithDefaultPrettyPrinter();
 		Dataset dversion = builder.build(facade);
 	    String json =   mapper.writeValueAsString(dversion);
-	    System.out.println(json);
-		
+	    System.out.println(json);		
 	}
-
-	
-
 }

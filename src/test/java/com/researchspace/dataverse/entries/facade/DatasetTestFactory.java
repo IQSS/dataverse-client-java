@@ -1,5 +1,8 @@
 package com.researchspace.dataverse.entries.facade;
 
+import java.net.MalformedURLException;
+import java.net.URL;
+
 import com.researchspace.dataverse.entities.facade.DatasetAuthor;
 import com.researchspace.dataverse.entities.facade.DatasetContact;
 import com.researchspace.dataverse.entities.facade.DatasetFacade;
@@ -10,7 +13,7 @@ import com.researchspace.dataverse.entities.facade.DatasetFacade;
  */
 public class DatasetTestFactory {
 	
-	public static DatasetFacade createFacade() {		
+	public static DatasetFacade createFacade() throws MalformedURLException {		
 		return DatasetFacade.builder()
 		  .author(buildAnAuthor()).author(buildAnotherAuthor())
 		  .title("title1")
@@ -20,6 +23,7 @@ public class DatasetTestFactory {
 		  .depositor("A depositor")
 		  .subtitle(" A subtitle")
 		  .alternativeTitle("altTitle")
+		  .alternativeURL(new URL("http://www.myrepo.com"))
 		  .build();
 	}
 
@@ -31,7 +35,9 @@ public class DatasetTestFactory {
 	
 	 static DatasetContact buildAnotherContact() {
 		return DatasetContact.builder()
-				.datasetContactAffiliation("Another place").datasetContactEmail("contact2@email.com").datasetContactName("Brian Contact2")
+				.datasetContactAffiliation("Another place")
+				.datasetContactEmail("contact2@email.com")
+				.datasetContactName("Brian Contact2")
 				.build();
 	}
 

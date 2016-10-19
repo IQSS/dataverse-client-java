@@ -10,6 +10,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -20,6 +21,7 @@ import org.springframework.web.client.RestTemplate;
 import org.swordapp.client.ProtocolViolationException;
 import org.swordapp.client.SWORDClientException;
 import org.swordapp.client.SWORDError;
+import org.swordapp.client.SWORDMultipartRequestEntity;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -193,9 +195,14 @@ public class DataverseOperationsImplV1 extends AbstractOpsImplV1 implements Data
 		FileUploader uploader = new FileUploader();
 		try {
 			uploader.deposit(file, apiKey, new URI(serverURL), doi);
-		} catch (IOException | SWORDClientException | SWORDError | ProtocolViolationException | URISyntaxException e) {		
+		} catch (IOException | SWORDClientException  | ProtocolViolationException | URISyntaxException e) {		
 			log.error("Couldn't upload file {} with doi {} : {}", file.getName(), doi.toString(), e.getMessage());
 			throw new RestClientException(e.getMessage());
+		} catch (SWORDError error) {
+			if (!StringUtils.isEmpty(error.getErrorBody())) {
+				log.error("SwordError: {}", error.getErrorBody());
+				throw new RestClientException(error.getErrorBody());
+			}
 		}
 	}
 
