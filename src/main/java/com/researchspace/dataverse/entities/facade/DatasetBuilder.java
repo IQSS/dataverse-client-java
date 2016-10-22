@@ -3,6 +3,8 @@ package com.researchspace.dataverse.entities.facade;
 import static java.util.Arrays.asList;
 import static org.apache.commons.lang.StringUtils.isEmpty;
 
+import java.text.DateFormat;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -11,7 +13,9 @@ import java.util.Map;
 
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.time.DateUtils;
 
+import com.ibm.icu.text.SimpleDateFormat;
 import com.researchspace.dataverse.entities.Citation;
 import com.researchspace.dataverse.entities.CitationField;
 import com.researchspace.dataverse.entities.CitationType;
@@ -27,6 +31,11 @@ import com.researchspace.dataverse.entities.DatasetVersion;
  */
 public class DatasetBuilder {
 
+	private static final String KEYWORD_VOCABULARY_URI = "keywordVocabularyURI";
+	private static final String KEYWORD_VOCABULARY = "keywordVocabulary";
+	private static final String KEYWORD_VALUE = "keywordValue";
+	private static final String DATASET_DESC_VALUE = "dsDescriptionValue";
+	private static final String DATASET_DESC_DATE = "dsDescriptionDate";
 	private static final String DATASET_CONTACT_EMAIL = "datasetContactEmail";
 	private static final String DATASET_CONTACT_NAME = "datasetContactName";
 	private static final String DATASET_CONTACT_AFFILIATION = "datasetContactAffiliation";
@@ -56,6 +65,7 @@ public class DatasetBuilder {
 		addTitle(facade, fields);	
 		addAuthors(facade, fields);
 		addDescription(facade, fields);
+		addKeywords(facade, fields);
 		addSubject(facade, fields);
 		addContacts(facade, fields);
 		
@@ -66,6 +76,8 @@ public class DatasetBuilder {
 		addAlternativeURL(facade, fields);
 		return fields;
 	}
+
+	
 
 	private void addAlternativeURL(DatasetFacade facade, List<CitationField> fields) {
 		if (facade.getAlternativeURL() != null) {
@@ -94,12 +106,48 @@ public class DatasetBuilder {
 	}
 
 	private void addDescription(DatasetFacade facade, List<CitationField> fields) {
-		CitationField descValue = createPrimitiveSingleField("dsDescriptionValue", facade.getDescription());
-		Map<String, Object> map2 = new HashMap<>();
-		map2.put("dsDescriptionValue", descValue);
-		CitationField desc = createCompoundField("dsDescription", true, Arrays.asList(map2));
+		List<DatasetDescription> descs = facade.getDescriptions();
+		List<Map<String, Object>> descList = new ArrayList<>();
+		for (DatasetDescription desc: descs) {
+			Map<String, Object> map2 = new HashMap<>();
+			CitationField descF = createPrimitiveSingleField(DATASET_DESC_VALUE, desc.getDescription());
+			map2.put(DATASET_DESC_VALUE, descF);
+			if(desc.getDate() != null) {
+				CitationField dateF = createPrimitiveSingleField(DATASET_DESC_DATE, isoDate(desc));
+				map2.put(DATASET_DESC_DATE, dateF);
+			}
+			descList.add(map2);
+		}
+		
+		CitationField desc = createCompoundField("dsDescription", true, descList);
 		fields.add(desc);
+	}
+	
+	private void addKeywords(DatasetFacade facade, List<CitationField> fields) {
+		List<DatasetKeyword> keywords = facade.getKeywords();
+		List<Map<String, Object>> keysList = new ArrayList<>();
+		for (DatasetKeyword desc: keywords) {
+			Map<String, Object> map2 = new HashMap<>();
+			CitationField descF = createPrimitiveSingleField(KEYWORD_VALUE, desc.getValue());
+			map2.put(KEYWORD_VALUE, descF);
+			if(desc.getVocabulary() != null) {
+				CitationField vocab = createPrimitiveSingleField(KEYWORD_VOCABULARY, desc.getVocabulary());
+				map2.put(KEYWORD_VOCABULARY, vocab);
+			}
+			if(desc.getVocabularyURI() != null) {
+				CitationField vocabURI = createPrimitiveSingleField(KEYWORD_VOCABULARY_URI, desc.getVocabularyURI().toString());
+				map2.put(KEYWORD_VOCABULARY_URI, vocabURI);
+			}
+			keysList.add(map2);
+		}
+		
+		CitationField desc = createCompoundField("keyword", true, keysList);
+		fields.add(desc);
+		
+	}
 
+	private String isoDate(DatasetDescription desc) {
+		return String.format("%tF", desc.getDate());
 	}
 
 	private void addContacts (DatasetFacade facade, List<CitationField> fields) {

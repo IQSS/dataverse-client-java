@@ -20,8 +20,9 @@ public class DatasetFacade   {
 	private @NonNull @Singular List<DatasetAuthor> authors;
 	private @NonNull @Singular List<DatasetContact> contacts;
 	private @NonNull String subject;
-	private @NonNull String description;
+	private @NonNull @Singular List<DatasetDescription> descriptions;
 	private String  depositor, subtitle, alternativeTitle;
 	private URL alternativeURL;
+	private @Singular List<DatasetKeyword> keywords;
 
 }
