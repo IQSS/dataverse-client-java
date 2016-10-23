@@ -1,6 +1,7 @@
 package com.researchspace.dataverse.entities.facade;
 
 import java.net.URL;
+import java.util.Date;
 import java.util.List;
 
 import lombok.Builder;
@@ -26,7 +27,25 @@ public class DatasetFacade   {
 	private @Singular List<DatasetKeyword> keywords;
 	private @Singular List<DatasetTopicClassification> topicClassifications;
 	private @Singular List<DatasetPublication> publications;
+	private @Singular List<DatasetProducer> producers;
 	private String note;
+	private List<String> languages;
+	private Date productionDate;
+	
+	/**
+	 * Returns a copy if the internally stored Date
+	 * @return
+	 */
+	public Date getProductionDate (){
+		return new Date(productionDate.getTime());
+	}
+	/**
+	 * Sets this obkect's date as a opy of the parameter Date.
+	 * @param date
+	 */
+	public void setProductionDate(Date date) {
+		this.productionDate = new Date (productionDate.getTime());
+	}
 
 
 }

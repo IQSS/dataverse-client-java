@@ -9,7 +9,8 @@ import lombok.Data;
 @Builder
 public class DatasetPublication {
 	
-	private String publicationCitation, publicationIdNumber, publicationIDType;
+	private String publicationCitation, publicationIdNumber;
+	private PublicationIDType publicationIDType;
 	private URL publicationURL;
 
 }
