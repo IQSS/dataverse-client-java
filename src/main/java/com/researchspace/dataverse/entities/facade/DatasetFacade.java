@@ -24,5 +24,9 @@ public class DatasetFacade   {
 	private String  depositor, subtitle, alternativeTitle;
 	private URL alternativeURL;
 	private @Singular List<DatasetKeyword> keywords;
+	private @Singular List<DatasetTopicClassification> topicClassifications;
+	private @Singular List<DatasetPublication> publications;
+	private String note;
+
 
 }
