@@ -25,6 +25,9 @@ import com.researchspace.dataverse.entities.DatasetVersion;
  */
 public class DatasetBuilder {
 
+	private static final String CONTRIBUTOR = "contributor";
+	private static final String CONTRIBUTOR_TYPE = "contributorType";
+	private static final String CONTRIBUTOR_NAME = "contributorName";
 	private static final String PRODUCER_LOGO_URL = "producerLogoURL";
 	private static final String PRODUCER_URL = "producerURL";
 	private static final String PRODUCER_AFFILIATION = "producerAffiliation";
@@ -79,6 +82,8 @@ public class DatasetBuilder {
 		addNotes(facade, fields);
 		addProducers(facade, fields);
 		addProductionDate(facade, fields);
+		addProductionPlace(facade, fields);
+		addContributor(facade, fields);
 		addSubject(facade, fields);
 		addContacts(facade, fields);
 		
@@ -92,13 +97,22 @@ public class DatasetBuilder {
 
 	
 
+	
+
 	private void addProductionDate(DatasetFacade facade, List<CitationField> fields) {
 		if( facade.getProductionDate() != null) {
 			CitationField prodDate = createPrimitiveSingleField("productionDate", isoDate(facade.getProductionDate()));
 			fields.add(prodDate);
 		}
-		
 	}
+	
+	private void addProductionPlace(DatasetFacade facade, List<CitationField> fields) {
+		if(!isEmpty(facade.getProductionPlace())){
+			CitationField prodPlace = createPrimitiveSingleField("productionPlace", facade.getProductionPlace());
+			fields.add(prodPlace);
+		}		
+	}
+	
 
 	private void addLanguages(DatasetFacade facade, List<CitationField> fields) {
 		if (!facade.getLanguages().isEmpty()) {
@@ -185,8 +199,24 @@ public class DatasetBuilder {
 			topicsList.add(map);
 		}	
 		CitationField topicClassifn = createCompoundField("producer", true, topicsList);
-		fields.add(topicClassifn);	
-		
+		fields.add(topicClassifn);			
+	}
+	
+	private void addContributor(DatasetFacade facade, List<CitationField> fields) {
+		List<DatasetContributor> contribs = facade.getContributors();
+		List<Map<String, Object>> contribList = new ArrayList<>();
+		for (DatasetContributor contrib: contribs) {
+			Map<String, Object> map = new HashMap<>();
+			addOptionalPrimitiveField(contrib.getName(), map, CONTRIBUTOR_NAME);
+			if(contrib.getType()!=null) {
+				CitationField cf =createControlledVocabField(CONTRIBUTOR_TYPE, false, 
+						asList(new String[] { contrib.getType().getDisplayName() }));
+				map.put(CONTRIBUTOR_TYPE, cf);
+			}		
+			contribList.add(map);
+		}	
+		CitationField topicClassifn = createCompoundField(CONTRIBUTOR, true, contribList);
+		fields.add(topicClassifn);			
 	}
 	
 	private void addPublications(DatasetFacade facade, List<CitationField> fields) {
@@ -232,7 +262,6 @@ public class DatasetBuilder {
 	private void addContacts (DatasetFacade facade, List<CitationField> fields) {
 		List<DatasetContact> contacts = facade.getContacts();
 		List<Map<String, Object>> contactsList = new ArrayList<>();
-
 		for (DatasetContact contact : contacts) {
 			Map<String, Object> map2 = new HashMap<>();
 			CitationField email = createPrimitiveSingleField(DATASET_CONTACT_EMAIL, contact.getDatasetContactEmail());

@@ -32,6 +32,8 @@ public class DatasetFacade   {
 	private String note;
 	private List<String> languages = new ArrayList<>();
 	private Date productionDate;
+	private String productionPlace;
+	private @Singular List<DatasetContributor> contributors;
 	
 	/**
 	 * Returns a copy if the internally stored Date

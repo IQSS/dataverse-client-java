@@ -7,8 +7,10 @@ import java.net.URL;
 import java.util.Arrays;
 import java.util.Date;
 
+import com.researchspace.dataverse.entities.facade.ContributorType;
 import com.researchspace.dataverse.entities.facade.DatasetAuthor;
 import com.researchspace.dataverse.entities.facade.DatasetContact;
+import com.researchspace.dataverse.entities.facade.DatasetContributor;
 import com.researchspace.dataverse.entities.facade.DatasetDescription;
 import com.researchspace.dataverse.entities.facade.DatasetFacade;
 import com.researchspace.dataverse.entities.facade.DatasetKeyword;
@@ -39,6 +41,8 @@ public class DatasetTestFactory {
 		  .publication(buildAPublication())
 		  .producer(buildAProducer())
 		  .productionDate(new Date())
+		  .productionPlace("Edinburgh, UK")
+		  .contributor(buildAContributor("Fred")).contributor(buildAContributor("Tim"))
 		  .subject("Chemistry")
 		  .depositor("A depositor")
 		  .subtitle(" A subtitle")
@@ -49,7 +53,14 @@ public class DatasetTestFactory {
 		  .build();
 	}
 
-	 private static DatasetProducer buildAProducer() throws MalformedURLException {
+	 private static DatasetContributor buildAContributor(String name) {
+		return DatasetContributor.builder()
+				.name(name)
+				.type(ContributorType.ProjectLeader)
+				.build();
+	}
+
+	private static DatasetProducer buildAProducer() throws MalformedURLException {
 		return DatasetProducer.builder()
 				.name("a producer")
 				.abbreviation("abbr")
