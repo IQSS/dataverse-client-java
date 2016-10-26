@@ -1,6 +1,7 @@
 package com.researchspace.dataverse.entities.facade;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -29,7 +30,7 @@ public class DatasetFacade   {
 	private @Singular List<DatasetPublication> publications;
 	private @Singular List<DatasetProducer> producers;
 	private String note;
-	private List<String> languages;
+	private List<String> languages = new ArrayList<>();
 	private Date productionDate;
 	
 	/**
