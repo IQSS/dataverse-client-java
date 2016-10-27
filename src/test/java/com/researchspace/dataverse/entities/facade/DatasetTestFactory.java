@@ -1,4 +1,4 @@
-package com.researchspace.dataverse.entries.facade;
+package com.researchspace.dataverse.entities.facade;
 
 import java.net.MalformedURLException;
 import java.net.URI;

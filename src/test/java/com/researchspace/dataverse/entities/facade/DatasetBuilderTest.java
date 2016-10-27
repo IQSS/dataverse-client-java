@@ -1,6 +1,6 @@
-package com.researchspace.dataverse.entries.facade;
+package com.researchspace.dataverse.entities.facade;
 
-import static com.researchspace.dataverse.entries.facade.DatasetTestFactory.*;
+import static com.researchspace.dataverse.entities.facade.DatasetTestFactory.*;
 
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;

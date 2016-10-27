@@ -1,4 +1,4 @@
-package com.researchspace.dataverse.entries.facade;
+package com.researchspace.dataverse.entities.facade;
 
 import org.junit.After;
 import org.junit.Before;

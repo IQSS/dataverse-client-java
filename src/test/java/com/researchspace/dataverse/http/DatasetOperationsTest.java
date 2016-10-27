@@ -1,6 +1,6 @@
 package com.researchspace.dataverse.http;
 
-import static com.researchspace.dataverse.entries.facade.DatasetTestFactory.createFacade;
+import static com.researchspace.dataverse.entities.facade.DatasetTestFactory.createFacade;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;

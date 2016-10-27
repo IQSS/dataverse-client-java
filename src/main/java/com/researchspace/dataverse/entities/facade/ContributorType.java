@@ -1,5 +1,9 @@
 package com.researchspace.dataverse.entities.facade;
-
+/**
+ * Listing of Contributor Types for Dataset 'Contributor' Citation field.
+ * @author rspace
+ *
+ */
 public enum ContributorType {
     DataCollector("Data Collector"),
     DataCurator("Data Curator"),

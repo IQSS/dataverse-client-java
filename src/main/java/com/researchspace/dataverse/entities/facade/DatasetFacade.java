@@ -5,8 +5,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.Singular;
 /**
@@ -16,6 +18,7 @@ import lombok.Singular;
  */
 @Data
 @Builder
+@AllArgsConstructor
 public class DatasetFacade   {
 	
 	private @NonNull String title; 
@@ -40,15 +43,25 @@ public class DatasetFacade   {
 	 * @return
 	 */
 	public Date getProductionDate (){
-		return new Date(productionDate.getTime());
+		if(productionDate != null){
+			return new Date(productionDate.getTime());
+		} else {
+			return null;
+		}
+		
 	}
 	/**
 	 * Sets this obkect's date as a opy of the parameter Date.
 	 * @param date
 	 */
 	public void setProductionDate(Date date) {
-		this.productionDate = new Date (productionDate.getTime());
+		this.productionDate = new Date (date.getTime());
 	}
-
+     /*
+      * For testing
+      */
+	 DatasetFacade() {
+		// TODO Auto-generated constructor stub
+	}
 
 }
