@@ -21,7 +21,6 @@ import org.springframework.web.client.RestTemplate;
 import org.swordapp.client.ProtocolViolationException;
 import org.swordapp.client.SWORDClientException;
 import org.swordapp.client.SWORDError;
-import org.swordapp.client.SWORDMultipartRequestEntity;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -37,6 +36,7 @@ import com.researchspace.dataverse.entities.DataverseResponse;
 import com.researchspace.dataverse.entities.DvMessage;
 import com.researchspace.dataverse.entities.Identifier;
 import com.researchspace.dataverse.entities.MetadataBlock;
+import com.researchspace.dataverse.entities.PublishedDataset;
 import com.researchspace.dataverse.entities.Version;
 import com.researchspace.dataverse.entities.facade.DatasetBuilder;
 import com.researchspace.dataverse.entities.facade.DatasetFacade;
@@ -306,17 +306,16 @@ public class DataverseOperationsImplV1 extends AbstractOpsImplV1 implements Data
 	 * @see com.researchspace.dataverse.http.DataverseAPI#publishDataset(com.researchspace.dataverse.entities.Identifier, com.researchspace.dataverse.entities.Version)
 	 */
 	@Override
-	public void publishDataset(Identifier dsIdentifier, Version version) {
+	public DataverseResponse<PublishedDataset> publishDataset(Identifier dsIdentifier, Version version) {
 		String url = createV1Url("datasets", dsIdentifier.getId() + "", "actions", ":publish") + "?type="
 				+ version.name().toLowerCase();
 		RestTemplate template = createTemplate();
 		HttpEntity<String> entity = createHttpEntity("");
-//		ParameterizedTypeReference<DataverseResponse<DvMessage>> type = new ParameterizedTypeReference<DataverseResponse<DvMessage>>() {
-//		};
-		ResponseEntity<String> resp = template.exchange(url, HttpMethod.GET, entity, String.class);
-		log.debug(resp.getBody());
-     	//handleError(resp);
-//		return resp.getBody().getData();
+		ParameterizedTypeReference<DataverseResponse<PublishedDataset>> type = new ParameterizedTypeReference<DataverseResponse<PublishedDataset>>() {
+		};
+		ResponseEntity<DataverseResponse<PublishedDataset>> resp = template.exchange(url, HttpMethod.GET, entity, type);
+		log.debug(resp.getBody().toString());
+    	return resp.getBody();
 		
 	}
 

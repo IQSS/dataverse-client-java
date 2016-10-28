@@ -51,7 +51,7 @@ public class DatasetFacade   {
 		
 	}
 	/**
-	 * Sets this obkect's date as a opy of the parameter Date.
+	 * Sets this object's date as a copy of the parameter Date.
 	 * @param date
 	 */
 	public void setProductionDate(Date date) {

@@ -47,7 +47,6 @@ public abstract class AbstractOpsImplV1 {
 			log.error(msg);
 			throw new RestClientException(msg);
 		}
-
 	}
 
 	RestTemplate createTemplate() {

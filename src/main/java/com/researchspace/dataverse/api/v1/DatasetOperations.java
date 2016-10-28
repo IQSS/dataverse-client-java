@@ -6,8 +6,10 @@ import java.util.List;
 import com.researchspace.dataverse.entities.DataSetMetadataBlock;
 import com.researchspace.dataverse.entities.Dataset;
 import com.researchspace.dataverse.entities.DatasetVersion;
+import com.researchspace.dataverse.entities.DataverseResponse;
 import com.researchspace.dataverse.entities.DvMessage;
 import com.researchspace.dataverse.entities.Identifier;
+import com.researchspace.dataverse.entities.PublishedDataset;
 import com.researchspace.dataverse.entities.Version;
 import com.researchspace.dataverse.entities.facade.DatasetFacade;
 /**
@@ -71,9 +73,10 @@ public interface DatasetOperations {
 	DvMessage deleteDataset(Identifier dsIdentifier);
 	
 	/**
-	 * Publishes a DataSet
+	 * Publishes a DataSet, if the parent dataverse is published.
 	 * @param dsIdentifier
 	 * @param version Major/Minor
+	 * @return A {@link DataverseResponse} with  an error message if Dataset could not be published.
 	 */
-	void publishDataset(Identifier dsIdentifier, Version version);
+	DataverseResponse<PublishedDataset> publishDataset(Identifier dsIdentifier, Version version);
 }

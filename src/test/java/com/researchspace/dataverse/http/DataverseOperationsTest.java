@@ -44,7 +44,7 @@ public class DataverseOperationsTest extends AbstractIntegrationTest {
 		assertNotNull(deleted.getData());	
 	}
 
-	private Dataverse createADataverse(String dvName) {
+	static Dataverse createADataverse(String dvName) {
 		Dataverse dv = new Dataverse();
 		dv.setAlias(dvName);
 		dv.setName("Test Instance " + dvName);
