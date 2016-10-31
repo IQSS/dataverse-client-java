@@ -22,6 +22,16 @@ public abstract class AbstractOpsImplV1 {
 	String serverURL = "";
 	String serverAPIURL = serverURL +"/api";
 	String serverAPIv1URL = serverAPIURL +"/v1";
+	protected RestTemplate template;
+
+	public AbstractOpsImplV1() {
+		super();
+		this.template = createTemplate();
+	}
+
+	protected void setTemplate(RestTemplate template) {
+		this.template = template;
+	}
 
 	public final static String apiHeader = "X-Dataverse-key";
 	public void setApiKey(String apiKey) {

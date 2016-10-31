@@ -71,7 +71,7 @@ public class DataverseOperationsImplV1 extends AbstractOpsImplV1 implements Data
 	public Dataverse getDataverseById(String dataverseAlias) {
 		String url = createV1Url("dataverses" , dataverseAlias);
 		log.debug(url);
-		RestTemplate template = createTemplate();
+		
 		HttpEntity<String> entity = createHttpEntity("");
 		ParameterizedTypeReference<DataverseResponse<Dataverse>> type = new ParameterizedTypeReference<DataverseResponse<Dataverse>>() {
 		};
@@ -86,7 +86,7 @@ public class DataverseOperationsImplV1 extends AbstractOpsImplV1 implements Data
 	public DataverseResponse<DvMessage> deleteDataverse(String dataverseAlias) {
 		String url = createV1Url("dataverses", dataverseAlias);
 		log.debug(url);
-		RestTemplate template = createTemplate();
+		
 		HttpEntity<String> entity = createHttpEntity("");
 		ParameterizedTypeReference<DataverseResponse<DvMessage>> type =
 				new ParameterizedTypeReference<DataverseResponse<DvMessage>>() {};
@@ -104,7 +104,7 @@ public class DataverseOperationsImplV1 extends AbstractOpsImplV1 implements Data
 		isTrue(!isEmpty(toCreate.getAlias()), "Alias must be specified");
 		String url = createV1Url("dataverses", parentDv);
 
-		RestTemplate template = createTemplate();
+		
 		String json = marshalDataset(toCreate);
 		HttpEntity<String> entity = createHttpEntity(json);
 		ParameterizedTypeReference<DataverseResponse<Dataverse>> type = new ParameterizedTypeReference<DataverseResponse<Dataverse>>() {
@@ -122,8 +122,7 @@ public class DataverseOperationsImplV1 extends AbstractOpsImplV1 implements Data
 	@Override
 	public Identifier createDataset(DatasetFacade facade, String dataverseAlias)  {
 		String url = createV1Url("dataverses", dataverseAlias,"datasets");
-		RestTemplate template = createTemplate();
-
+		
 		String json = getJsonFromFacade(facade);
 		HttpEntity<String> entity = createHttpEntity(json);
 		ParameterizedTypeReference<DataverseResponse<Identifier>> type = new ParameterizedTypeReference<DataverseResponse<Identifier>>() {
@@ -144,7 +143,7 @@ public class DataverseOperationsImplV1 extends AbstractOpsImplV1 implements Data
 		
 		Dataset ds = new DatasetBuilder().build(facade);
 		String json = marshalDataset(ds.getDatasetVersion());
-		RestTemplate template = createTemplate();
+		
 		
 		HttpEntity<String> entity = createHttpEntity(json);
 		ParameterizedTypeReference<DataverseResponse<DatasetVersion>> type = new ParameterizedTypeReference<DataverseResponse<DatasetVersion>>() {
@@ -162,7 +161,7 @@ public class DataverseOperationsImplV1 extends AbstractOpsImplV1 implements Data
 	@Override
 	public Dataset getDataset(Identifier dsIdentifier) {
 		String url = createV1Url("datasets",  dsIdentifier.getId() +"");
-		RestTemplate template = createTemplate();
+		
 		HttpEntity<String> entity = createHttpEntity("");
 		ParameterizedTypeReference<DataverseResponse<Dataset>> type = new ParameterizedTypeReference<DataverseResponse<Dataset>>() {
 		};
@@ -177,7 +176,7 @@ public class DataverseOperationsImplV1 extends AbstractOpsImplV1 implements Data
 	@Override
 	public List<DatasetVersion> getDatasetVersions (Identifier dsIdentifier) {
 		String url = createV1Url("datasets",  dsIdentifier.getId() +"", "versions");
-		RestTemplate template = createTemplate();
+		
 		HttpEntity<String> entity = createHttpEntity("");
 		ParameterizedTypeReference<DataverseResponse<List<DatasetVersion>>> type = new ParameterizedTypeReference<DataverseResponse<List<DatasetVersion>>>() {
 		};
@@ -212,7 +211,7 @@ public class DataverseOperationsImplV1 extends AbstractOpsImplV1 implements Data
 	@Override
 	public DvMessage deleteDataset(Identifier dsIdentifier) {
 		String url = createV1Url("datasets",  dsIdentifier.getId() +"" );
-		RestTemplate template = createTemplate();
+		
 		HttpEntity<String> entity = createHttpEntity("");
 		ParameterizedTypeReference<DataverseResponse<DvMessage>> type = new ParameterizedTypeReference<DataverseResponse<DvMessage>>() {
 		};
@@ -250,7 +249,7 @@ public class DataverseOperationsImplV1 extends AbstractOpsImplV1 implements Data
 	@Override
 	public List<DataverseObject> getDataverseContents(String dataverseAlias) {
 		String url = createV1Url("dataverses", dataverseAlias, "contents" );
-		RestTemplate template = createTemplate();
+		
 		HttpEntity<String> entity = createHttpEntity("");
 		ParameterizedTypeReference<DataverseResponse<List<DataverseObject>>> type = new ParameterizedTypeReference<DataverseResponse<List<DataverseObject>>>() {
 		};
@@ -272,7 +271,7 @@ public class DataverseOperationsImplV1 extends AbstractOpsImplV1 implements Data
 	@Override
 	public List<MetadataBlock> getMetadataBlockInfo() {
 		String url = createV1Url("metadatablocks" );
-		RestTemplate template = createTemplate();
+		
 		HttpHeaders headers = addAPIKeyToHeader();
 		HttpEntity<String> entity = new HttpEntity<String>("parameters", headers);
 		ParameterizedTypeReference<DataverseResponse<List<MetadataBlock>>> type = new ParameterizedTypeReference<DataverseResponse<List<MetadataBlock>>>() {
@@ -289,7 +288,7 @@ public class DataverseOperationsImplV1 extends AbstractOpsImplV1 implements Data
 	@Override
 	public MetadataBlock getMetadataById(String name) {
 		String url = createV1Url("metadatablocks", name );
-		RestTemplate template = createTemplate();
+		
 		HttpHeaders headers = addAPIKeyToHeader();
 		HttpEntity<String> entity = new HttpEntity<String>("parameters", headers);
 		ParameterizedTypeReference<DataverseResponse<MetadataBlock>> type = new ParameterizedTypeReference<DataverseResponse<MetadataBlock>>() {
@@ -309,7 +308,7 @@ public class DataverseOperationsImplV1 extends AbstractOpsImplV1 implements Data
 	public DataverseResponse<PublishedDataset> publishDataset(Identifier dsIdentifier, Version version) {
 		String url = createV1Url("datasets", dsIdentifier.getId() + "", "actions", ":publish") + "?type="
 				+ version.name().toLowerCase();
-		RestTemplate template = createTemplate();
+		
 		HttpEntity<String> entity = createHttpEntity("");
 		ParameterizedTypeReference<DataverseResponse<PublishedDataset>> type = new ParameterizedTypeReference<DataverseResponse<PublishedDataset>>() {
 		};
@@ -321,8 +320,7 @@ public class DataverseOperationsImplV1 extends AbstractOpsImplV1 implements Data
 
 	@Override
 	public DataverseResponse<Dataverse> publishDataverse(String dvName) {
-		String url = createV1Url("dataverses", dvName, "actions", ":publish");
-		RestTemplate template = createTemplate();
+		String url = createV1Url("dataverses", dvName, "actions", ":publish");		
 		HttpEntity<String> entity = createHttpEntity("");
 		ParameterizedTypeReference<DataverseResponse<Dataverse>> type = new ParameterizedTypeReference<DataverseResponse<Dataverse>>() {
 		};
@@ -334,8 +332,7 @@ public class DataverseOperationsImplV1 extends AbstractOpsImplV1 implements Data
 
 	@Override
 	public DvMessage getDatasetPublishPopupCustomText() {
-		String url = createAdminUrl("admin", "settings", ":DatasetPublishPopupCustomText");
-		RestTemplate template = createTemplate();
+		String url = createAdminUrl("admin", "settings", ":DatasetPublishPopupCustomText");		
 		HttpEntity<String> entity = createHttpEntity("");
 		ParameterizedTypeReference<DataverseResponse<DvMessage>> type = new ParameterizedTypeReference<DataverseResponse<DvMessage>>() {
 		};
@@ -348,7 +345,6 @@ public class DataverseOperationsImplV1 extends AbstractOpsImplV1 implements Data
 	@Override
 	public DataverseResponse<Object> setDatasetPublishPopupCustomText(String text) {
 		String url = createAdminUrl("admin", "settings", ":DatasetPublishPopupCustomText");
-		RestTemplate template = createTemplate();
 		HttpEntity<String> entity = createHttpEntity(text);
 		ParameterizedTypeReference<DataverseResponse<Object>> type = new ParameterizedTypeReference<DataverseResponse<Object>>() {
 		};

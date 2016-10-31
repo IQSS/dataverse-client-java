@@ -17,16 +17,15 @@ import lombok.Data;
 // used to deserialise Json into correct subclasses using value of 'type'
 // property
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type")
-@JsonSubTypes({ @Type(value = DataverseSearchHit.class, name = "dataverse"),
-		@Type(value = DatasetSearchHit.class, name = "dataset"), 
+@JsonSubTypes({ @Type(value = DataverseItem.class, name = "dataverse"),
+		@Type(value = DatasetItem.class, name = "dataset"), 
 		@Type(value = FileSearchHit.class, name = "file"), })
 @Data
-public abstract class SearchHit {
+public abstract class Item {
 	private String name, type, url;
 
 	@JsonProperty(value = "image_url")
 	private String imageUrl;
 
-	abstract SearchHit asSubtype();
 
 }

@@ -9,7 +9,7 @@ import lombok.ToString;
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Data
-public class FileSearchHit extends SearchHit {
+public class FileSearchHit extends Item {
 
 	private @JsonProperty("file_id") String fileId;
 	private @JsonProperty("dataset_citation") String datasetCitation;
@@ -21,11 +21,6 @@ public class FileSearchHit extends SearchHit {
 
 	public String getType() {
 		return "file";
-	}
-
-	@Override
-	FileSearchHit asSubtype() {
-		return this;
 	}
 
 }

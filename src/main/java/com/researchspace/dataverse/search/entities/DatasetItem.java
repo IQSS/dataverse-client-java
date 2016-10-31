@@ -9,18 +9,14 @@ import lombok.ToString;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
-public class DatasetSearchHit extends SearchHit {
+public class DatasetItem extends Item {
 
 	private @JsonProperty("global_id") String globalId;
 	private @JsonProperty("published_at") String publishedAt;
 	private String description, citation, citationHtml;
 
 	public String getType() {
-		return "file";
+		return "dataset";
 	}
 
-	@Override
-	DatasetSearchHit asSubtype() {
-		return this;
-	}
 }

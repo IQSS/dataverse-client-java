@@ -1,6 +1,7 @@
 package com.researchspace.dataverse.search.entities;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -25,6 +26,17 @@ public class SearchResults {
 	int start;
 
 	List<Object> spellingAlternatives;
-	List<SearchHit> items;
+	List<Item> items;
+	
+	/**
+	 * Filters a list of SearchHits by their type.
+	 * @param type
+	 * @return
+	 */
+	public List<Item> filterByType (SearchType type) {
+		return items.stream().filter((i)->
+		 i.getType().equalsIgnoreCase(type.name()))
+		.collect(Collectors.toList());
+	}
 
 }

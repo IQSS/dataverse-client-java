@@ -9,7 +9,7 @@ import lombok.ToString;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
-public class DataverseSearchHit extends SearchHit {
+public class DataverseItem extends Item {
 	String identifier;
 	@JsonProperty("published_at")
 	String publishedAt;
@@ -18,8 +18,5 @@ public class DataverseSearchHit extends SearchHit {
 		return "dataverse";
 	}
 
-	@Override
-	DataverseSearchHit asSubtype() {
-		return this;
-	}
+
 }

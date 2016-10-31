@@ -1,6 +1,7 @@
 package com.researchspace.dataverse.http;
 
 import static org.junit.Assert.*;
+import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.test.web.client.match.MockRestRequestMatchers.method;
 
 import java.net.MalformedURLException;
@@ -24,24 +25,13 @@ import com.researchspace.dataverse.api.v1.DataverseConfig;
 import com.researchspace.dataverse.entities.DataverseResponse;
 import com.researchspace.dataverse.search.entities.SearchConfig;
 import com.researchspace.dataverse.search.entities.SearchResults;
+import com.researchspace.dataverse.search.entities.SearchType;
+import com.researchspace.dataverse.testutils.TestFileUtils;
 
 public class SearchOpsMockServerTest  {
-	
-	class SearchOpsTss extends SearchOperationsImplV1 {
-		protected ResponseEntity<DataverseResponse<SearchResults>> performRequest(String url, RestTemplate template,
-				HttpEntity<String> entity, ParameterizedTypeReference<DataverseResponse<SearchResults>> type) {
-			MockRestServiceServer server = MockRestServiceServer.bindTo(template).build();
-			server.expect(ExpectedCount.once(), MockRestRequestMatchers.requestTo("http://anyDataverse.com/api/v1/search?q=trees"))
-			  .andExpect(method(HttpMethod.GET))
-		     .andRespond(MockRestResponseCreators.withSuccess("{ \"status\":\"OK\",\"data\":{\"q\":\"trees\",\"total_count\":4}}",
-		    		 MediaType.APPLICATION_JSON));
-			return super.performRequest(url, template, entity, type);
-		}
-	}
-
+		
 	@Before
 	public void setUp() throws Exception {
-
 	}
 
 
@@ -50,14 +40,62 @@ public class SearchOpsMockServerTest  {
 	}
 
 	@Test
-	public void testSearch() throws MalformedURLException {
+	public void testSimpleSearch() throws MalformedURLException {
 		SearchConfig scfg = SearchConfig.builder().q("trees").build();
-		SearchOpsTss tss = new SearchOpsTss();
+		RestTemplate template = new RestTemplate();
+		MockRestServiceServer server = MockRestServiceServer.bindTo(template).build();
+		server.expect(ExpectedCount.once(), MockRestRequestMatchers.requestTo("http://anyDataverse.com/api/v1/search?q=trees"))
+		 .andExpect(method(HttpMethod.GET))
+	     .andRespond(MockRestResponseCreators.withSuccess(getSimpleQueryResult(),
+	    		 APPLICATION_JSON));
+		SearchOperationsImplV1 tss = setupSearchOps(template);
 		DataverseConfig cfg = new DataverseConfig(new URL("http://anyDataverse.com"), "any", "alias");
 		tss.configure(cfg);
 		DataverseResponse<SearchResults> resp = tss.search(scfg);
 		assertNotNull(resp.getData());
 		assertEquals("trees", resp.getData().getQ());
+	}
+	
+	@Test
+	public void testComplexSearch() throws MalformedURLException {
+		SearchConfig scfg = SearchConfig.builder().q("trees").build();
+		RestTemplate template = new RestTemplate();
+		MockRestServiceServer server = MockRestServiceServer.bindTo(template).build();
+		server.expect(ExpectedCount.once(), MockRestRequestMatchers.requestTo("http://anyDataverse.com/api/v1/search?q=trees"))
+		 .andExpect(method(HttpMethod.GET))
+	     .andRespond(MockRestResponseCreators.withSuccess(getComplexQueryResult(),
+	    		 APPLICATION_JSON));
+		SearchOperationsImplV1 tss = setupSearchOps(template);
+		DataverseConfig cfg = new DataverseConfig(new URL("http://anyDataverse.com"), "any", "alias");
+		tss.configure(cfg);
+		DataverseResponse<SearchResults> resp = tss.search(scfg);
+		assertNotNull(resp.getData());
+		assertEquals("trees", resp.getData().getQ());
+		SearchResults searches = resp.getData();
+		assertEquals(3, searches.getTotalCount());
+		assertEquals(3, searches.getCountInResponse());
+		assertEquals(3, searches.getItems().size());
+		assertEquals(1, searches.filterByType(SearchType.dataset).size());
+		assertEquals(1, searches.filterByType(SearchType.dataverse).size());
+		assertEquals(1, searches.filterByType(SearchType.file).size());
+		
+	}
+
+
+	private SearchOperationsImplV1 setupSearchOps(RestTemplate template) {
+		SearchOperationsImplV1 tss = new SearchOperationsImplV1();
+		tss.setTemplate(template);
+		return tss;
+	}
+
+
+	private String getSimpleQueryResult() {
+		return TestFileUtils.getJsonFromFile("simpleQuery.json");
+	}
+	
+	//gets 3 results: file, dataset, dataverse
+	private String getComplexQueryResult() {
+		return TestFileUtils.getJsonFromFile("multiTypeSearch.json");
 	}
 
 }

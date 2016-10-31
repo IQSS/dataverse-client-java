@@ -29,7 +29,6 @@ public class SearchOperationsImplV1 extends AbstractOpsImplV1 implements SearchO
 	public DataverseResponse<SearchResults> search(SearchConfig cfg) {
 		String url = createV1Url("search");
 		url = urlBuilder.buildSearchUrl(url, cfg);
-		RestTemplate template = createTemplate();
 		HttpHeaders headers = addAPIKeyToHeader();
 		HttpEntity<String> entity = new HttpEntity<String>("", headers);
 		ParameterizedTypeReference<DataverseResponse<SearchResults>> type = new ParameterizedTypeReference<DataverseResponse<SearchResults>>() {
