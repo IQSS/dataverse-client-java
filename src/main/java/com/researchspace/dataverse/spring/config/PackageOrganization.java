@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package com.researchspace.dataverse.spring.config;
 /**
  * /**  Copyright 2016 ResearchSpace
