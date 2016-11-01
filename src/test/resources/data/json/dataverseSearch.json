@@ -1,0 +1,22 @@
+{
+  "status": "OK",
+  "data": {
+    "q": "trees",
+    "total_count": 1,
+    "start": 0,
+    "spelling_alternatives": {
+      "trees": "[tree, three, trend, treat, teest, these, true, teen]"
+    },
+    "items": [
+      {
+        "name": "This is a study to test the truncation of the folder selector in the file tree/So let's see ",
+        "type": "dataverse",
+        "url": "https://demo.dataverse.org/dataverse/trunctest",
+        "image_url": "https://demo.dataverse.org/api/access/dvCardImage/645",
+        "identifier": "trunctest",
+        "published_at": "2015-06-18T14:40:12Z"
+      }
+    ],
+    "count_in_response": 1
+  }
+}

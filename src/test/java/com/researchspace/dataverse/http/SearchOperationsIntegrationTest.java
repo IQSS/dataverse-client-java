@@ -7,6 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.researchspace.dataverse.entities.DataverseResponse;
+import com.researchspace.dataverse.search.entities.Item;
 import com.researchspace.dataverse.search.entities.SearchConfig;
 import com.researchspace.dataverse.search.entities.SearchResults;
 import com.researchspace.dataverse.search.entities.SortBy;
@@ -33,7 +34,7 @@ public class SearchOperationsIntegrationTest extends AbstractIntegrationTest {
 	@Test
 	public void testBasicSearchByTermOnly() {
 		SearchConfig cfg = searchOps.builder().q(FILE_SEARCH_TERM).build();
-		DataverseResponse<SearchResults> results = searchOps.search(cfg);
+		DataverseResponse<SearchResults<Item>> results = searchOps.search(cfg);
 		assertNotNull(results.getMessage(), results.getData());		
 	}
 	
@@ -47,7 +48,7 @@ public class SearchOperationsIntegrationTest extends AbstractIntegrationTest {
 				.start(1)
 				.perPage(3)
 				.build();
-		DataverseResponse<SearchResults> results = searchOps.search(cfg);
+		DataverseResponse<SearchResults<Item>> results = searchOps.search(cfg);
 		assertNotNull(results.getMessage(), results.getData());		
 	}
 

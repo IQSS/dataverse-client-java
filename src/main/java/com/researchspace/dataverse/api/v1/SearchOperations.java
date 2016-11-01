@@ -1,6 +1,10 @@
 package com.researchspace.dataverse.api.v1;
 
 import com.researchspace.dataverse.entities.DataverseResponse;
+import com.researchspace.dataverse.search.entities.DatasetItem;
+import com.researchspace.dataverse.search.entities.DataverseItem;
+import com.researchspace.dataverse.search.entities.FileSearchHit;
+import com.researchspace.dataverse.search.entities.Item;
 import com.researchspace.dataverse.search.entities.SearchConfig;
 import com.researchspace.dataverse.search.entities.SearchConfig.SearchConfigBuilder;
 import com.researchspace.dataverse.search.entities.SearchResults;
@@ -37,6 +41,27 @@ public interface SearchOperations {
 	 * @param cfg A {@link SearchConfig} object generated from a {@link SearchConfigBuilder}
 	 * @return
 	 */
-	DataverseResponse<SearchResults> search(SearchConfig cfg);
+	DataverseResponse<SearchResults<Item>> search(SearchConfig cfg);
+
+	/**
+	 * A search restricted to Dataverse files that returns a typed list of {@link FileSearchHit}.
+	 * @param A {@link SearchConfig} configured to search by SearchType.file only
+	 * @throws IllegalArgumentException if search config is not set to return files only.
+	 */
+	DataverseResponse<SearchResults<FileSearchHit>> searchFiles(SearchConfig cfg);
+
+	/**
+	 * A search restricted to Dataverses that returns a typed list of {@link DataverseItem}.
+	 * @param A {@link SearchConfig} configured to search by SearchType.dataverse only
+	 * @throws IllegalArgumentException if search config is not set to return dataverses only.
+	 */
+	DataverseResponse<SearchResults<DataverseItem>> searchDataverses(SearchConfig cfg);
+
+	/**
+	 * A search restricted to Dataverses that returns a typed list of {@link DatasetItem}.
+	 * @param A {@link SearchConfig} configured to search by SearchType.dataset only
+	 * @throws IllegalArgumentException if search config is not set to return datasets only.
+	 */
+	DataverseResponse<SearchResults<DatasetItem>> searchDatasets(SearchConfig cfg);
 
 }

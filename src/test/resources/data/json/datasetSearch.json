@@ -1,0 +1,28 @@
+{
+  "status": "OK",
+  "data": {
+    "q": "trees",
+    "total_count": 1,
+    "start": 0,
+    "spelling_alternatives": {
+      "trees": "[tree, three, trend, treat, teest, these, true, teen]"
+    },
+    "items": [
+     {
+        "name": "Campus Tree Census 2015",
+        "type": "dataset",
+        "url": "http://dx.doi.org/10.5072/FK2/1FUEXN",
+        "image_url": "https://demo.dataverse.org/api/access/dsCardImage/89",
+        "global_id": "doi:10.5072/FK2/1FUEXN",
+        "description": "This is a test of the system using dummy data.",
+        "published_at": "2015-05-11T21:20:20Z",
+        "citationHtml": "Donald, Jeremy, 2015, \"Campus Tree Census 2015\", <a href=\"http://dx.doi.org/10.5072/FK2/1FUEXN\" target=\"_blank\">doi:10.5072/FK2/1FUEXN</a>, Demo Dataverse, V1",
+        "citation": "Donald, Jeremy, 2015, \"Campus Tree Census 2015\", doi:10.5072/FK2/1FUEXN, Demo Dataverse, V1",
+        "authors": [
+          "Donald, Jeremy"
+        ]
+      }
+    ],
+    "count_in_response": 1
+  }
+}

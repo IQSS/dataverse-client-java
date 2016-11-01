@@ -1,0 +1,27 @@
+{
+  "status": "OK",
+  "data": {
+    "q": "trees",
+    "total_count": 1,
+    "start": 0,
+    "spelling_alternatives": {
+      "trees": "[tree, three, trend, treat, teest, these, true, teen]"
+    },
+    "items": [
+      {
+        "name": "trees.txt",
+        "type": "file",
+        "url": "https://demo.dataverse.org/api/access/datafile/2453",
+        "image_url": "https://demo.dataverse.org/api/access/fileCardImage/2453",
+        "file_id": "2453",
+        "published_at": "2016-04-20T16:37:20Z",
+        "file_type": "Plain Text",
+        "file_content_type": "text/plain",
+        "size_in_bytes": 1723,
+        "md5": "59c981467fd13068236f35c679f85dde",
+        "dataset_citation": "Sacco, Todd, 2016, \"COS test files\", doi:10.5072/FK2/AZ1XRG, Demo Dataverse, DRAFT VERSION"
+      }
+    ],
+    "count_in_response": 1
+  }
+}

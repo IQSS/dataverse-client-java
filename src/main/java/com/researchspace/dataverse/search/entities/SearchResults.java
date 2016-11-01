@@ -16,7 +16,7 @@ import lombok.Data;
  *
  */
 @Data
-public class SearchResults {
+public class SearchResults <T extends Item> {
 
 	String q;
 	@JsonProperty(value = "total_count")
@@ -26,7 +26,7 @@ public class SearchResults {
 	int start;
 
 	List<Object> spellingAlternatives;
-	List<Item> items;
+	List<T> items;
 	
 	/**
 	 * Filters a list of SearchHits by their type.
