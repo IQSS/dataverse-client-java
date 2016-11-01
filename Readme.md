@@ -51,12 +51,27 @@ The best way to explore the bindings currently is by examining unit tests, espec
 Very briefly....
 
 ```java
- DataverseAPI api = new DataverseAPIImpl();
- //must set in serverURL and apiKey first.
- DataverseConfig config = new DataverseConfig(serverURL, apiKey, dataverseAlias);
- api.configure(config);
- // now you can call
- api.getDataverseOperations().getDataverseById(dataverseAlias);
+    DataverseAPI api = new DataverseAPIImpl();
+    //must set in serverURL and apiKey first.
+    DataverseConfig config = new DataverseConfig(serverURL, apiKey, dataverseAlias);
+    api.configure(config);
+    // now you can call
+    api.getDataverseOperations().getDataverseById(dataverseAlias);
+```
+
+Searching uses a builder pattern to build a search query:
+
+```java
+    SearchOperations searchOps = dataverseAPI.getSearchOperations();
+    SearchConfig cfg = searchOps.builder().q(FILE_SEARCH_TERM)
+				.sortBy(SortBy.date)
+				.sortOrder(SortOrder.asc)
+				.showFacets(true)
+				.showRelevance(true)
+				.start(1)
+				.perPage(3)
+				.build();
+    DataverseResponse<SearchResults<Item>> results = searchOps.search(cfg);
 ```
 
 
