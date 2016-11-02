@@ -16,13 +16,13 @@ The Sword client library is included in this project as a jar file as it is not 
 
 This project is built using Gradle. You can build straight away without needing to install anything:
 
-    ./gradlew clean build -x test
+    ./gradlew clean build -x integrationTest
    
-which will compile, and build a jar file.
+which will compile, run unit tests (but not integration tests) and build a jar file.
 
-### Running tests
+### Running integration tests
 
-Many unit tests require a connection to  a Dataverse instance.
+Integration tests require a connection to  a Dataverse instance.
 In order to connect to a Dataverse for running tests, the following configuration is set up in `test.properties`.
 
     dataverseServerURL=https://demo.dataverse.org
@@ -30,11 +30,11 @@ In order to connect to a Dataverse for running tests, the following configuratio
     
 As a minimum, you'll need to specify an API key on the command line to run the tests:
 
-    ./gradlew clean test -DdataverseApiKey=xxx-xxxx-xxxx
+    ./gradlew clean integrationTest -DdataverseApiKey=xxx-xxxx-xxxx
 
 You can also override the Dataverse server URL and Id with your own settings by setting them on the command line:
 
-    ./gradlew clean test  -DdataverseServerURL=https://my.dataverse.org -DdataverseApiKey=xxx-xxx-xxx -DdataverseAlias=MY-DEMO-DATAVERSE
+    ./gradlew clean integrationTest  -DdataverseServerURL=https://my.dataverse.org -DdataverseApiKey=xxx-xxx-xxx -DdataverseAlias=MY-DEMO-DATAVERSE
     
 ### Installing into a Maven repository
 
@@ -46,7 +46,7 @@ to install into a local repository and generate a pom.xml file for calculating d
     
 ## Usage
 
-The best way to explore the bindings currently is by examining unit tests, especially those extending from `AbstractIntegrationTest`.
+The best way to explore the bindings currently is by examining integration tests, especially those extending from `AbstractIntegrationTest`.
 
 Very briefly....
 

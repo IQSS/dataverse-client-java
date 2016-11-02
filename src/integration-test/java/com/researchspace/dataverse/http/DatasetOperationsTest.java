@@ -91,6 +91,6 @@ public class DatasetOperationsTest extends AbstractIntegrationTest {
 	}
 
 	private File getTestFile() {
-		return new File("src/test/resources/ResizablePng.zip");
+		return new File("src/integration-test/resources/ResizablePng.zip");
 	}
 }
