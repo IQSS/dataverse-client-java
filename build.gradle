@@ -1,7 +1,7 @@
 apply plugin: 'java'
 // enables 'install' task into repository
 apply plugin: 'maven'
-groupId ='com.researchspace'
+group =com.researchspace
 sourceCompatibility = 1.8
 version = '0.1.1'
 def springVersion='4.3.0.RELEASE'
