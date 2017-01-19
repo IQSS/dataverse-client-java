@@ -46,6 +46,7 @@ public interface DatasetOperations {
 	 * @return A {@link DatasetVersion}
 	 */
 	DatasetVersion updateDataset(DatasetFacade facade, Identifier id);
+
     
 	/**
 	 * Retrieves a {@link Dataset} based on its Id.
