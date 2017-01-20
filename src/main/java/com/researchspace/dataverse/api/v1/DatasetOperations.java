@@ -4,6 +4,7 @@
 package com.researchspace.dataverse.api.v1;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 import com.researchspace.dataverse.entities.DataSetMetadataBlock;
@@ -11,6 +12,7 @@ import com.researchspace.dataverse.entities.Dataset;
 import com.researchspace.dataverse.entities.DatasetVersion;
 import com.researchspace.dataverse.entities.DataverseResponse;
 import com.researchspace.dataverse.entities.DvMessage;
+import com.researchspace.dataverse.entities.Files;
 import com.researchspace.dataverse.entities.Identifier;
 import com.researchspace.dataverse.entities.PublishedDataset;
 import com.researchspace.dataverse.entities.Version;
@@ -67,7 +69,16 @@ public interface DatasetOperations {
 	 * @param doi The DOI of the  Dataset
 	 * @param file The file to add to the DataSet
 	 */
-	void uploadFile(String doi, File file);
+	void uploadFile(Dataset ds, File file);
+	
+	/**
+	 * Uploads via native API , requires Dataverse 4.6.1 or later
+	 * @param ds
+	 * @param file
+	 * @return a list of uploaded files
+	 * @throws IOException
+	 */
+	Files nativeUpload(Dataset ds, File file) throws IOException;
 
 	/**
 	 * Deletes a {@link Dataset}  

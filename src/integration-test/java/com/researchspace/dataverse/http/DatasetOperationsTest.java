@@ -4,7 +4,10 @@
 package com.researchspace.dataverse.http;
 
 import static com.researchspace.dataverse.entities.facade.DatasetTestFactory.createFacade;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 import java.io.File;
 import java.io.IOException;
@@ -21,6 +24,8 @@ import com.researchspace.dataverse.entities.DatasetVersion;
 import com.researchspace.dataverse.entities.Dataverse;
 import com.researchspace.dataverse.entities.DataverseObject;
 import com.researchspace.dataverse.entities.DataverseResponse;
+import com.researchspace.dataverse.entities.DvFile;
+import com.researchspace.dataverse.entities.Files;
 import com.researchspace.dataverse.entities.Identifier;
 import com.researchspace.dataverse.entities.PublishedDataset;
 import com.researchspace.dataverse.entities.Version;
@@ -71,8 +76,10 @@ public class DatasetOperationsTest extends AbstractIntegrationTest {
 		Identifier datasetId = dataverseOps.createDataset(facade, newDV.getAlias());
 		assertNotNull(datasetId.getId());
 		Dataset ds = datasetOps.getDataset(datasetId);
-		String doiId = ds.getDoiId().get();
-		datasetOps.uploadFile(doiId, getTestFile());
+		Files files = datasetOps.nativeUpload(ds, getTestFile());
+		assertTrue(files.getFiles().size() > 0);
+		DvFile file = files.getFiles().get(0);
+		assertNotNull(file.getDataFile().getId());
 		
 		//publishing will fail, as parent DV is not published
 		DataverseResponse<PublishedDataset> response = datasetOps.publishDataset (datasetId, Version.MAJOR);

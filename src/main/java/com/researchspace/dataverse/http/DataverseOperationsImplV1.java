@@ -13,14 +13,20 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestClientException;
-import org.springframework.web.client.RestTemplate;
 import org.swordapp.client.ProtocolViolationException;
 import org.swordapp.client.SWORDClientException;
 import org.swordapp.client.SWORDError;
@@ -37,6 +43,7 @@ import com.researchspace.dataverse.entities.Dataverse;
 import com.researchspace.dataverse.entities.DataverseObject;
 import com.researchspace.dataverse.entities.DataverseResponse;
 import com.researchspace.dataverse.entities.DvMessage;
+import com.researchspace.dataverse.entities.Files;
 import com.researchspace.dataverse.entities.Identifier;
 import com.researchspace.dataverse.entities.MetadataBlock;
 import com.researchspace.dataverse.entities.PublishedDataset;
@@ -193,12 +200,13 @@ public class DataverseOperationsImplV1 extends AbstractOpsImplV1 implements Data
 	 * @see com.researchspace.dataverse.http.DataverseAPI#uploadFile(java.lang.String, java.io.File)
 	 */
 	@Override
-	public void uploadFile (String doi, File file) {
+	public void uploadFile (Dataset ds, File file) {
+		
 		FileUploader uploader = new FileUploader();
 		try {
-			uploader.deposit(file, apiKey, new URI(serverURL), doi);
+			uploader.deposit(file, apiKey, new URI(serverURL), ds.getDoiId().get());
 		} catch (IOException | SWORDClientException  | ProtocolViolationException | URISyntaxException e) {		
-			log.error("Couldn't upload file {} with doi {} : {}", file.getName(), doi.toString(), e.getMessage());
+			log.error("Couldn't upload file {} with doi {} : {}", file.getName(),  ds.getDoiId().get(), e.getMessage());
 			throw new RestClientException(e.getMessage());
 		} catch (SWORDError error) {
 			if (!StringUtils.isEmpty(error.getErrorBody())) {
@@ -206,6 +214,26 @@ public class DataverseOperationsImplV1 extends AbstractOpsImplV1 implements Data
 				throw new RestClientException(error.getErrorBody());
 			}
 		}
+	}
+	@Override
+	public Files nativeUpload(Dataset ds, File file) throws IOException {
+		String url = createV1Url("datasets", ds.getId() + "", "add");
+
+		MultiValueMap<String, Object> multipartMap = new LinkedMultiValueMap<>();
+		multipartMap.add("file", new FileSystemResource(file.getAbsolutePath()));
+
+		HttpHeaders headers = new HttpHeaders();
+		headers.add(apiHeader, apiKey);
+		headers.setContentType(MediaType.MULTIPART_FORM_DATA);
+
+		HttpEntity<MultiValueMap<String, Object>> request = new HttpEntity<MultiValueMap<String, Object>>(multipartMap,
+				headers);
+		ParameterizedTypeReference<DataverseResponse<Files>> type = new ParameterizedTypeReference<DataverseResponse<Files>>() {
+		};
+		ResponseEntity<DataverseResponse<Files>> resp = template.exchange(url, HttpMethod.POST, request, type);
+
+		handleError(resp);
+		return resp.getBody().getData();
 	}
 
 	/* (non-Javadoc)
@@ -226,6 +254,13 @@ public class DataverseOperationsImplV1 extends AbstractOpsImplV1 implements Data
 	private HttpEntity<String> createHttpEntity(String body) {
 		HttpHeaders headers = addAPIKeyToHeader();
 		HttpEntity<String> entity = new HttpEntity<String>(body, headers);
+		return entity;
+	}
+	
+	private HttpEntity<byte[]> createHttpByteEntity(byte[] body) {
+		HttpHeaders headers = addAPIKeyToHeader();
+		headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+		HttpEntity<byte[]> entity = new HttpEntity<byte[]>(body, headers);
 		return entity;
 	}
 

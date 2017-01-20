@@ -3,6 +3,8 @@
  */
 package com.researchspace.dataverse.http;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.Arrays;
 
 import org.apache.commons.lang.StringUtils;
@@ -102,6 +104,11 @@ public abstract class AbstractOpsImplV1 {
 		headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
 		headers.add(apiHeader, apiKey);
 		return headers;
+	}
+
+	void nativeUpload(String doi, File file) throws IOException {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
