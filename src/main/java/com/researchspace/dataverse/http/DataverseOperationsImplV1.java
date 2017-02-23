@@ -13,11 +13,8 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 
-import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.core.io.ByteArrayResource;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -69,10 +66,8 @@ limitations under the License.
 
 */
 @Slf4j
-public class DataverseOperationsImplV1 extends AbstractOpsImplV1 implements DatasetOperations, MetadataOperations, InfoOperations, DataverseOperations {
-
-	
-
+public class DataverseOperationsImplV1 extends AbstractOpsImplV1 
+     implements DatasetOperations, MetadataOperations, InfoOperations, DataverseOperations {
 
 	/* (non-Javadoc)
 	 * @see com.researchspace.dataverse.http.DataverseAPI#getDataverseById(java.lang.String)
@@ -89,21 +84,17 @@ public class DataverseOperationsImplV1 extends AbstractOpsImplV1 implements Data
 		log.debug(resp.getBody().toString());
 		return resp.getBody().getData();
 	}
-
-	
 	
 	@Override
 	public DataverseResponse<DvMessage> deleteDataverse(String dataverseAlias) {
 		String url = createV1Url("dataverses", dataverseAlias);
 		log.debug(url);
-		
 		HttpEntity<String> entity = createHttpEntity("");
 		ParameterizedTypeReference<DataverseResponse<DvMessage>> type =
 				new ParameterizedTypeReference<DataverseResponse<DvMessage>>() {};
 		ResponseEntity<DataverseResponse<DvMessage>> resp = template.exchange(url, HttpMethod.DELETE, entity, type);
 		log.debug(resp.getBody().toString());
-		return resp.getBody();
-		
+		return resp.getBody();		
 	}
 	
 	@Override
@@ -122,8 +113,7 @@ public class DataverseOperationsImplV1 extends AbstractOpsImplV1 implements Data
 		ResponseEntity<DataverseResponse<Dataverse>> resp = template.exchange(url, HttpMethod.POST, entity, type);
 		log.debug(resp.getBody().toString());
 		handleError(resp);
-		return resp.getBody();
-		
+		return resp.getBody();		
 	}
 
 	/* (non-Javadoc)
@@ -152,8 +142,7 @@ public class DataverseOperationsImplV1 extends AbstractOpsImplV1 implements Data
 		String url = createV1Url("datasets",  id.getId() +"", "versions",":draft");
 		
 		Dataset ds = new DatasetBuilder().build(facade);
-		String json = marshalDataset(ds.getDatasetVersion());
-		
+		String json = marshalDataset(ds.getDatasetVersion());	
 		
 		HttpEntity<String> entity = createHttpEntity(json);
 		ParameterizedTypeReference<DataverseResponse<DatasetVersion>> type = new ParameterizedTypeReference<DataverseResponse<DatasetVersion>>() {
@@ -161,8 +150,7 @@ public class DataverseOperationsImplV1 extends AbstractOpsImplV1 implements Data
 		ResponseEntity<DataverseResponse<DatasetVersion>> resp = template.exchange(url, HttpMethod.PUT, entity,type);
 		
 		handleError(resp);
-		return resp.getBody().getData();
-		
+		return resp.getBody().getData();		
 	}
 	
 	/* (non-Javadoc)
@@ -200,8 +188,7 @@ public class DataverseOperationsImplV1 extends AbstractOpsImplV1 implements Data
 	 * @see com.researchspace.dataverse.http.DataverseAPI#uploadFile(java.lang.String, java.io.File)
 	 */
 	@Override
-	public void uploadFile (Dataset ds, File file) {
-		
+	public void uploadFile (Dataset ds, File file) {	
 		FileUploader uploader = new FileUploader();
 		try {
 			uploader.deposit(file, apiKey, new URI(serverURL), ds.getDoiId().get());
@@ -215,6 +202,7 @@ public class DataverseOperationsImplV1 extends AbstractOpsImplV1 implements Data
 			}
 		}
 	}
+	
 	@Override
 	public Files nativeUpload(Dataset ds, File file) throws IOException {
 		String url = createV1Url("datasets", ds.getId() + "", "add");
@@ -241,8 +229,7 @@ public class DataverseOperationsImplV1 extends AbstractOpsImplV1 implements Data
 	 */
 	@Override
 	public DvMessage deleteDataset(Identifier dsIdentifier) {
-		String url = createV1Url("datasets",  dsIdentifier.getId() +"" );
-		
+		String url = createV1Url("datasets",  dsIdentifier.getId() +"" );		
 		HttpEntity<String> entity = createHttpEntity("");
 		ParameterizedTypeReference<DataverseResponse<DvMessage>> type = new ParameterizedTypeReference<DataverseResponse<DvMessage>>() {
 		};
@@ -286,8 +273,7 @@ public class DataverseOperationsImplV1 extends AbstractOpsImplV1 implements Data
 	 */
 	@Override
 	public List<DataverseObject> getDataverseContents(String dataverseAlias) {
-		String url = createV1Url("dataverses", dataverseAlias, "contents" );
-		
+		String url = createV1Url("dataverses", dataverseAlias, "contents" );	
 		HttpEntity<String> entity = createHttpEntity("");
 		ParameterizedTypeReference<DataverseResponse<List<DataverseObject>>> type = new ParameterizedTypeReference<DataverseResponse<List<DataverseObject>>>() {
 		};
@@ -308,8 +294,7 @@ public class DataverseOperationsImplV1 extends AbstractOpsImplV1 implements Data
 	 */
 	@Override
 	public List<MetadataBlock> getMetadataBlockInfo() {
-		String url = createV1Url("metadatablocks" );
-		
+		String url = createV1Url("metadatablocks" );		
 		HttpHeaders headers = addAPIKeyToHeader();
 		HttpEntity<String> entity = new HttpEntity<String>("parameters", headers);
 		ParameterizedTypeReference<DataverseResponse<List<MetadataBlock>>> type = new ParameterizedTypeReference<DataverseResponse<List<MetadataBlock>>>() {
@@ -352,8 +337,7 @@ public class DataverseOperationsImplV1 extends AbstractOpsImplV1 implements Data
 		};
 		ResponseEntity<DataverseResponse<PublishedDataset>> resp = template.exchange(url, HttpMethod.GET, entity, type);
 		log.debug(resp.getBody().toString());
-    	return resp.getBody();
-		
+    	return resp.getBody();	
 	}
 
 	@Override
@@ -364,8 +348,7 @@ public class DataverseOperationsImplV1 extends AbstractOpsImplV1 implements Data
 		};
 		ResponseEntity<DataverseResponse<Dataverse>> resp = template.exchange(url, HttpMethod.POST, entity, type);
 		log.debug(resp.getBody().toString());
-		return resp.getBody();
-		
+		return resp.getBody();		
 	}
 
 	@Override
@@ -376,8 +359,7 @@ public class DataverseOperationsImplV1 extends AbstractOpsImplV1 implements Data
 		};
 		ResponseEntity<DataverseResponse<DvMessage>> resp = template.exchange(url, HttpMethod.GET, entity, type);
 		log.debug(resp.getBody().toString());
-		return resp.getBody().getData();
-		
+		return resp.getBody().getData();		
 	}
 
 	@Override
