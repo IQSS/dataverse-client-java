@@ -42,7 +42,7 @@ dependencies {
     compile 'commons-lang:commons-lang:2.6'
     compile 'org.slf4j:slf4j-api:1.7.21'
     
-    //for SWORD-API. Sword is included locally in this project
+    //for SWORD-API. 
     compile 'org.swordapp:sword2-client:0.9.3'
     compile 'org.apache.abdera:abdera-client:1.1.1'
  
