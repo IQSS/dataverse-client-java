@@ -91,10 +91,4 @@ public class AbstractIntegrationTest extends AbstractJUnit4SpringContextTests {
 		Validate.notEmpty(serverURL,
 				"Dataverse server URL must be set via command line -DdataverseServerURL option or in test.properties)");
 	}
-
-	@Test
-	public void test() {
-		assertTrue(1 == 1);// stop complaints about no methods
-	}
-
 }
