@@ -315,7 +315,7 @@ public class DataverseOperationsImplV1 extends AbstractOpsImplV1 implements Data
 		HttpEntity<String> entity = createHttpEntity("");
 		ParameterizedTypeReference<DataverseResponse<PublishedDataset>> type = new ParameterizedTypeReference<DataverseResponse<PublishedDataset>>() {
 		};
-		ResponseEntity<DataverseResponse<PublishedDataset>> resp = template.exchange(url, HttpMethod.GET, entity, type);
+		ResponseEntity<DataverseResponse<PublishedDataset>> resp = template.exchange(url, HttpMethod.POST, entity, type);
 		log.debug(resp.getBody().toString());
     	return resp.getBody();
 		
