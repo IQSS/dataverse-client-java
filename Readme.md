@@ -94,19 +94,19 @@ Please make sure tests pass before committing, and to add new tests for new addi
 API | Endpoint | URL | Implemented ?| Notes 
 ------|----------|-----|--------------|-------
 Native|Dataverses | POST `api/dataverses/$id` | Y| - 
--     | -         | GET `api/dataverses/$id` | Y | -
--     | -         | GET `api/dataverses/$id/contents` | Y | -
--     | -         | DELETE `api/dataverses/$id` | Y | -
--     | -         | POST `api/dataverses/$id/datasets` | Y | -
--     | -         | POST `api/dataverses/$identifier/actions/:publish` | Y | -
+| -   | -         | GET `api/dataverses/$id` | Y | -
+| -   | -         | GET `api/dataverses/$id/contents` | Y | -
+| -   | -         | DELETE `api/dataverses/$id` | Y | -
+| -   | -         | POST `api/dataverses/$id/datasets` | Y | -
+| -   | -         | POST `api/dataverses/$identifier/actions/:publish` | Y | -
 Native|Datasets | POST `api/dataverses/$id` | Y| -
--     | -         | GET `api/datasets/$id` | Y | -
--     | -         | DELETE `api/datasets/$id` | Y | -
--     | -         | GET `api/datasets/$id/versions` | Y | -
--     | -         | GET `PUT api/datasets/$id/versions/:draft?` | Y | -
--     | -         | POST `PUT api/datasets/$id/actions/:publish?type=$type` | Y | -
+| -   | -         | GET `api/datasets/$id` | Y | -
+| -   | -         | DELETE `api/datasets/$id` | Y | -
+| -   | -         | GET `api/datasets/$id/versions` | Y | -
+| -   | -         | GET `PUT api/datasets/$id/versions/:draft?` | Y | -
+| -   | -         | POST `PUT api/datasets/$id/actions/:publish?type=$type` | Y | -
 Native|MetadataBlocks | GET ` api/metadatablocks` | Y| -
--     | -         | GET ` api/metadatablocks/$identifier` | Y| -
+| -   | -         | GET ` api/metadatablocks/$identifier` | Y| -
 Search | - | GET `api/search` | In progress | All query params supported, optional data not returned yet.
 Sword | Upload file | 'Add files to a dataset with a zip file' | Y | -
 
