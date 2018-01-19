@@ -3,6 +3,7 @@
  */
 package com.researchspace.dataverse.http;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import org.apache.commons.lang.StringUtils;
@@ -30,7 +31,7 @@ Copyright 2016 ResearchSpace
 */
 public class InfoOperationsTest extends AbstractIntegrationTest {
 
-	private static final String NEW_TEXT = "Do you want to publish";
+	private static final String PUBLISH_TEXT = "Do you want to publish";
 
 	@Before
 	public void setUp() throws Exception {
@@ -42,13 +43,11 @@ public class InfoOperationsTest extends AbstractIntegrationTest {
 	}
 
 	@Test
-	public void testGetSetDatasetPublishPopupCustomText() {
+	public void testGetDatasetPublishPopupCustomText() {
 		DvMessage originalText = infoOps.getDatasetPublishPopupCustomText();
 		assertTrue("Message text was empty", !StringUtils.isEmpty(originalText.getMessage()));
-		DataverseResponse<Object> response = infoOps.setDatasetPublishPopupCustomText(NEW_TEXT);
-		assertTrue("New text was not set", response.getData().toString().contains(NEW_TEXT));
-	    response = infoOps.setDatasetPublishPopupCustomText(originalText.getMessage());
-	    assertTrue("Originl text was not restored", response.getData().toString().contains(originalText.getMessage()));		
+		assertEquals(PUBLISH_TEXT, originalText.getMessage());
+			
 	}
 
 }

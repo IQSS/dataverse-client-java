@@ -256,6 +256,10 @@ public class DataverseOperationsImplV1 extends AbstractOpsImplV1 implements Data
 		HttpEntity<String> entity = createHttpEntity("");
 		ParameterizedTypeReference<DataverseResponse<List<DataverseObject>>> type = new ParameterizedTypeReference<DataverseResponse<List<DataverseObject>>>() {
 		};
+		ParameterizedTypeReference<String> type2 = new ParameterizedTypeReference<String>() {
+		};
+		ResponseEntity<String> resp2 = template.exchange(url, HttpMethod.GET, entity,
+				type2);
 		ResponseEntity<DataverseResponse<List<DataverseObject>>> resp = template.exchange(url, HttpMethod.GET, entity,
 				type);
 		handleError(resp);
@@ -335,7 +339,7 @@ public class DataverseOperationsImplV1 extends AbstractOpsImplV1 implements Data
 
 	@Override
 	public DvMessage getDatasetPublishPopupCustomText() {
-		String url = createAdminUrl("admin", "settings", ":DatasetPublishPopupCustomText");		
+		String url = createAdminUrl("info", "settings", ":DatasetPublishPopupCustomText");		
 		HttpEntity<String> entity = createHttpEntity("");
 		ParameterizedTypeReference<DataverseResponse<DvMessage>> type = new ParameterizedTypeReference<DataverseResponse<DvMessage>>() {
 		};

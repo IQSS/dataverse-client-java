@@ -36,6 +36,9 @@ public interface InfoOperations {
 	
 	DvMessage getDatasetPublishPopupCustomText () ;
 	
+	/**
+	 * Deprecated, does not work for client calls from non-Localhost URLs from Dataverse 4.8 onwards 
+    */
 	DataverseResponse<Object> setDatasetPublishPopupCustomText (String text) ;
 
 }
