@@ -31,7 +31,7 @@ Copyright 2016 ResearchSpace
 */
 public class InfoOperationsTest extends AbstractIntegrationTest {
 
-	private static final String PUBLISH_TEXT = "Do you want to publish";
+	private static final String PUBLISH_TEXT = "By default datasets are published with the";
 
 	@Before
 	public void setUp() throws Exception {
@@ -46,7 +46,7 @@ public class InfoOperationsTest extends AbstractIntegrationTest {
 	public void testGetDatasetPublishPopupCustomText() {
 		DvMessage originalText = infoOps.getDatasetPublishPopupCustomText();
 		assertTrue("Message text was empty", !StringUtils.isEmpty(originalText.getMessage()));
-		assertEquals(PUBLISH_TEXT, originalText.getMessage());
+		assertTrue(originalText.getMessage().contains(PUBLISH_TEXT));
 			
 	}
 

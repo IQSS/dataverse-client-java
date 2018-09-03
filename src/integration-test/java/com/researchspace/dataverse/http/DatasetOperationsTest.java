@@ -56,7 +56,7 @@ public class DatasetOperationsTest extends AbstractIntegrationTest {
 		List<DataverseObject> results = dataverseOps.getDataverseContents(dataverseAlias);
 		assertTrue(results.size() > 0);
 		URL url = results.get(0).getPersistentUrl();
-		assertEquals("http", url.getProtocol());
+		assertEquals("https", url.getProtocol());
 	}
 
 	@Test
