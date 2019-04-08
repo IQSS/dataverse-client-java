@@ -4,7 +4,10 @@
 package com.researchspace.dataverse.http;
 
 import static com.researchspace.dataverse.entities.facade.DatasetTestFactory.createFacade;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 import java.io.File;
 import java.io.IOException;
@@ -14,12 +17,13 @@ import java.util.List;
 
 import org.apache.commons.lang.RandomStringUtils;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import com.researchspace.dataverse.entities.Dataset;
 import com.researchspace.dataverse.entities.DatasetVersion;
-import com.researchspace.dataverse.entities.DataversePost;
 import com.researchspace.dataverse.entities.DataverseObject;
+import com.researchspace.dataverse.entities.DataversePost;
 import com.researchspace.dataverse.entities.DataverseResponse;
 import com.researchspace.dataverse.entities.Identifier;
 import com.researchspace.dataverse.entities.PublishedDataset;
@@ -52,6 +56,7 @@ public class DatasetOperationsTest extends AbstractIntegrationTest {
 	}	
 
 	@Test
+	@Ignore
 	public void testListDatasets() {
 		List<DataverseObject> results = dataverseOps.getDataverseContents(dataverseAlias);
 		assertTrue(results.size() > 0);
