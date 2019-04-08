@@ -6,7 +6,8 @@ package com.researchspace.dataverse.api.v1;
 import java.io.IOException;
 import java.util.List;
 
-import com.researchspace.dataverse.entities.Dataverse;
+import com.researchspace.dataverse.entities.DataversePost;
+import com.researchspace.dataverse.entities.DataverseGet;
 import com.researchspace.dataverse.entities.DataverseObject;
 import com.researchspace.dataverse.entities.DataverseResponse;
 import com.researchspace.dataverse.entities.DvMessage;
@@ -34,7 +35,7 @@ public interface DataverseOperations {
 	
 	
 	/**
-	 * Create a new dataverse. The supplied {@link Dataverse} must contain as a minimum:
+	 * Create a new dataverse. The supplied {@link DataversePost} must contain as a minimum:
 	 *  <ul>
 	 *   <li> alias
 	 *   <li> Name
@@ -43,7 +44,7 @@ public interface DataverseOperations {
 	 *  @param parentDataverseAlias The owning Dataverse
 	 *  @throws IllegalArgumentException if any mandatory fields are <code>null</code>
 	 */
-	public DataverseResponse<Dataverse> createNewDataverse (String parentDataverseAlias, Dataverse toCreate);
+	public DataverseResponse<DataversePost> createNewDataverse (String parentDataverseAlias, DataversePost toCreate);
 	
 	/**
 	 * Creates a new Dataset within the specified dataverse.
@@ -66,7 +67,7 @@ public interface DataverseOperations {
 	 * @param dataverseAlias
 	 * @return
 	 */
-	Dataverse getDataverseById(String dataverseAlias);
+	DataverseGet getDataverseById(String dataverseAlias);
 
 	/**
 	 * Deletes a dataverse
@@ -79,8 +80,8 @@ public interface DataverseOperations {
 	/**
 	 * Publishes the specified Datavers
 	 * @param dataverseAlias numeric or unique identifier of the dataverse
-	 * @return The updated {@link Dataverse} object
+	 * @return The updated {@link DataversePost} object
 	 */
-	DataverseResponse<Dataverse> publishDataverse(String dataverseAlias);
+	DataverseResponse<DataversePost> publishDataverse(String dataverseAlias);
 
 }

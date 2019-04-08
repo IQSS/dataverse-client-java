@@ -14,8 +14,9 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.researchspace.dataverse.entities.Dataverse;
 import com.researchspace.dataverse.entities.DataverseContacts;
+import com.researchspace.dataverse.entities.DataverseGet;
+import com.researchspace.dataverse.entities.DataversePost;
 import com.researchspace.dataverse.entities.DataverseResponse;
 import com.researchspace.dataverse.entities.DvMessage;
 /** <pre>
@@ -50,8 +51,8 @@ public class DataverseOperationsTest extends AbstractIntegrationTest {
 	@Test
 	public void createPublishAndDeleteNewDataverse(){
 		String dvName = RandomStringUtils.randomAlphabetic(10);
-		Dataverse dv = createADataverse(dvName);
-		DataverseResponse<Dataverse>  success = dataverseOps.createNewDataverse(dataverseAlias, dv);
+		DataversePost dv = createADataverse(dvName);
+		DataverseResponse<DataversePost>  success = dataverseOps.createNewDataverse(dataverseAlias, dv);
 		assertNotNull(success.getData());
 		assertNotNull(success.getData().getId());
 		
@@ -62,8 +63,8 @@ public class DataverseOperationsTest extends AbstractIntegrationTest {
 		assertNotNull(deleted.getData());	
 	}
 
-	static Dataverse createADataverse(String dvName) {
-		Dataverse dv = new Dataverse();
+	static DataversePost createADataverse(String dvName) {
+		DataversePost dv = new DataversePost();
 		dv.setAlias(dvName);
 		dv.setName("Test Instance " + dvName);
 		dv.setDataverseContacts(Arrays.asList(new DataverseContacts("a@b.com")));
@@ -80,21 +81,21 @@ public class DataverseOperationsTest extends AbstractIntegrationTest {
 	@Test(expected=IllegalArgumentException.class)
 	public void createDataverseValidation () {		
 		String dvName = RandomStringUtils.randomAlphabetic(10);
-		Dataverse dv = createADataverse(dvName);
+		DataversePost dv = createADataverse(dvName);
 		dv.setAlias("");
 		dataverseOps.createNewDataverse("rspace", dv);
 	}
 	@Test(expected=IllegalArgumentException.class)
 	public void createDataverseValidationContactREquired () {		
 		String dvName = RandomStringUtils.randomAlphabetic(10);
-		Dataverse dv = createADataverse(dvName);
+		DataversePost dv = createADataverse(dvName);
 		dv.setDataverseContacts(null);
 		dataverseOps.createNewDataverse("rspace", dv);
 	}
 
 	@Test
 	public void testListDataverses() {
-		Dataverse dv = dataverseOps.getDataverseById(dataverseAlias);
+		DataverseGet dv = dataverseOps.getDataverseById(dataverseAlias);
 		assertNotNull(dv.getId());
 	}
 }

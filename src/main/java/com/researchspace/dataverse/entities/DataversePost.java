@@ -23,7 +23,7 @@ Copyright 2016 ResearchSpace
 */
 @Data
 @JsonFormat
-public class Dataverse {
+public class DataversePost {
 	private String id;
 	private String alias;
 	private String name;
