@@ -23,7 +23,7 @@ import org.junit.Test;
 import com.researchspace.dataverse.entities.Dataset;
 import com.researchspace.dataverse.entities.DatasetVersion;
 import com.researchspace.dataverse.entities.DataverseObject;
-import com.researchspace.dataverse.entities.DataversePost;
+import com.researchspace.dataverse.entities.Dataverse;
 import com.researchspace.dataverse.entities.DataverseResponse;
 import com.researchspace.dataverse.entities.Identifier;
 import com.researchspace.dataverse.entities.PublishedDataset;
@@ -69,8 +69,8 @@ public class DatasetOperationsTest extends AbstractIntegrationTest {
 		DatasetFacade facade = createFacade();
 		//create a new, unpublished Dataverse
 		String newAlias = RandomStringUtils.randomAlphabetic(10);
-    	DataversePost toCreate = DataverseOperationsTest.createADataverse(newAlias);
-    	DataversePost newDV = dataverseOps.createNewDataverse(dataverseAlias, toCreate).getData();
+    	Dataverse toCreate = DataverseOperationsTest.createADataverse(newAlias);
+    	Dataverse newDV = dataverseOps.createNewDataverse(dataverseAlias, toCreate).getData();
 		
 		// create Dataset in child dataverse
 		Identifier datasetId = dataverseOps.createDataset(facade, newDV.getAlias());

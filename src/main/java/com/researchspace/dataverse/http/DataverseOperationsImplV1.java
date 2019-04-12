@@ -32,9 +32,8 @@ import com.researchspace.dataverse.api.v1.InfoOperations;
 import com.researchspace.dataverse.api.v1.MetadataOperations;
 import com.researchspace.dataverse.entities.Dataset;
 import com.researchspace.dataverse.entities.DatasetVersion;
-import com.researchspace.dataverse.entities.DataverseGet;
+import com.researchspace.dataverse.entities.Dataverse;
 import com.researchspace.dataverse.entities.DataverseObject;
-import com.researchspace.dataverse.entities.DataversePost;
 import com.researchspace.dataverse.entities.DataverseResponse;
 import com.researchspace.dataverse.entities.DvMessage;
 import com.researchspace.dataverse.entities.Identifier;
@@ -71,14 +70,14 @@ public class DataverseOperationsImplV1 extends AbstractOpsImplV1 implements Data
 	 * @see com.researchspace.dataverse.http.DataverseAPI#getDataverseById(java.lang.String)
 	 */
 	@Override
-	public DataverseGet getDataverseById(String dataverseAlias) {
+	public Dataverse getDataverseById(String dataverseAlias) {
 		String url = createV1Url("dataverses" , dataverseAlias);
 		log.debug(url);
 		
 		HttpEntity<String> entity = createHttpEntity("");
-		ParameterizedTypeReference<DataverseResponse<DataverseGet>> type = new ParameterizedTypeReference<DataverseResponse<DataverseGet>>() {
+		ParameterizedTypeReference<DataverseResponse<Dataverse>> type = new ParameterizedTypeReference<DataverseResponse<Dataverse>>() {
 		};
-		ResponseEntity<DataverseResponse<DataverseGet>> resp = template.exchange(url, HttpMethod.GET, entity, type);
+		ResponseEntity<DataverseResponse<Dataverse>> resp = template.exchange(url, HttpMethod.GET, entity, type);
 		log.debug(resp.getBody().toString());
 		return resp.getBody().getData();
 	}
@@ -100,7 +99,7 @@ public class DataverseOperationsImplV1 extends AbstractOpsImplV1 implements Data
 	}
 	
 	@Override
-	public DataverseResponse<DataversePost> createNewDataverse(String parentDv, DataversePost toCreate) {
+	public DataverseResponse<Dataverse> createNewDataverse(String parentDv, Dataverse toCreate) {
 		isTrue(!isEmpty(toCreate.getAlias()), "Alias must be specified");
 		isTrue(!isEmpty(toCreate.getName()), "Name must be specified");
 		noNullElements(toCreate.getDataverseContacts(), "At least 1 email contact must be provided"); 
@@ -110,9 +109,9 @@ public class DataverseOperationsImplV1 extends AbstractOpsImplV1 implements Data
 		
 		String json = marshalDataset(toCreate);
 		HttpEntity<String> entity = createHttpEntity(json);
-		ParameterizedTypeReference<DataverseResponse<DataversePost>> type = new ParameterizedTypeReference<DataverseResponse<DataversePost>>() {
+		ParameterizedTypeReference<DataverseResponse<Dataverse>> type = new ParameterizedTypeReference<DataverseResponse<Dataverse>>() {
 		};
-		ResponseEntity<DataverseResponse<DataversePost>> resp = template.exchange(url, HttpMethod.POST, entity, type);
+		ResponseEntity<DataverseResponse<Dataverse>> resp = template.exchange(url, HttpMethod.POST, entity, type);
 		log.debug(resp.getBody().toString());
 		handleError(resp);
 		return resp.getBody();
@@ -326,12 +325,12 @@ public class DataverseOperationsImplV1 extends AbstractOpsImplV1 implements Data
 	}
 
 	@Override
-	public DataverseResponse<DataversePost> publishDataverse(String dvName) {
+	public DataverseResponse<Dataverse> publishDataverse(String dvName) {
 		String url = createV1Url("dataverses", dvName, "actions", ":publish");		
 		HttpEntity<String> entity = createHttpEntity("");
-		ParameterizedTypeReference<DataverseResponse<DataversePost>> type = new ParameterizedTypeReference<DataverseResponse<DataversePost>>() {
+		ParameterizedTypeReference<DataverseResponse<Dataverse>> type = new ParameterizedTypeReference<DataverseResponse<Dataverse>>() {
 		};
-		ResponseEntity<DataverseResponse<DataversePost>> resp = template.exchange(url, HttpMethod.POST, entity, type);
+		ResponseEntity<DataverseResponse<Dataverse>> resp = template.exchange(url, HttpMethod.POST, entity, type);
 		log.debug(resp.getBody().toString());
 		return resp.getBody();
 		
