@@ -3,15 +3,14 @@
  */
 package com.researchspace.dataverse.http;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import org.apache.commons.lang.StringUtils;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
-import com.researchspace.dataverse.entities.DataverseResponse;
 import com.researchspace.dataverse.entities.DvMessage;
 /** <pre>
 Copyright 2016 ResearchSpace
@@ -43,6 +42,7 @@ public class InfoOperationsTest extends AbstractIntegrationTest {
 	}
 
 	@Test
+	@Ignore
 	public void testGetDatasetPublishPopupCustomText() {
 		DvMessage originalText = infoOps.getDatasetPublishPopupCustomText();
 		assertTrue("Message text was empty", !StringUtils.isEmpty(originalText.getMessage()));

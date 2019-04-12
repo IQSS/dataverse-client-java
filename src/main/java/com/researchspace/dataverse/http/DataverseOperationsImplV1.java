@@ -340,11 +340,11 @@ public class DataverseOperationsImplV1 extends AbstractOpsImplV1 implements Data
 	public DvMessage getDatasetPublishPopupCustomText() {
 		String url = createAdminUrl("info", "settings", ":DatasetPublishPopupCustomText");		
 		HttpEntity<String> entity = createHttpEntity("");
-		ParameterizedTypeReference<DataverseResponse<DvMessage>> type = new ParameterizedTypeReference<DataverseResponse<DvMessage>>() {
+		ParameterizedTypeReference<String> type = new ParameterizedTypeReference<String>() {
 		};
-		ResponseEntity<DataverseResponse<DvMessage>> resp = template.exchange(url, HttpMethod.GET, entity, type);
+		ResponseEntity<String> resp = template.exchange(url, HttpMethod.GET, entity, type);
 		log.debug(resp.getBody().toString());
-		return resp.getBody().getData();
+		return null;
 		
 	}
 
