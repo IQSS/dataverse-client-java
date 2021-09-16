@@ -15,6 +15,7 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.List;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.RandomStringUtils;
 import org.junit.Before;
 import org.junit.Ignore;
@@ -55,13 +56,20 @@ public class DatasetOperationsTest extends AbstractIntegrationTest {
 		super.setUp();
 	}	
 
+	File exampleDatasetJson = new File("src/integration-test/resources/dataset-create-new-all-default-fields.json");
 	@Test
-	@Ignore
 	public void testListDatasets() {
 		List<DataverseObject> results = dataverseOps.getDataverseContents(dataverseAlias);
 		assertTrue(results.size() > 0);
-		URL url = results.get(0).getPersistentUrl();
-		assertEquals("https", url.getProtocol());
+
+	}
+
+	@Test
+	public void testPostSampleDataset() throws IOException, InterruptedException, URISyntaxException {
+		String toPost = FileUtils.readFileToString(exampleDatasetJson);
+		Identifier datasetId = dataverseOps.createDataset(toPost, dataverseAlias);
+		assertNotNull(datasetId.getId());
+
 	}
 
 	@Test

@@ -135,6 +135,18 @@ public class DataverseOperationsImplV1 extends AbstractOpsImplV1 implements Data
 		handleError(resp);
 		return resp.getBody().getData();
 	}
+
+	@Override
+	public Identifier createDataset(String dataSetJson, String dataverseAlias)  {
+		String url = createV1Url("dataverses", dataverseAlias,"datasets");
+		HttpEntity<String> entity = createHttpEntity(dataSetJson);
+		ParameterizedTypeReference<DataverseResponse<Identifier>> type = new ParameterizedTypeReference<DataverseResponse<Identifier>>() {
+		};
+
+		ResponseEntity<DataverseResponse<Identifier>> resp = template.exchange(url, HttpMethod.POST, entity, type);
+		handleError(resp);
+		return resp.getBody().getData();
+	}
 	
 	
 	/* (non-Javadoc)

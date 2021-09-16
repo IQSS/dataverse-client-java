@@ -54,6 +54,9 @@ public interface DataverseOperations {
 	 * @throws IOException
 	 */
 	Identifier createDataset(DatasetFacade facade, String dataverseAlias);
+
+
+	Identifier createDataset(String dataSetJson, String dataverseAlias);
 	
     /**
      * Gets an overview of the contents of the specified Dataverse
