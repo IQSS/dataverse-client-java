@@ -94,8 +94,9 @@ public class DataverseOperationsTest extends AbstractIntegrationTest {
 	}
 
 	@Test
-	public void testListDataverses() {
+	public void testGetDataverseById() {
 		DataverseGet dv = dataverseOps.getDataverseById(dataverseAlias);
 		assertNotNull(dv.getId());
+		assertTrue(dv.getContactEmails().size() > 0);
 	}
 }

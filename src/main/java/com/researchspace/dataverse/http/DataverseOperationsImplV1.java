@@ -78,6 +78,10 @@ public class DataverseOperationsImplV1 extends AbstractOpsImplV1 implements Data
 		HttpEntity<String> entity = createHttpEntity("");
 		ParameterizedTypeReference<DataverseResponse<DataverseGet>> type = new ParameterizedTypeReference<DataverseResponse<DataverseGet>>() {
 		};
+		ParameterizedTypeReference<String> type2 = new ParameterizedTypeReference<String>() {
+		};
+		ResponseEntity<String> resp2 = template.exchange(url, HttpMethod.GET, entity, type2);
+		String what = resp2.getBody();
 		ResponseEntity<DataverseResponse<DataverseGet>> resp = template.exchange(url, HttpMethod.GET, entity, type);
 		log.debug(resp.getBody().toString());
 		return resp.getBody().getData();
@@ -147,8 +151,8 @@ public class DataverseOperationsImplV1 extends AbstractOpsImplV1 implements Data
 		handleError(resp);
 		return resp.getBody().getData();
 	}
-	
-	
+
+
 	/* (non-Javadoc)
 	 * @see com.researchspace.dataverse.http.DataverseAPI#updateDataset(com.researchspace.dataverse.entities.facade.DatasetFacade, com.researchspace.dataverse.entities.Identifier)
 	 */
@@ -272,6 +276,7 @@ public class DataverseOperationsImplV1 extends AbstractOpsImplV1 implements Data
 		};
 		ResponseEntity<String> resp2 = template.exchange(url, HttpMethod.GET, entity,
 				type2);
+		String respB = resp2.getBody();
 		ResponseEntity<DataverseResponse<List<DataverseObject>>> resp = template.exchange(url, HttpMethod.GET, entity,
 				type);
 		handleError(resp);
