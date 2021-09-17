@@ -38,7 +38,9 @@ You can also override the Dataverse server URL and Id with your own settings by 
     
 ### Installing into a Maven repository
 
-Currently binaries of this project are not yet available in an open Maven repository. You can run:
+This project can be added as a Gradle or Maven dependency in your project using [JitPack](https://jitpack.io).
+
+Or, you can run:
 
     ./gradlew clean install
     
@@ -74,8 +76,6 @@ Searching uses a builder pattern to build a search query:
     DataverseResponse<SearchResults<Item>> results = searchOps.search(cfg);
 ```
 
-
-
 ### Synchronisation and thread-safety
 
 There is no explicit synchronisation performed in this library. The Dataverse configuration is stored in the 
@@ -109,8 +109,3 @@ Native|MetadataBlocks | GET ` api/metadatablocks` | Y| -
 | -   | -         | GET ` api/metadatablocks/$identifier` | Y| -
 Search | - | GET `api/search` | In progress | All query params supported, optional data not returned yet.
 Sword | Upload file | 'Add files to a dataset with a zip file' | Y | -
-
-
-
-
-
