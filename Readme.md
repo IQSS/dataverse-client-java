@@ -40,6 +40,26 @@ You can also override the Dataverse server URL and Id with your own settings by 
 
 This project can be added as a Gradle or Maven dependency in your project using [JitPack](https://jitpack.io).
 
+If using Maven, add this to your pom.xml file (thanks AleixMT).
+
+```
+<repositories>
+  <repository>
+    <id>jitpack.io</id>
+    <url>https://jitpack.io</url>
+  </repository>
+</repositories>
+
+<dependencies>
+  <dependency>
+    <groupId>com.github.IQSS</groupId>
+    <artifactId>dataverse-client-java</artifactId>
+    <version>master-SNAPSHOT</version>
+  </dependency>
+</dependencies>`
+```
+
+
 Or, you can run:
 
     ./gradlew clean install
