@@ -9,6 +9,7 @@ import static org.apache.commons.lang.Validate.noNullElements;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
@@ -222,6 +223,23 @@ public class DataverseOperationsImplV1 extends AbstractOpsImplV1 implements Data
 				throw new RestClientException(error.getErrorBody());
 			}
 		}
+	}
+
+	@Override
+	public void uploadFile(String doi, InputStream file, String filename) {
+		FileUploader uploader = new FileUploader();
+		try {
+			uploader.deposit(file, filename, apiKey, new URI(serverURL), doi);
+		} catch (IOException | SWORDClientException  | ProtocolViolationException | URISyntaxException e) {
+			log.error("Couldn't upload file {} with doi {} : {}", filename, doi.toString(), e.getMessage());
+			throw new RestClientException(e.getMessage());
+		} catch (SWORDError error) {
+			if (!StringUtils.isEmpty(error.getErrorBody())) {
+				log.error("SwordError: {}", error.getErrorBody());
+				throw new RestClientException(error.getErrorBody());
+			}
+		}
+
 	}
 
 	/* (non-Javadoc)
