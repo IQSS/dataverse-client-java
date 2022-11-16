@@ -77,7 +77,7 @@ public interface DatasetOperations {
 	 * @param file Stream of data to the contents of the file to upload.
 	 * @param filename Name of the file.
 	 */
-	void uploadFile(String doi, InputStream file, String filename);
+	void uploadFile(String doi, InputStream inputStream, String filename);
 
 	/**
 	 * Deletes a {@link Dataset}  
