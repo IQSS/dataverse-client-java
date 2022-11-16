@@ -73,7 +73,7 @@ public interface DatasetOperations {
 	/**
 	 * Uploads a file using a data stream.
 	 *
-	 * @param doi Identifier of the dataset that we are attacking.
+	 * @param doi Identifier of the dataset that we are sending the data to.
 	 * @param file Stream of data to the contents of the file to upload.
 	 * @param filename Name of the file.
 	 */
