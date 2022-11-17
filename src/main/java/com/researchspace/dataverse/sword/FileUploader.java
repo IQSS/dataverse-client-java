@@ -76,7 +76,8 @@ public class FileUploader {
 	 * @throws SWORDError Thrown when an exception happens inside the SWORD client.
 	 * @throws ProtocolViolationException Thrown for unknown reasons.
 	 */
-	public DepositReceipt deposit(InputStream is, String filename, String apiKey, URI dataverseServer, String doi) throws IOException, SWORDClientException, SWORDError, ProtocolViolationException {
+	public DepositReceipt deposit(InputStream is, String filename, String apiKey, URI dataverseServer, String doi)
+			throws IOException, SWORDClientException, SWORDError, ProtocolViolationException {
 		SWORDClient cli = new SWORDClient();
 		Deposit dep = new Deposit();
 		dep.setFilename(filename);

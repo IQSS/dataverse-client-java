@@ -74,8 +74,8 @@ public interface DatasetOperations {
 	 * Uploads a file using a data stream.
 	 *
 	 * @param doi Identifier of the dataset that we are sending the data to.
-	 * @param file Stream of data to the contents of the file to upload.
-	 * @param filename Name of the file.
+	 * @param inputStream Stream of data to upload as a file in Dataverse.
+	 * @param filename Contents of the field "name" that will appear as in Dataverse.
 	 */
 	void uploadFile(String doi, InputStream inputStream, String filename);
 

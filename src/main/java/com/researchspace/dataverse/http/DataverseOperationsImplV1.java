@@ -7,9 +7,7 @@ import static org.apache.commons.lang.StringUtils.isEmpty;
 import static org.apache.commons.lang.Validate.isTrue;
 import static org.apache.commons.lang.Validate.noNullElements;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
@@ -211,17 +209,10 @@ public class DataverseOperationsImplV1 extends AbstractOpsImplV1 implements Data
 	 */
 	@Override
 	public void uploadFile (String doi, File file) {
-		FileUploader uploader = new FileUploader();
 		try {
-			uploader.deposit(file, apiKey, new URI(serverURL), doi);
-		} catch (IOException | SWORDClientException  | ProtocolViolationException | URISyntaxException e) {		
-			log.error("Couldn't upload file {} with doi {} : {}", file.getName(), doi.toString(), e.getMessage());
-			throw new RestClientException(e.getMessage());
-		} catch (SWORDError error) {
-			if (!StringUtils.isEmpty(error.getErrorBody())) {
-				log.error("SwordError: {}", error.getErrorBody());
-				throw new RestClientException(error.getErrorBody());
-			}
+			this.uploadFile(doi, new FileInputStream(file), file.getName());
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
 		}
 	}
 
