@@ -10,4 +10,4 @@ jobs:
           distribution: 'corretto'
           java-version: '8'
           cache: 'gradle'
-  - run: ./gradlew test --no-daemon
+      - run: ./gradlew test --no-daemon
