@@ -4,6 +4,7 @@
 package com.researchspace.dataverse.api.v1;
 
 import java.io.File;
+import java.io.InputStream;
 import java.util.List;
 
 import com.researchspace.dataverse.entities.DataSetMetadataBlock;
@@ -68,6 +69,15 @@ public interface DatasetOperations {
 	 * @param file The file to add to the DataSet
 	 */
 	void uploadFile(String doi, File file);
+
+	/**
+	 * Uploads a file using a data stream.
+	 *
+	 * @param doi Identifier of the dataset that we are sending the data to.
+	 * @param inputStream Stream of data to upload as a file in Dataverse.
+	 * @param filename Contents of the field "name" that will appear as in Dataverse.
+	 */
+	void uploadFile(String doi, InputStream inputStream, String filename);
 
 	/**
 	 * Deletes a {@link Dataset}  
