@@ -2,7 +2,7 @@ apply plugin: 'java'
 
 group = 'com.researchspace'
 sourceCompatibility = 1.8
-version = '0.1.10'
+version = '0.2.0'
 def springVersion='4.3.15.RELEASE'
 def jacksonVersion='2.6.7'
 
