@@ -11,6 +11,12 @@ repositories {
     mavenCentral()  
 }
 
+configurations.all {
+    resolutionStrategy {
+        force 'xml-apis:xml-apis:1.0.b2'
+    }
+}
+
 sourceSets {
     integrationTest {
         java {
@@ -59,7 +65,7 @@ test{
 
 
 task integrationTest(type: Test) {
-    testClassesDir = sourceSets.integrationTest.output.classesDir
+    testClassesDirs = sourceSets.integrationTest.output
     classpath = sourceSets.integrationTest.runtimeClasspath
     outputs.upToDateWhen { false }
     systemProperties = System.getProperties()
@@ -73,6 +79,8 @@ tasks.withType(Test) {
 }
 
 //Lists dependencies
-task listJars << {
-    configurations.compile.each { File file -> println file.name }
+task listJars {
+    doLast {
+        configurations.compile.each { File file -> println file.name }
+    }
 }
