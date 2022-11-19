@@ -5,7 +5,7 @@ package com.researchspace.dataverse.search.entities;
 
 import java.util.EnumSet;
 
-import org.apache.commons.lang.Validate;
+import org.apache.commons.lang3.Validate;
 
 import lombok.Builder;
 import lombok.NonNull;

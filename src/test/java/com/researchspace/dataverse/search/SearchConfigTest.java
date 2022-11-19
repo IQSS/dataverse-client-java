@@ -3,14 +3,13 @@
  */
 package com.researchspace.dataverse.search;
 
-import static com.researchspace.dataverse.search.entities.SearchConfig.MAX_RESULTS_PER_PAGE;
-import static org.junit.Assert.assertEquals;
-
+import com.researchspace.dataverse.search.entities.SearchConfig;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.researchspace.dataverse.search.entities.SearchConfig;
+import static com.researchspace.dataverse.search.entities.SearchConfig.MAX_RESULTS_PER_PAGE;
+import static org.junit.Assert.assertEquals;
 /** <pre>
 Copyright 2016 ResearchSpace
 

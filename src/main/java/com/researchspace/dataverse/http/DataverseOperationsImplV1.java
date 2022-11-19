@@ -3,16 +3,16 @@
  */
 package com.researchspace.dataverse.http;
 
-import static org.apache.commons.lang.StringUtils.isEmpty;
-import static org.apache.commons.lang.Validate.isTrue;
-import static org.apache.commons.lang.Validate.noNullElements;
+import static org.apache.commons.lang3.StringUtils.isEmpty;
+import static org.apache.commons.lang3.Validate.isTrue;
+import static org.apache.commons.lang3.Validate.noNullElements;
 
 import java.io.*;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
