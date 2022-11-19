@@ -43,8 +43,8 @@ dependencies {
     implementation 'com.fasterxml.jackson.core:jackson-core:'+jacksonVersion
     implementation 'com.fasterxml.jackson.core:jackson-databind:'+jacksonVersion
 
-    implementation 'org.projectlombok:lombok:1.16.10'
-    annotationProcessor 'org.projectlombok:lombok:1.16.10'
+    implementation 'org.projectlombok:lombok:1.18.4'
+    annotationProcessor 'org.projectlombok:lombok:1.18.4'
     implementation 'commons-lang:commons-lang:2.6'
     implementation 'org.slf4j:slf4j-api:1.7.21'
     
