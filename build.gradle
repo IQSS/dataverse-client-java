@@ -45,6 +45,7 @@ dependencies {
     compile 'com.fasterxml.jackson.core:jackson-databind:'+jacksonVersion
       
     compile 'org.projectlombok:lombok:1.16.10'
+    annotationProcessor 'org.projectlombok:lombok:1.16.10'
     compile 'commons-lang:commons-lang:2.6'
     compile 'org.slf4j:slf4j-api:1.7.21'
     
