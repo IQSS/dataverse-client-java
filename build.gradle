@@ -1,6 +1,5 @@
 apply plugin: 'java'
-// enables 'install' task into repository
-apply plugin: 'maven'
+
 group = 'com.researchspace'
 sourceCompatibility = 1.8
 version = '0.1.10'
@@ -38,24 +37,24 @@ configurations {
 }
 
 dependencies {
-    compile 'org.springframework:spring-web:'+springVersion
-    compile 'org.springframework:spring-core:'+springVersion
-    compile 'com.fasterxml.jackson.core:jackson-annotations:'+jacksonVersion
-    compile 'com.fasterxml.jackson.core:jackson-core:'+jacksonVersion
-    compile 'com.fasterxml.jackson.core:jackson-databind:'+jacksonVersion
-      
-    compile 'org.projectlombok:lombok:1.16.10'
+    implementation 'org.springframework:spring-web:'+springVersion
+    implementation 'org.springframework:spring-core:'+springVersion
+    implementation 'com.fasterxml.jackson.core:jackson-annotations:'+jacksonVersion
+    implementation 'com.fasterxml.jackson.core:jackson-core:'+jacksonVersion
+    implementation 'com.fasterxml.jackson.core:jackson-databind:'+jacksonVersion
+
+    implementation 'org.projectlombok:lombok:1.16.10'
     annotationProcessor 'org.projectlombok:lombok:1.16.10'
-    compile 'commons-lang:commons-lang:2.6'
-    compile 'org.slf4j:slf4j-api:1.7.21'
+    implementation 'commons-lang:commons-lang:2.6'
+    implementation 'org.slf4j:slf4j-api:1.7.21'
     
     //for SWORD-API. 
-    compile 'org.swordapp:sword2-client:0.9.3'
-    compile 'org.apache.abdera:abdera-client:1.1.1'
+    implementation 'org.swordapp:sword2-client:0.9.3'
+    implementation 'org.apache.abdera:abdera-client:1.1.1'
  
-    testCompile   'junit:junit:4.12'
-    testCompile   'org.springframework:spring-test:'+springVersion
-    testCompile   'org.slf4j:slf4j-simple:1.7.21'
+    testImplementation   'junit:junit:4.12'
+    testImplementation   'org.springframework:spring-test:'+springVersion
+    testImplementation   'org.slf4j:slf4j-simple:1.7.21'
 }
 
 test{
