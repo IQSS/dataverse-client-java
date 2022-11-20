@@ -18,3 +18,21 @@ jobs:
           java-version: ${{matrix.java}}
           cache: 'gradle'
       - run: ./gradlew test --no-daemon
+  integration-test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        java: [ '8', '11' ]
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-java@v3
+        with:
+          distribution: 'corretto'
+          java-version: ${{matrix.java}}
+          cache: 'gradle'
+      - bame: Run integration tests
+        with:
+          env:
+            DV_KEY: ${{ secrets.DEMO_DATAVERSE_OTTER606 }}
+        run: |
+          ./gradlew clean integrationTest -DdataverseApiKey="$DV_KEY"
