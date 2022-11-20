@@ -26,7 +26,7 @@ Integration tests require a connection to  a Dataverse instance.
 In order to connect to a Dataverse for running tests, the following configuration is set up in `test.properties`.
 
     dataverseServerURL=https://demo.dataverse.org
-    dataverseAlias=rspace-demo
+    dataverseAlias=otter606
     
 As a minimum, you'll need to specify an API key on the command line to run the tests:
 

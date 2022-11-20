@@ -32,7 +32,7 @@ configurations {
      all*.exclude group: 'javax.jms'
      all*.exclude group: 'com.sun.jdmk'
      all*.exclude group: 'com.sun.jmx'
-    integrationTestCompile.extendsFrom testCompile
+    integrationTestImplementation.extendsFrom testImplementation
     integrationTestRuntime.extendsFrom testRuntime
 }
 
