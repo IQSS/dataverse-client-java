@@ -3,13 +3,15 @@ on:
   pull_request:
   push:
     branches:
-      - main
+      - master
+  schedule:
+    - cron: '12 4 13 * *'
 jobs:
   test:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        java: [ '8', '11' ]
+        java: [ '8', '11', '17' ]
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-java@v3
@@ -23,7 +25,7 @@ jobs:
     needs: test
     strategy:
       matrix:
-        java: [ '8', '11' ]
+        java: [ '8', '11', '17' ]
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-java@v3

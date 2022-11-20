@@ -2,9 +2,10 @@ apply plugin: 'java'
 
 group = 'com.researchspace'
 sourceCompatibility = 1.8
-version = '0.2.0'
-def springVersion='4.3.15.RELEASE'
-def jacksonVersion='2.6.7'
+version = '1.0.0'
+def springVersion='5.3.24'
+def jacksonVersion='2.11.1'
+def lombokVersion='1.18.24'
 
 repositories {
     mavenCentral()  
@@ -38,23 +39,24 @@ configurations {
 
 dependencies {
     implementation 'org.springframework:spring-web:'+springVersion
+    implementation 'org.springframework:spring-context:'+springVersion
     implementation 'org.springframework:spring-core:'+springVersion
     implementation 'com.fasterxml.jackson.core:jackson-annotations:'+jacksonVersion
     implementation 'com.fasterxml.jackson.core:jackson-core:'+jacksonVersion
     implementation 'com.fasterxml.jackson.core:jackson-databind:'+jacksonVersion
 
-    implementation 'org.projectlombok:lombok:1.18.4'
-    annotationProcessor 'org.projectlombok:lombok:1.18.4'
-    implementation 'commons-lang:commons-lang:2.6'
+    implementation 'org.projectlombok:lombok:' + lombokVersion
+    annotationProcessor 'org.projectlombok:lombok:' + lombokVersion
+    implementation 'org.apache.commons:commons-lang3:3.12.0'
     implementation 'org.slf4j:slf4j-api:1.7.21'
     
     //for SWORD-API. 
     implementation 'org.swordapp:sword2-client:0.9.3'
     implementation 'org.apache.abdera:abdera-client:1.1.1'
  
-    testImplementation   'junit:junit:4.12'
+    testImplementation   'junit:junit:4.13.2'
     testImplementation   'org.springframework:spring-test:'+springVersion
-    testImplementation   'org.slf4j:slf4j-simple:1.7.21'
+    testImplementation   'org.slf4j:slf4j-simple:1.7.36'
 }
 
 test{

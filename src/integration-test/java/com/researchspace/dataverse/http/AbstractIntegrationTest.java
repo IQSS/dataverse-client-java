@@ -3,12 +3,11 @@
  */
 package com.researchspace.dataverse.http;
 
-import static org.junit.Assert.assertTrue;
-
-import java.net.URL;
-
-import org.apache.commons.lang.StringUtils;
-import org.apache.commons.lang.Validate;
+import com.researchspace.dataverse.api.v1.*;
+import com.researchspace.dataverse.spring.config.DataverseSpringConfig;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.Validate;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -16,16 +15,9 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.AbstractJUnit4SpringContextTests;
 
-import com.researchspace.dataverse.api.v1.DatasetOperations;
-import com.researchspace.dataverse.api.v1.DataverseAPI;
-import com.researchspace.dataverse.api.v1.DataverseConfig;
-import com.researchspace.dataverse.api.v1.DataverseOperations;
-import com.researchspace.dataverse.api.v1.InfoOperations;
-import com.researchspace.dataverse.api.v1.MetadataOperations;
-import com.researchspace.dataverse.api.v1.SearchOperations;
-import com.researchspace.dataverse.spring.config.DataverseSpringConfig;
+import java.net.URL;
 
-import lombok.extern.slf4j.Slf4j;
+import static org.junit.Assert.assertTrue;
 /** <pre>
 Copyright 2016 ResearchSpace
 
