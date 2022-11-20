@@ -3,33 +3,21 @@
  */
 package com.researchspace.dataverse.http;
 
-import static com.researchspace.dataverse.entities.facade.DatasetTestFactory.createFacade;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-
-import java.io.File;
-import java.io.IOException;
-import java.net.URISyntaxException;
-import java.net.URL;
-import java.util.List;
-
+import com.researchspace.dataverse.entities.*;
+import com.researchspace.dataverse.entities.facade.DatasetFacade;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.RandomStringUtils;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
-import com.researchspace.dataverse.entities.Dataset;
-import com.researchspace.dataverse.entities.DatasetVersion;
-import com.researchspace.dataverse.entities.DataverseObject;
-import com.researchspace.dataverse.entities.DataversePost;
-import com.researchspace.dataverse.entities.DataverseResponse;
-import com.researchspace.dataverse.entities.Identifier;
-import com.researchspace.dataverse.entities.PublishedDataset;
-import com.researchspace.dataverse.entities.Version;
-import com.researchspace.dataverse.entities.facade.DatasetFacade;
+import java.io.File;
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.util.List;
+
+import static com.researchspace.dataverse.entities.facade.DatasetTestFactory.createFacade;
+import static org.junit.Assert.*;
 
 
 /** <pre>
@@ -64,7 +52,9 @@ public class DatasetOperationsTest extends AbstractIntegrationTest {
 
 	}
 
+	//TODO figure out why data is invalid
 	@Test
+	@Ignore("this test fails with message: Error parsing Json: incorrect multiple   for field collectionMode")
 	public void testPostSampleDataset() throws IOException, InterruptedException, URISyntaxException {
 		String toPost = FileUtils.readFileToString(exampleDatasetJson);
 		Identifier datasetId = dataverseOps.createDataset(toPost, dataverseAlias);

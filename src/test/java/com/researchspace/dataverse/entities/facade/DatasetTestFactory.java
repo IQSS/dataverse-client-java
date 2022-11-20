@@ -9,18 +9,6 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.Date;
-
-import com.researchspace.dataverse.entities.facade.ContributorType;
-import com.researchspace.dataverse.entities.facade.DatasetAuthor;
-import com.researchspace.dataverse.entities.facade.DatasetContact;
-import com.researchspace.dataverse.entities.facade.DatasetContributor;
-import com.researchspace.dataverse.entities.facade.DatasetDescription;
-import com.researchspace.dataverse.entities.facade.DatasetFacade;
-import com.researchspace.dataverse.entities.facade.DatasetKeyword;
-import com.researchspace.dataverse.entities.facade.DatasetProducer;
-import com.researchspace.dataverse.entities.facade.DatasetPublication;
-import com.researchspace.dataverse.entities.facade.DatasetTopicClassification;
-import com.researchspace.dataverse.entities.facade.PublicationIDType;
 /**
  * /** <pre>
 Copyright 2016 ResearchSpace
@@ -65,7 +53,7 @@ public class DatasetTestFactory {
 		  .depositor("A depositor")
 		  .subtitle(" A subtitle")
 		  .alternativeTitle("altTitle")
-		  .alternativeURL(new URL("http://www.myrepo.com"))
+		  .alternativeURL(new URL("https://www.myrepo.com"))
 		  .note("Some note")
 		  .languages(Arrays.asList(new String []{"English", "French"}))
 		  .build();
@@ -83,8 +71,8 @@ public class DatasetTestFactory {
 				.name("a producer")
 				.abbreviation("abbr")
 				.affiliation("UoE")
-				.logoURL(new URL("http:///pubmed.logo.com/1234"))
-				.url(new URL("http:///pubmed.com/1234"))
+				.logoURL(new URL("https://pubmed.logo.com/1234"))
+				.url(new URL("https://pubmed.com/1234"))
 				.build();
 	}
 
@@ -93,19 +81,19 @@ public class DatasetTestFactory {
 				.publicationCitation("citation")
 				.publicationIdNumber("12435")
 				.publicationIDType(PublicationIDType.ean13)
-				.publicationURL(new URL("http:///pubmed.com/1234"))
+				.publicationURL(new URL("https://pubmed.com/1234"))
 				.build();
 	}
 
 	private static DatasetTopicClassification buildATopicClassification(String value) throws URISyntaxException {
 		return DatasetTopicClassification.builder().topicClassValue(value)
-				.topicClassVocab("a topic vocab").topicClassVocabURI(new URI("http://www.vocab.org"))
+				.topicClassVocab("a topic vocab").topicClassVocabURI(new URI("https://www.vocab.org"))
 				.build();
 	}
 
 	private static DatasetKeyword buildAKeyword(String key) throws URISyntaxException {
 			return DatasetKeyword.builder().value(key).vocabulary("keywordVocab")
-			     .vocabularyURI(new URI("http://vocab.com")).build();	
+			     .vocabularyURI(new URI("https://vocab.com")).build();
 	}
 
 	private static DatasetDescription buildADesc() {

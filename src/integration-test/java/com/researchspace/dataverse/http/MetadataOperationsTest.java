@@ -3,18 +3,16 @@
  */
 package com.researchspace.dataverse.http;
 
-import static org.junit.Assert.assertTrue;
-
-import java.io.IOException;
-
+import com.researchspace.dataverse.entities.DVField;
+import com.researchspace.dataverse.entities.MetadataBlock;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.web.client.RestClientException;
 
-import com.researchspace.dataverse.entities.DVField;
-import com.researchspace.dataverse.entities.MetadataBlock;
+import java.io.IOException;
 
-import lombok.extern.slf4j.Slf4j;
+import static org.junit.Assert.assertTrue;
 /** <pre>
 Copyright 2016 ResearchSpace
 
@@ -56,7 +54,7 @@ public class MetadataOperationsTest  extends AbstractIntegrationTest {
 	public void testGetMetdataByIdBlockInfo() throws IOException {
 		MetadataBlock block = metadataOPs.getMetadataById("biomedical");
 		for (DVField fld : block.getFields().values()) {
-			log.info(fld.toString());
+		//	log.info(fld.toString());
 		}
 	}
 }

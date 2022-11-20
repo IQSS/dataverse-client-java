@@ -71,7 +71,7 @@ public class AbstractIntegrationTest extends AbstractJUnit4SpringContextTests {
 
 	public void setUp() throws Exception {
 		validateServerCredentials();
-		log.info("serverURL: [{}], apiKey: [{}], dataverseId=[{}]", serverURL, apiKey, dataverseAlias);
+	//	log.info("serverURL: [{}], apiKey: [{}], dataverseId=[{}]", serverURL, apiKey, dataverseAlias);
 		URL uri = new URL(serverURL);
 		DataverseConfig cfg = new DataverseConfig(uri, apiKey, dataverseAlias);
 		dataverseAPI.configure(cfg);
