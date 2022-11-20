@@ -3,17 +3,12 @@
  */
 package com.researchspace.dataverse.entities.facade;
 
+import lombok.*;
+
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.NonNull;
-import lombok.Singular;
 /**
  * /** <pre>
 Copyright 2016 ResearchSpace

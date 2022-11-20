@@ -28,5 +28,6 @@ Copyright 2016 ResearchSpace
 @NoArgsConstructor
 public class Identifier {
 	private Long id;
+	private String persistentId;
 
 }
