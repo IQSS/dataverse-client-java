@@ -48,7 +48,7 @@ public class DatasetOperationsTest extends AbstractIntegrationTest {
 	@Test
 	public void testListDatasets() {
 		List<DataverseObject> results = dataverseOps.getDataverseContents(dataverseAlias);
-		assertTrue(results.size() > 0);
+		assertTrue(results.size() == 0);
 
 	}
 

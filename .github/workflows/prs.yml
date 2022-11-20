@@ -20,6 +20,7 @@ jobs:
       - run: ./gradlew test --no-daemon
   integration-test:
     runs-on: ubuntu-latest
+    depends_on: test
     strategy:
       matrix:
         java: [ '8', '11' ]
