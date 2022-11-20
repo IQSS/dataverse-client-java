@@ -30,7 +30,7 @@ jobs:
           distribution: 'corretto'
           java-version: ${{matrix.java}}
           cache: 'gradle'
-      - bame: Run integration tests
+      - name: Run integration tests
         with:
           env:
             DV_KEY: ${{ secrets.DEMO_DATAVERSE_OTTER606 }}
