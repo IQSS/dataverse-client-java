@@ -1,0 +1,38 @@
+{
+  "status": "OK",
+  "message": {
+    "message": "This file has the same content as out198.json that is in the dataset. "
+  },
+  "data": {
+    "files": [
+      {
+        "description": "My description.",
+        "label": "out198-1.json",
+        "restricted": false,
+        "directoryLabel": "data/subdir1",
+        "version": 1,
+        "datasetVersionId": 223100,
+        "categories": [
+          "Data"
+        ],
+        "dataFile": {
+          "id": 2013378,
+          "persistentId": "",
+          "pidURL": "",
+          "filename": "out198-1.json",
+          "contentType": "application/json",
+          "filesize": 530,
+          "description": "My description.",
+          "storageIdentifier": "s3://demo-dataverse-org:18496421a60-31b9c8e88499",
+          "rootDataFileId": -1,
+          "md5": "7ac97aa42f2b7f05b0cfc46d28a3f979",
+          "checksum": {
+            "type": "MD5",
+            "value": "7ac97aa42f2b7f05b0cfc46d28a3f979"
+          },
+          "creationDate": "2022-11-20"
+        }
+      }
+    ]
+  }
+}
