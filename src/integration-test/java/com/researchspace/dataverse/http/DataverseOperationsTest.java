@@ -3,22 +3,16 @@
  */
 package com.researchspace.dataverse.http;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-
-import java.util.Arrays;
-
+import com.researchspace.dataverse.entities.*;
 import org.apache.commons.lang.RandomStringUtils;
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.researchspace.dataverse.entities.DataverseContacts;
-import com.researchspace.dataverse.entities.DataverseGet;
-import com.researchspace.dataverse.entities.DataversePost;
-import com.researchspace.dataverse.entities.DataverseResponse;
-import com.researchspace.dataverse.entities.DvMessage;
+import java.util.Arrays;
+
+import static org.junit.Assert.*;
 /** <pre>
 Copyright 2016 ResearchSpace
 
@@ -85,12 +79,12 @@ public class DataverseOperationsTest extends AbstractIntegrationTest {
 		dv.setAlias("");
 		dataverseOps.createNewDataverse("rspace", dv);
 	}
-	@Test(expected=IllegalArgumentException.class)
-	public void createDataverseValidationContactREquired () {		
+	@Test
+	public void createDataverseValidationContactRequired () {
 		String dvName = RandomStringUtils.randomAlphabetic(10);
 		DataversePost dv = createADataverse(dvName);
 		dv.setDataverseContacts(null);
-		dataverseOps.createNewDataverse("rspace", dv);
+		Assert.assertThrows(NullPointerException.class, ()->dataverseOps.createNewDataverse("rspace", dv));
 	}
 
 	@Test
