@@ -2,9 +2,10 @@ apply plugin: 'java'
 
 group = 'com.researchspace'
 sourceCompatibility = 1.8
-version = '0.2.0'
+version = '1.0.0'
 def springVersion='5.3.24'
 def jacksonVersion='2.11.1'
+def lombokVersion='1.18.24'
 
 repositories {
     mavenCentral()  
@@ -44,8 +45,8 @@ dependencies {
     implementation 'com.fasterxml.jackson.core:jackson-core:'+jacksonVersion
     implementation 'com.fasterxml.jackson.core:jackson-databind:'+jacksonVersion
 
-    implementation 'org.projectlombok:lombok:1.18.24'
-    annotationProcessor 'org.projectlombok:lombok:1.18.24'
+    implementation 'org.projectlombok:lombok:' + lombokVersion
+    annotationProcessor 'org.projectlombok:lombok:' + lombokVersion
     implementation 'org.apache.commons:commons-lang3:3.12.0'
     implementation 'org.slf4j:slf4j-api:1.7.21'
     
