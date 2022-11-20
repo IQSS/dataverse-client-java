@@ -31,8 +31,7 @@ jobs:
           java-version: ${{matrix.java}}
           cache: 'gradle'
       - name: Run integration tests
-        with:
-          env:
-            DV_KEY: ${{ secrets.DEMO_DATAVERSE_OTTER606 }}
+        env:
+          DV_KEY: ${{ secrets.DEMO_DATAVERSE_OTTER606 }}
         run: |
           ./gradlew clean integrationTest -DdataverseApiKey="$DV_KEY"
