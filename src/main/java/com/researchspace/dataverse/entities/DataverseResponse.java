@@ -3,6 +3,7 @@
  */
 package com.researchspace.dataverse.entities;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import lombok.Data;
 /**
  *  <pre>
@@ -30,6 +31,7 @@ public class DataverseResponse <T> {
 	
 	private String status;
 	private T data;
+	@JsonDeserialize(using = ObjectOrStringMessageDeserializer.class )
 	private String message;
 
 }
