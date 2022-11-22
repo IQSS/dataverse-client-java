@@ -3,15 +3,17 @@
  */
 package com.researchspace.dataverse.http;
 
-import static org.apache.commons.lang3.StringUtils.isEmpty;
-import static org.apache.commons.lang3.Validate.isTrue;
-import static org.apache.commons.lang3.Validate.noNullElements;
-
-import java.io.*;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.List;
-
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.researchspace.dataverse.api.v1.DatasetOperations;
+import com.researchspace.dataverse.api.v1.DataverseOperations;
+import com.researchspace.dataverse.api.v1.InfoOperations;
+import com.researchspace.dataverse.api.v1.MetadataOperations;
+import com.researchspace.dataverse.entities.*;
+import com.researchspace.dataverse.entities.facade.DatasetBuilder;
+import com.researchspace.dataverse.entities.facade.DatasetFacade;
+import com.researchspace.dataverse.sword.FileUploader;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
@@ -23,28 +25,14 @@ import org.swordapp.client.ProtocolViolationException;
 import org.swordapp.client.SWORDClientException;
 import org.swordapp.client.SWORDError;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.researchspace.dataverse.api.v1.DatasetOperations;
-import com.researchspace.dataverse.api.v1.DataverseOperations;
-import com.researchspace.dataverse.api.v1.InfoOperations;
-import com.researchspace.dataverse.api.v1.MetadataOperations;
-import com.researchspace.dataverse.entities.Dataset;
-import com.researchspace.dataverse.entities.DatasetVersion;
-import com.researchspace.dataverse.entities.DataverseGet;
-import com.researchspace.dataverse.entities.DataverseObject;
-import com.researchspace.dataverse.entities.DataversePost;
-import com.researchspace.dataverse.entities.DataverseResponse;
-import com.researchspace.dataverse.entities.DvMessage;
-import com.researchspace.dataverse.entities.Identifier;
-import com.researchspace.dataverse.entities.MetadataBlock;
-import com.researchspace.dataverse.entities.PublishedDataset;
-import com.researchspace.dataverse.entities.Version;
-import com.researchspace.dataverse.entities.facade.DatasetBuilder;
-import com.researchspace.dataverse.entities.facade.DatasetFacade;
-import com.researchspace.dataverse.sword.FileUploader;
+import java.io.*;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.List;
 
-import lombok.extern.slf4j.Slf4j;
+import static org.apache.commons.lang3.StringUtils.isEmpty;
+import static org.apache.commons.lang3.Validate.isTrue;
+import static org.apache.commons.lang3.Validate.noNullElements;
 /**  Copyright 2016 ResearchSpace
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -85,8 +73,6 @@ public class DataverseOperationsImplV1 extends AbstractOpsImplV1 implements Data
 		log.debug(resp.getBody().toString());
 		return resp.getBody().getData();
 	}
-
-	
 	
 	@Override
 	public DataverseResponse<DvMessage> deleteDataverse(String dataverseAlias) {
@@ -194,11 +180,22 @@ public class DataverseOperationsImplV1 extends AbstractOpsImplV1 implements Data
 	@Override
 	public List<DatasetVersion> getDatasetVersions (Identifier dsIdentifier) {
 		String url = createV1Url("datasets",  dsIdentifier.getId() +"", "versions");
-		
+
 		HttpEntity<String> entity = createHttpEntity("");
 		ParameterizedTypeReference<DataverseResponse<List<DatasetVersion>>> type = new ParameterizedTypeReference<DataverseResponse<List<DatasetVersion>>>() {
 		};
 		ResponseEntity<DataverseResponse<List<DatasetVersion>>> resp = template.exchange(url, HttpMethod.GET, entity, type);
+		log.debug("{}", resp.getBody());
+		handleError(resp);
+		return resp.getBody().getData();
+	}
+
+	public DatasetFileList uploadNativeFile(Identifier dsIdentifier){
+		String url = createV1Url("datasets", ":persistentId", "add") + "?persistentId=" + dsIdentifier.getId();
+		HttpEntity<String> entity = createHttpEntity("{}");
+		ParameterizedTypeReference<DataverseResponse<DatasetFileList>> type =
+				new ParameterizedTypeReference<DataverseResponse<DatasetFileList>>() {};
+		ResponseEntity<DataverseResponse<DatasetFileList>> resp = template.exchange(url, HttpMethod.POST, entity, type);
 		log.debug("{}", resp.getBody());
 		handleError(resp);
 		return resp.getBody().getData();
