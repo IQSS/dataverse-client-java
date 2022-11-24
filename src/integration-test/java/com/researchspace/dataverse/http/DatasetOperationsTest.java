@@ -73,6 +73,7 @@ public class DatasetOperationsTest extends AbstractIntegrationTest {
 		// create Dataset in child dataverse
 		Identifier datasetId = dataverseOps.createDataset(facade, newDV.getAlias());
 		assertNotNull(datasetId.getId());
+		assertNotNull(datasetId.getPersistentId());
 		Dataset ds = datasetOps.getDataset(datasetId);
 		String doiId = ds.getDoiId().get();
 		datasetOps.uploadFile(doiId, getTestFile());
