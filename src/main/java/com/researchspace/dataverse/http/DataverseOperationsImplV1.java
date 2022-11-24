@@ -192,11 +192,11 @@ public class DataverseOperationsImplV1 extends AbstractOpsImplV1 implements Data
 	}
 
 	@Override
-	public DatasetFileList uploadNativeFile(Identifier dsIdentifier, byte[] data, String fileName){
+	public DatasetFileList uploadNativeFile( FileUploadMetadata metadata, Identifier dsIdentifier, byte[] data, String fileName){
 		String url = createV1Url("datasets", ":persistentId", "add") + "?persistentId=" + dsIdentifier.getPersistentId();
 		ParameterizedTypeReference<DataverseResponse<DatasetFileList>> type =
 				new ParameterizedTypeReference<DataverseResponse<DatasetFileList>>() {};
-		HttpEntity<MultiValueMap<String, Object>> entity = new NativeFileUploader().uploadFile(apiKey, data, fileName);
+		HttpEntity<MultiValueMap<String, Object>> entity = new NativeFileUploader().uploadFile(metadata, apiKey, data, fileName);
 		ResponseEntity<DataverseResponse<DatasetFileList>> resp = template.exchange(url, HttpMethod.POST, entity, type);
 		log.debug("{}", resp.getBody());
 		handleError(resp);

@@ -5,6 +5,7 @@ package com.researchspace.dataverse.api.v1;
 
 import com.researchspace.dataverse.entities.*;
 import com.researchspace.dataverse.entities.facade.DatasetFacade;
+import com.researchspace.dataverse.http.FileUploadMetadata;
 
 import java.io.File;
 import java.io.InputStream;
@@ -56,7 +57,7 @@ public interface DatasetOperations {
 	 */
 	List<DatasetVersion> getDatasetVersions(Identifier dsIdentifier);
 
-    DatasetFileList uploadNativeFile(Identifier dsIdentifier, byte[] data, String fileName);
+    DatasetFileList uploadNativeFile(FileUploadMetadata metadata, Identifier dsIdentifier, byte[] data, String fileName);
 
     /**
 	 * Uploads a file to a dataset

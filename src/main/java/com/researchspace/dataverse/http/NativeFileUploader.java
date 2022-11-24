@@ -8,7 +8,7 @@ import org.springframework.web.client.RestTemplate;
 
 public class NativeFileUploader {
 
-    public HttpEntity<MultiValueMap<String, Object>> uploadFile(String apiKey, byte [] data, String fName){
+    public HttpEntity<MultiValueMap<String, Object>> uploadFile(FileUploadMetadata metadata, String apiKey, byte[] data, String fName){
         RestTemplate restTemplate = new RestTemplate();
         MultiValueMap<String,Object> multipartRequest = new LinkedMultiValueMap<>();
 
@@ -28,17 +28,12 @@ public class NativeFileUploader {
 
         multipartRequest.set("file",attachmentPart);
 
-
         HttpHeaders requestHeadersJSON = new HttpHeaders();
-
         requestHeadersJSON.setContentType(MediaType.APPLICATION_JSON);
-        String requestBody = "{\"description\":\"My description.\",\"directoryLabel\":\"data/subdir1\",\"categories\":[\"Data\"], \"restrict\":\"false\", \"tabIngest\":\"false\"}";
-        HttpEntity<String> requestEntityJSON = new HttpEntity<>(requestBody, requestHeadersJSON);
-
+        HttpEntity<FileUploadMetadata> requestEntityJSON = new HttpEntity<>(metadata, requestHeadersJSON);
         multipartRequest.set("jsonData",requestEntityJSON);
 
         HttpEntity<MultiValueMap<String,Object>> requestEntity = new HttpEntity<>(multipartRequest,requestHeaders);//final request
-
         return requestEntity;
 
     }
