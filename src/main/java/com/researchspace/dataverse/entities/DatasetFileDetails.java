@@ -2,7 +2,7 @@ package com.researchspace.dataverse.entities;
 
 import lombok.Data;
 
-import java.time.LocalDate;
+import java.util.Date;
 
 @Data
 public class DatasetFileDetails {
@@ -17,5 +17,5 @@ public class DatasetFileDetails {
     private String rootDataFileId;
     private String md5;
     private Checksum checksum;
-    private LocalDate creationDate;
+    private Date creationDate;
 }
