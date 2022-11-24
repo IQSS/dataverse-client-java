@@ -14,6 +14,7 @@ import org.junit.Test;
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.util.Arrays;
 import java.util.List;
 
 import static com.researchspace.dataverse.entities.facade.DatasetTestFactory.createFacade;
@@ -66,7 +67,9 @@ public class DatasetOperationsTest extends AbstractIntegrationTest {
 		DatasetFacade facade = createFacade();
 		Identifier datasetId = dataverseOps.createDataset(facade, dataverseAlias);
 		assertNotNull(datasetId.getId());
-		DatasetFileList datasetFileList = datasetOps.uploadNativeFile(datasetId, new byte[]{1, 2, 3, 4, 5}, "myFileName.dat");
+		FileUploadMetadata meta = FileUploadMetadata.builder().description("My description.").categories(Arrays.asList(new String[]{"Data"}))
+				.directoryLabel("test/x").build();
+		DatasetFileList datasetFileList = datasetOps.uploadNativeFile(meta, datasetId, new byte[]{1, 2, 3, 4, 5}, "myFileName.dat");
 		assertNotNull(datasetFileList);
 		assertEquals(1, datasetFileList.getFiles().size());
 		assertTrue(datasetFileList.getFiles().get(0).getCategories().contains("Data"));
