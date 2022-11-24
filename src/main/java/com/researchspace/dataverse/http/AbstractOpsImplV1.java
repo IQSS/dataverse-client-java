@@ -3,8 +3,11 @@
  */
 package com.researchspace.dataverse.http;
 
-import java.util.Arrays;
-
+import com.researchspace.dataverse.api.v1.DataverseConfig;
+import com.researchspace.dataverse.entities.DataverseResponse;
+import com.researchspace.springrest.ext.LoggingResponseErrorHandler;
+import com.researchspace.springrest.ext.RestUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -12,12 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
-import com.researchspace.dataverse.api.v1.DataverseConfig;
-import com.researchspace.dataverse.entities.DataverseResponse;
-import com.researchspace.springrest.ext.LoggingResponseErrorHandler;
-import com.researchspace.springrest.ext.RestUtil;
-
-import lombok.extern.slf4j.Slf4j;
+import java.util.Arrays;
 
 /** <pre>
 Copyright 2016 ResearchSpace
@@ -101,8 +99,12 @@ public abstract class AbstractOpsImplV1 {
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_JSON);
 		headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
-		headers.add(apiHeader, apiKey);
+		addApiKey(headers);
 		return headers;
+	}
+
+	 void addApiKey(HttpHeaders headers) {
+		headers.add(apiHeader, apiKey);
 	}
 
 }

@@ -63,7 +63,7 @@ public class DatasetFilePostMockServerTest {
 		tss.configure(cfg);
 		Identifier id = new Identifier();
 		id.setId(1234L);
-		DatasetFileList resp = tss.uploadNativeFile(id);
+		DatasetFileList resp = tss.uploadNativeFile(id, null, null);
 		assertNotNull(resp.getFiles());
 		assertEquals(1, resp.getFiles().size());
 	}

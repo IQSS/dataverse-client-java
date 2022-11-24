@@ -59,7 +59,18 @@ public class DatasetOperationsTest extends AbstractIntegrationTest {
 		String toPost = FileUtils.readFileToString(exampleDatasetJson);
 		Identifier datasetId = dataverseOps.createDataset(toPost, dataverseAlias);
 		assertNotNull(datasetId.getId());
+	}
 
+	@Test
+	public void uploadFileToDataSetWithNativeApi() throws IOException, URISyntaxException {
+		DatasetFacade facade = createFacade();
+		Identifier datasetId = dataverseOps.createDataset(facade, dataverseAlias);
+		assertNotNull(datasetId.getId());
+		DatasetFileList datasetFileList = datasetOps.uploadNativeFile(datasetId, new byte[]{1, 2, 3, 4, 5}, "myFileName.dat");
+		assertNotNull(datasetFileList);
+		assertEquals(1, datasetFileList.getFiles().size());
+		assertTrue(datasetFileList.getFiles().get(0).getCategories().contains("Data"));
+		assertTrue(datasetFileList.getFiles().get(0).getDescription().equals(("My description.")));
 	}
 
 	@Test

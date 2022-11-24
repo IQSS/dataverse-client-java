@@ -20,6 +20,7 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestClientException;
 import org.swordapp.client.ProtocolViolationException;
 import org.swordapp.client.SWORDClientException;
@@ -190,11 +191,12 @@ public class DataverseOperationsImplV1 extends AbstractOpsImplV1 implements Data
 		return resp.getBody().getData();
 	}
 
-	public DatasetFileList uploadNativeFile(Identifier dsIdentifier){
-		String url = createV1Url("datasets", ":persistentId", "add") + "?persistentId=" + dsIdentifier.getId();
-		HttpEntity<String> entity = createHttpEntity("{}");
+	@Override
+	public DatasetFileList uploadNativeFile(Identifier dsIdentifier, byte[] data, String fileName){
+		String url = createV1Url("datasets", ":persistentId", "add") + "?persistentId=" + dsIdentifier.getPersistentId();
 		ParameterizedTypeReference<DataverseResponse<DatasetFileList>> type =
 				new ParameterizedTypeReference<DataverseResponse<DatasetFileList>>() {};
+		HttpEntity<MultiValueMap<String, Object>> entity = new NativeFileUploader().uploadFile(apiKey, data, fileName);
 		ResponseEntity<DataverseResponse<DatasetFileList>> resp = template.exchange(url, HttpMethod.POST, entity, type);
 		log.debug("{}", resp.getBody());
 		handleError(resp);

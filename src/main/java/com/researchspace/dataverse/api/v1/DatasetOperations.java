@@ -3,19 +3,12 @@
  */
 package com.researchspace.dataverse.api.v1;
 
+import com.researchspace.dataverse.entities.*;
+import com.researchspace.dataverse.entities.facade.DatasetFacade;
+
 import java.io.File;
 import java.io.InputStream;
 import java.util.List;
-
-import com.researchspace.dataverse.entities.DataSetMetadataBlock;
-import com.researchspace.dataverse.entities.Dataset;
-import com.researchspace.dataverse.entities.DatasetVersion;
-import com.researchspace.dataverse.entities.DataverseResponse;
-import com.researchspace.dataverse.entities.DvMessage;
-import com.researchspace.dataverse.entities.Identifier;
-import com.researchspace.dataverse.entities.PublishedDataset;
-import com.researchspace.dataverse.entities.Version;
-import com.researchspace.dataverse.entities.facade.DatasetFacade;
 /**
 <pre>
   Copyright 2016 ResearchSpace
@@ -63,7 +56,9 @@ public interface DatasetOperations {
 	 */
 	List<DatasetVersion> getDatasetVersions(Identifier dsIdentifier);
 
-	/**
+    DatasetFileList uploadNativeFile(Identifier dsIdentifier, byte[] data, String fileName);
+
+    /**
 	 * Uploads a file to a dataset
 	 * @param doi The DOI of the  Dataset
 	 * @param file The file to add to the DataSet
