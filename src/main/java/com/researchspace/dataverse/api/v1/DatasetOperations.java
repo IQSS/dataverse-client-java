@@ -42,7 +42,6 @@ public interface DatasetOperations {
 	 */
 	DatasetVersion updateDataset(DatasetFacade facade, Identifier id);
 
-    
 	/**
 	 * Retrieves a {@link Dataset} based on its Id.
 	 * @param dsIdentifier
@@ -57,7 +56,27 @@ public interface DatasetOperations {
 	 */
 	List<DatasetVersion> getDatasetVersions(Identifier dsIdentifier);
 
-    DatasetFileList uploadNativeFile(FileUploadMetadata metadata, Identifier dsIdentifier, byte[] data, String fileName);
+	/**
+	 * Upload a file to a dataset using Dataverse's native API (not Sword)
+	 * @param metadata Metadata to attach to the file upload
+	 * @param dsIdentifier The persistent identifier of the dataset
+	 * @param data bytes of data to upload
+	 * @param fileName The name of the file to be created on Dataverse
+	 * @return DatasetFileList information about the uploaded file.
+	 */
+    DatasetFileList uploadNativeFile( byte[] data, FileUploadMetadata metadata, Identifier dsIdentifier, String fileName);
+
+	/**
+	 * Upload a file to a dataset using Dataverse's native API (not Sword).
+	 * @param metadata Metadata to attach to the file upload
+	 * @param contentLength The length of the stream
+	 * @param dsIdentifier The persistent identifier of the dataset
+	 * @param data bytes of data to upload
+	 * @param fileName The name of the file to be created on Dataverse
+	 * @return DatasetFileList information about the uploaded file.
+	 */
+	DatasetFileList uploadNativeFile(InputStream data, long contentLength, FileUploadMetadata metadata,
+									 Identifier dsIdentifier,  String fileName);
 
     /**
 	 * Uploads a file to a dataset

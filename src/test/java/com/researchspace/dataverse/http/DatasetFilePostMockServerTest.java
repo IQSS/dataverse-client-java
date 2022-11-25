@@ -8,8 +8,6 @@ import com.researchspace.dataverse.entities.DatasetFileList;
 import com.researchspace.dataverse.entities.Identifier;
 import com.researchspace.dataverse.search.entities.SearchConfig;
 import com.researchspace.dataverse.testutils.TestFileUtils;
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 import org.springframework.http.HttpMethod;
 import org.springframework.test.web.client.ExpectedCount;
@@ -43,27 +41,22 @@ Copyright 2016 ResearchSpace
 </pre>
 */
 public class DatasetFilePostMockServerTest {
-		
-	@Before
-	public void setUp() throws Exception {
-	}
 
-	@After
-	public void tearDown() throws Exception {
-	}
 
 	@Test
 	public void testNativeFilePost() throws MalformedURLException {
 		RestTemplate template = new RestTemplate();
 		DataverseOperationsImplV1 tss = setupDataverseOps(template);
-		setUpServerResponse(template, "http://anyDataverse.com/api/v1/datasets/:persistentId/add?persistentId=1234",
+		final String persistentid = "doi://dsfh.dsdsd.sds";
+		setUpServerResponse(template, "http://anyDataverse.com/api/v1/datasets/:persistentId/add?persistentId="+persistentid,
 				getDataSetFileUploadResults() );
 		
 		DataverseConfig cfg = new DataverseConfig(new URL("http://anyDataverse.com"), "any", "alias");
 		tss.configure(cfg);
 		Identifier id = new Identifier();
 		id.setId(1234L);
-		DatasetFileList resp = tss.uploadNativeFile( FileUploadMetadata.builder().build(), id, null, null);
+		id.setPersistentId(persistentid);
+		DatasetFileList resp = tss.uploadNativeFile(new byte []{}, FileUploadMetadata.builder().build(), id,  "any");
 		assertNotNull(resp.getFiles());
 		assertEquals(1, resp.getFiles().size());
 	}

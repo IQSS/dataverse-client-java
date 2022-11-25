@@ -11,8 +11,10 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.util.Arrays;
 import java.util.List;
@@ -63,17 +65,51 @@ public class DatasetOperationsTest extends AbstractIntegrationTest {
 	}
 
 	@Test
-	public void uploadFileToDataSetWithNativeApi() throws IOException, URISyntaxException {
-		DatasetFacade facade = createFacade();
-		Identifier datasetId = dataverseOps.createDataset(facade, dataverseAlias);
+	public void uploadFileToDataSetWithNativeApiBytes() throws IOException, URISyntaxException {
+		//arrange
+		Identifier datasetId = createADataset();
 		assertNotNull(datasetId.getId());
-		FileUploadMetadata meta = FileUploadMetadata.builder().description("My description.").categories(Arrays.asList(new String[]{"Data"}))
-				.directoryLabel("test/x").build();
-		DatasetFileList datasetFileList = datasetOps.uploadNativeFile(meta, datasetId, new byte[]{1, 2, 3, 4, 5}, "myFileName.dat");
+		FileUploadMetadata meta = getUploadMetadata();
+
+		//act
+		DatasetFileList datasetFileList = datasetOps.uploadNativeFile(new byte[]{1, 2, 3, 4, 5}, meta, datasetId,  "myFileName.dat");
+
+		//assert
 		assertNotNull(datasetFileList);
 		assertEquals(1, datasetFileList.getFiles().size());
 		assertTrue(datasetFileList.getFiles().get(0).getCategories().contains("Data"));
 		assertTrue(datasetFileList.getFiles().get(0).getDescription().equals(("My description.")));
+		assertEquals(5 ,datasetFileList.getFiles().get(0).getDataFile().getFilesize());
+	}
+
+	@Test
+	public void uploadFileToDataSetWithNativeApiInputStream() throws IOException, URISyntaxException {
+		// arrange
+		Identifier datasetId = createADataset();
+		assertNotNull(datasetId.getId());
+		FileUploadMetadata meta = getUploadMetadata();
+
+		//act
+		DatasetFileList datasetFileList = datasetOps.uploadNativeFile(new ByteArrayInputStream(new byte[]{1, 2, 3, 4, 5,6}), 6, meta, datasetId,  "myFileName.dat");
+
+		//assert
+		assertNotNull(datasetFileList);
+		assertEquals(1, datasetFileList.getFiles().size());
+		DatasetFile uploadedFile = datasetFileList.getFiles().get(0);
+		assertTrue(uploadedFile.getCategories().contains("Data"));
+		assertTrue(uploadedFile.getDescription().equals(("My description.")));
+		assertEquals(6 ,uploadedFile.getDataFile().getFilesize());
+	}
+
+	private Identifier createADataset() throws MalformedURLException, URISyntaxException {
+		DatasetFacade facade = createFacade();
+		Identifier datasetId = dataverseOps.createDataset(facade, dataverseAlias);
+		return datasetId;
+	}
+
+	private FileUploadMetadata getUploadMetadata() {
+		return FileUploadMetadata.builder().description("My description.").categories(Arrays.asList(new String[]{"Data"}))
+				.directoryLabel("test/x").build();
 	}
 
 	@Test

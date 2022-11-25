@@ -21,7 +21,7 @@ public class ObjectOrStringMessageDeserializer extends JsonDeserializer<String> 
         } else if (node.isObject()){
             return node.get("message").toString();
         } else{
-            throw new IllegalArgumentException("expect a string or an object with a string property");
+            throw new IllegalArgumentException("expect a string or an object with a string property 'message'");
         }
 
     }
