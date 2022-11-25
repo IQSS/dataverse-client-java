@@ -16,6 +16,9 @@ import com.researchspace.dataverse.sword.FileUploader;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.core.io.AbstractResource;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -192,17 +195,43 @@ public class DataverseOperationsImplV1 extends AbstractOpsImplV1 implements Data
 	}
 
 	@Override
-	public DatasetFileList uploadNativeFile( FileUploadMetadata metadata, Identifier dsIdentifier, byte[] data, String fileName){
+	public DatasetFileList uploadNativeFile( byte[] data, FileUploadMetadata metadata, Identifier dsIdentifier,  String fileName){
+		ByteArrayResource resource = new ByteArrayResource(data){
+			@Override
+			public String getFilename(){
+				return fileName;
+			}
+		};
+		return getDatasetFileList(metadata, dsIdentifier, resource);
+	}
+	@Override
+	public DatasetFileList uploadNativeFile(InputStream data, long contentLength, FileUploadMetadata metadata, Identifier dsIdentifier,  String fileName) {
+		InputStreamResource resource = new InputStreamResource(data) {
+			@Override
+			public String getFilename(){
+				return fileName;
+			}
+
+			@Override
+			public long contentLength() throws IOException {
+				return contentLength;
+			}
+		};
+		return getDatasetFileList(metadata, dsIdentifier,  resource);
+
+	}
+
+	private DatasetFileList getDatasetFileList(FileUploadMetadata metadata, Identifier dsIdentifier, AbstractResource resource) {
 		String url = createV1Url("datasets", ":persistentId", "add") + "?persistentId=" + dsIdentifier.getPersistentId();
 		ParameterizedTypeReference<DataverseResponse<DatasetFileList>> type =
 				new ParameterizedTypeReference<DataverseResponse<DatasetFileList>>() {};
-		HttpEntity<MultiValueMap<String, Object>> entity = new NativeFileUploader().uploadFile(metadata, apiKey, data, fileName);
+		HttpEntity<MultiValueMap<String, Object>> entity = new NativeFileUploader().createFileUploadEntity(metadata, apiKey, resource);
 		ResponseEntity<DataverseResponse<DatasetFileList>> resp = template.exchange(url, HttpMethod.POST, entity, type);
 		log.debug("{}", resp.getBody());
 		handleError(resp);
 		return resp.getBody().getData();
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see com.researchspace.dataverse.http.DataverseAPI#uploadFile(java.lang.String, java.io.File)
 	 */
