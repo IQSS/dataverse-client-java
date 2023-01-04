@@ -1,24 +1,3 @@
-/*
- * 
- */
-package com.researchspace.dataverse.http;
-
-import java.util.Arrays;
-
-import org.apache.commons.lang.StringUtils;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.client.RestClientException;
-import org.springframework.web.client.RestTemplate;
-
-import com.researchspace.dataverse.api.v1.DataverseConfig;
-import com.researchspace.dataverse.entities.DataverseResponse;
-import com.researchspace.springrest.ext.LoggingResponseErrorHandler;
-import com.researchspace.springrest.ext.RestUtil;
-
-import lombok.extern.slf4j.Slf4j;
-
 /** <pre>
 Copyright 2016 ResearchSpace
 
@@ -33,76 +12,112 @@ Copyright 2016 ResearchSpace
  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  See the License for the specific language governing permissions and
  limitations under the License.
-</pre>
-*/
+</pre> */
+package com.researchspace.dataverse.http;
+
+import java.io.IOException;
+import java.util.Arrays;
+
+import org.apache.commons.lang.StringUtils;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.http.client.ClientHttpResponse;
+import org.springframework.web.client.ResponseErrorHandler;
+import org.springframework.web.client.RestTemplate;
+
+import com.researchspace.dataverse.api.v1.DataverseConfig;
+import com.researchspace.dataverse.entities.DataverseResponse;
+import com.researchspace.springrest.ext.RestClientException;
+import com.researchspace.springrest.ext.RestUtil;
+
+import lombok.extern.slf4j.Slf4j;
+
+/**
+ * Abstract extension class for v1 operation classes.
+ */
 @Slf4j
 public abstract class AbstractOpsImplV1 {
-	
-	String apiKey = "";
-	String serverURL = "";
-	String serverAPIURL = serverURL +"/api";
-	String serverAPIv1URL = serverAPIURL +"/v1";
-	protected RestTemplate template;
 
-	public AbstractOpsImplV1() {
-		super();
-		this.template = createTemplate();
-	}
+    String apiKey = "";
+    String serverURL = "";
+    String serverAPIURL = serverURL +"/api";
+    String serverAPIv1URL = serverAPIURL +"/v1";
+    protected RestTemplate template;
 
-	protected void setTemplate(RestTemplate template) {
-		this.template = template;
-	}
+    protected AbstractOpsImplV1() {
+        createTemplate();
+    }
 
-	public final static String apiHeader = "X-Dataverse-key";
-	public void setApiKey(String apiKey) {
-		this.apiKey = apiKey;
-	}
+    public class CustomErrorHandler implements ResponseErrorHandler {
 
-	public void setServerURL(String serverURL) {
-		this.serverURL = serverURL;
-		this.serverAPIURL = serverURL + "/api";
-		this.serverAPIv1URL = this.serverAPIURL +"/v1";
-	}
-	
-	public void configure(DataverseConfig config) {
-		setApiKey(config.getApiKey());
-		setServerURL(config.getServerURL().toString());		
-	}
-	
-	 <T> void handleError(ResponseEntity<DataverseResponse<T>> resp) {
-		log.debug("{}", resp.getBody());
-		if (RestUtil.isError(resp.getStatusCode())) {
-			String msg = String.format("Error  code returned %d with message [%s]", resp.getStatusCodeValue(),
-					resp.getBody().getMessage());
-			log.error(msg);
-			throw new RestClientException(msg);
-		}
-	}
+        @Override
+        public boolean hasError(final ClientHttpResponse response) throws IOException {
+            return RestUtil.isError(response.getStatusCode());
+        }
 
-	RestTemplate createTemplate() {
-		RestTemplate template = new RestTemplate();
-		template.setErrorHandler(new LoggingResponseErrorHandler());
-		return template;
-	}
-	
-	String createV1Url(String ... pathComponents) {
-		String url = serverAPIv1URL + "/" + StringUtils.join(pathComponents, "/") ;
-		log.info("URL is {}", url);
-		return url;
-	}
-   
-	String createAdminUrl(String ... pathComponents) {
-		String url = serverAPIURL + "/" + StringUtils.join(pathComponents, "/") ;
-		log.info("URL is {}", url);
-		return url;
-	}
-	
+        @Override
+        public void handleError(final ClientHttpResponse response) throws IOException, RestClientException {
+            log.error("Error code returned %d with message [%s]",
+                    response.getStatusCode().value(),
+                    response.getStatusText());
+            throw new RestClientException(response.getStatusCode().value(), response.getStatusText());
+        }
+    }
+
+    protected void setTemplate(final RestTemplate template) {
+        this.template = template;
+    }
+
+    public static final String API_HEADER = "X-Dataverse-key";
+
+    public void setApiKey(final String apiKey) {
+        this.apiKey = apiKey;
+    }
+
+    public void setServerURL(final String serverURL) {
+        this.serverURL = serverURL;
+        serverAPIURL = serverURL + "/api";
+        serverAPIv1URL = serverAPIURL +"/v1";
+    }
+
+    public void configure(final DataverseConfig config) {
+        setApiKey(config.getApiKey());
+        setServerURL(config.getServerURL().toString());
+    }
+
+    <T> void handleError(final ResponseEntity<DataverseResponse<T>> resp) throws RestClientException {
+        log.debug("{}", resp.getBody());
+        if (RestUtil.isError(resp.getStatusCode())) {
+            log.error("Error code returned %d with message [%s]", resp.getStatusCodeValue(),
+                    resp.getBody().getMessage());
+            throw new RestClientException(resp.getStatusCodeValue(), resp.getBody().getMessage());
+        }
+    }
+
+    void createTemplate() {
+        template = new RestTemplate();
+        template.setErrorHandler(new CustomErrorHandler());
+    }
+
+    String createV1Url(final String ... pathComponents) {
+        final String url = serverAPIv1URL + "/" + StringUtils.join(pathComponents, "/") ;
+        log.info("URL is {}", url);
+        return url;
+    }
+
+    String createAdminUrl(final String ... pathComponents) {
+        final String url = serverAPIURL + "/" + StringUtils.join(pathComponents, "/") ;
+        log.info("URL is {}", url);
+        return url;
+    }
+
     HttpHeaders addAPIKeyToHeader() {
-		HttpHeaders headers = new HttpHeaders();
-		headers.setContentType(MediaType.APPLICATION_JSON);
-		headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
-		headers.add(apiHeader, apiKey);
-		return headers;
-	}
+        final HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON_UTF8));
+        headers.add(API_HEADER, apiKey);
+        return headers;
+    }
 
 }

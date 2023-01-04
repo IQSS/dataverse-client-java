@@ -1,13 +1,3 @@
-/*
- * 
- */
-package com.researchspace.dataverse.search.entities;
-
-import com.fasterxml.jackson.annotation.JsonProperty;
-
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
 /** <pre>
 Copyright 2016 ResearchSpace
 
@@ -22,19 +12,27 @@ Copyright 2016 ResearchSpace
  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  See the License for the specific language governing permissions and
  limitations under the License.
-</pre>
-*/
+</pre> */
+package com.researchspace.dataverse.search.entities;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
+
 @Data
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 public class DataverseItem extends Item {
-	String identifier;
-	@JsonProperty("published_at")
-	String publishedAt;
+    String identifier;
+    @JsonProperty("published_at")
+    String publishedAt;
 
-	public String getType() {
-		return "dataverse";
-	}
+    @Override
+    public String getType() {
+        return "dataverse";
+    }
 
 
 }

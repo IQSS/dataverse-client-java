@@ -1,17 +1,4 @@
-/*
- * 
- */
-package com.researchspace.dataverse.search.entities;
-
-import java.util.List;
-import java.util.stream.Collectors;
-
-import com.fasterxml.jackson.annotation.JsonProperty;
-
-import lombok.Data;
-
-/**
- * /** <pre>
+/** <pre>
 Copyright 2016 ResearchSpace
 
  Licensed under the Apache License, Version 2.0 (the "License");
@@ -25,36 +12,43 @@ Copyright 2016 ResearchSpace
  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  See the License for the specific language governing permissions and
  limitations under the License.
-</pre>
+</pre> */
+package com.researchspace.dataverse.search.entities;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import lombok.Data;
+
+/**
  * Encapsulates search results.
- * <p/>
- * Items' subclass can be identified from the 'type' value.
- * 
+ * Items subclass can be identified from the 'type' value.
  * @author rspace
- *
  */
 @Data
 public class SearchResults <T extends Item> {
 
-	String q;
-	@JsonProperty(value = "total_count")
-	private int totalCount;
-	@JsonProperty(value = "count_in_response")
-	private int countInResponse;
-	int start;
+    String q;
+    @JsonProperty(value = "total_count")
+    private int totalCount;
+    @JsonProperty(value = "count_in_response")
+    private int countInResponse;
+    int start;
 
-	List<Object> spellingAlternatives;
-	List<T> items;
-	
-	/**
-	 * Filters a list of SearchHits by their type.
-	 * @param type
-	 * @return
-	 */
-	public List<Item> filterByType (SearchType type) {
-		return items.stream().filter((i)->
-		 i.getType().equalsIgnoreCase(type.name()))
-		.collect(Collectors.toList());
-	}
+    List<Object> spellingAlternatives;
+    List<T> items;
+
+    /**
+     * Filters a list of SearchHits by their type.
+     * @param type
+     * @return
+     */
+    public List<Item> filterByType (final SearchType type) {
+        return items.stream().filter((i)->
+        i.getType().equalsIgnoreCase(type.name()))
+                .collect(Collectors.toList());
+    }
 
 }

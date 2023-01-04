@@ -1,9 +1,3 @@
-/*
- * 
- */
-package com.researchspace.springrest.ext;
-
-import org.springframework.http.HttpStatus;
 /** <pre>
 Copyright 2016 ResearchSpace
 
@@ -18,13 +12,19 @@ Copyright 2016 ResearchSpace
  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  See the License for the specific language governing permissions and
  limitations under the License.
-</pre>
-*/
+</pre> */
+package com.researchspace.springrest.ext;
+
+import org.springframework.http.HttpStatus;
+
+/**
+ * Rest client Utils.
+ */
 public class RestUtil {
 
-    public static boolean isError(HttpStatus status) {
-        HttpStatus.Series series = status.series();
-        return (HttpStatus.Series.CLIENT_ERROR.equals(series)
-                || HttpStatus.Series.SERVER_ERROR.equals(series));
+    public static boolean isError(final HttpStatus status) {
+        final HttpStatus.Series series = status.series();
+        return HttpStatus.Series.CLIENT_ERROR.equals(series)
+                || HttpStatus.Series.SERVER_ERROR.equals(series);
     }
 }

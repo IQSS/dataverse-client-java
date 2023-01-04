@@ -1,13 +1,3 @@
-/*
- * 
- */
-package com.researchspace.dataverse.entities.facade;
-
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-
-import com.researchspace.dataverse.entities.facade.DatasetAuthor;
 /** <pre>
 Copyright 2016 ResearchSpace
 
@@ -22,21 +12,26 @@ Copyright 2016 ResearchSpace
  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  See the License for the specific language governing permissions and
  limitations under the License.
-</pre>
-*/
+</pre> */
+package com.researchspace.dataverse.entities.facade;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
 public class DatasetAuthorTest {
 
-	@Before
-	public void setUp() throws Exception {
-	}
+    @Before
+    public void setUp() throws Exception {
+    }
 
-	@After
-	public void tearDown() throws Exception {
-	}
+    @After
+    public void tearDown() throws Exception {
+    }
 
-	@Test(expected = NullPointerException.class)
-	public void testNameRequired() {
-		DatasetAuthor.builder().authorAffiliation("somewhere").build();
-	}
+    @Test(expected = NullPointerException.class)
+    public void testNameRequired() {
+        DatasetAuthor.builder().authorAffiliation("somewhere").build();
+    }
 
 }

@@ -1,18 +1,3 @@
-/*
- * 
- */
-package com.researchspace.dataverse.entities.facade;
-
-import static org.junit.Assert.*;
-
-import java.util.Date;
-
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-
-import java.util.Calendar;
-import com.researchspace.dataverse.entities.facade.DatasetFacade;
 /** <pre>
 Copyright 2016 ResearchSpace
 
@@ -27,40 +12,52 @@ Copyright 2016 ResearchSpace
  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  See the License for the specific language governing permissions and
  limitations under the License.
-</pre>
-*/
+</pre> */
+package com.researchspace.dataverse.entities.facade;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+
+import java.util.Calendar;
+import java.util.Date;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
+
 public class DatasetFacadeTest {
 
-	@Before
-	public void setUp() throws Exception {
-	}
+    @Before
+    public void setUp() throws Exception {
+    }
 
-	@After
-	public void tearDown() throws Exception {
-	}
+    @After
+    public void tearDown() throws Exception {
+    }
 
-	@Test(expected = NullPointerException.class)
-	public void testAuthorRequired() {
-		DatasetFacade.builder().contact(DatasetTestFactory.buildAContact()).build();
-	}
-	
-	@Test(expected = NullPointerException.class)
-	public void testContactRequired() {
-		DatasetFacade.builder().author(DatasetTestFactory.buildAnAuthor()).build();
-	}
-	
-	@Test
-	public void testProductionDate() {
-		DatasetFacade facade = new DatasetFacade() ;
-		assertNull(facade.getProductionDate());
-		Calendar cal = Calendar.getInstance();
-		Date now = cal.getTime();
-		long nowMillis = now.getTime();
-		facade.setProductionDate(now);
-		now.setTime(10000L);
-		
-		assertEquals(nowMillis, facade.getProductionDate().getTime());
-		
-	}
+    @Test(expected = NullPointerException.class)
+    public void testAuthorRequired() {
+        DatasetFacade.builder().contact(DatasetTestFactory.buildAContact()).build();
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void testContactRequired() {
+        DatasetFacade.builder().author(DatasetTestFactory.buildAnAuthor()).build();
+    }
+
+    @Test
+    public void testProductionDate() {
+        final DatasetFacade facade = new DatasetFacade() ;
+        assertNull(facade.getProductionDate());
+        final Calendar cal = Calendar.getInstance();
+        final Date now = cal.getTime();
+        final long nowMillis = now.getTime();
+        facade.setProductionDate(now);
+        now.setTime(10000L);
+
+        assertEquals(nowMillis, facade.getProductionDate().getTime());
+
+    }
 
 }

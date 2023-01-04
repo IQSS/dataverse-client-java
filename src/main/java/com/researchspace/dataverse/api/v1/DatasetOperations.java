@@ -1,20 +1,3 @@
-/*
- * 
- */
-package com.researchspace.dataverse.api.v1;
-
-import java.io.File;
-import java.util.List;
-
-import com.researchspace.dataverse.entities.DataSetMetadataBlock;
-import com.researchspace.dataverse.entities.Dataset;
-import com.researchspace.dataverse.entities.DatasetVersion;
-import com.researchspace.dataverse.entities.DataverseResponse;
-import com.researchspace.dataverse.entities.DvMessage;
-import com.researchspace.dataverse.entities.Identifier;
-import com.researchspace.dataverse.entities.PublishedDataset;
-import com.researchspace.dataverse.entities.Version;
-import com.researchspace.dataverse.entities.facade.DatasetFacade;
 /**
 <pre>
   Copyright 2016 ResearchSpace
@@ -31,56 +14,100 @@ import com.researchspace.dataverse.entities.facade.DatasetFacade;
    See the License for the specific language governing permissions and
    limitations under the License.
  </pre>
-   
- * @author richard
- *
+ */
+package com.researchspace.dataverse.api.v1;
+
+import java.io.File;
+import java.net.URISyntaxException;
+import java.util.List;
+
+import com.researchspace.dataverse.entities.Dataset;
+import com.researchspace.dataverse.entities.DatasetVersion;
+import com.researchspace.dataverse.entities.DataverseResponse;
+import com.researchspace.dataverse.entities.DvMessage;
+import com.researchspace.dataverse.entities.Identifier;
+import com.researchspace.dataverse.entities.PublishedDataset;
+import com.researchspace.dataverse.entities.Version;
+import com.researchspace.dataverse.entities.facade.DatasetFacade;
+import com.researchspace.springrest.ext.RestClientException;
+import com.researchspace.springrest.ext.SWORDException;
+
+/**
  * Operations on Datasets
- *
- *
+ * @author richard
  */
 public interface DatasetOperations {
 
-	/**
-	 * @param facade The {@link DatasetFacade} containing the updated DataSet data.
-	 * @param id The {@link DataSetMetadataBlock} identifier
-	 * @return A {@link DatasetVersion}
-	 */
-	DatasetVersion updateDataset(DatasetFacade facade, Identifier id);
+    /**
+     * @param facade The {@link DatasetFacade} containing the updated DataSet data.
+     * @param id The {@link DataSetMetadataBlock} identifier
+     * @return A {@link DatasetVersion}
+     */
+    DatasetVersion updateDataset(DatasetFacade facade, Identifier id) throws RestClientException;
 
-    
-	/**
-	 * Retrieves a {@link Dataset} based on its Id.
-	 * @param dsIdentifier
-	 * @return
-	 */
-	Dataset getDataset(Identifier dsIdentifier);
+    /**
+     * Retrieves a {@link Dataset} based on its Id.
+     * @param dsIdentifier
+     * @return a {@link Dataset} from dataverse
+     * @throws RestClientException
+     */
+    Dataset getDataset(Identifier dsIdentifier) throws RestClientException;
 
-	/**
-	 * Gets list of metadata about different Dataset versions.
-	 * @param dsIdentifier
-	 * @return
-	 */
-	List<DatasetVersion> getDatasetVersions(Identifier dsIdentifier);
+    /**
+     * Gets list of metadata about different {@link Dataset} versions.
+     * @param dsIdentifier
+     * @return a list of {@link DatasetVersion}
+     * @throws RestClientException
+     */
+    List<DatasetVersion> getDatasetVersions(Identifier dsIdentifier) throws RestClientException;
 
-	/**
-	 * Uploads a file to a dataset
-	 * @param doi The DOI of the  Dataset
-	 * @param file The file to add to the DataSet
-	 */
-	void uploadFile(String doi, File file);
+    /**
+     * Uploads a file to a dataset
+     * @param doi The DOI of the Dataset
+     * @param file The file to add to the DataSet
+     * @throws SWORDException
+     */
+    void uploadFile(String doi, File file) throws SWORDException;
 
-	/**
-	 * Deletes a {@link Dataset}  
-	 * @param dsIdentifier
-	 * @return
-	 */
-	DvMessage deleteDataset(Identifier dsIdentifier);
-	
-	/**
-	 * Publishes a DataSet, if the parent dataverse is published.
-	 * @param dsIdentifier
-	 * @param version Major/Minor
-	 * @return A {@link DataverseResponse} with  an error message if Dataset could not be published.
-	 */
-	DataverseResponse<PublishedDataset> publishDataset(Identifier dsIdentifier, Version version);
+    /**
+     * List files ids present in a dataset.
+     * @param doi
+     * @return a List of files urls
+     * @throws SWORDException
+     */
+    List<String> listFilesUrls(String doi) throws SWORDException;
+
+    /**
+     * Deletes a {@link Dataset}.
+     * @param dsIdentifier
+     * @return message from dataverse
+     * @throws RestClientException
+     */
+    DvMessage deleteDataset(Identifier dsIdentifier) throws RestClientException;
+
+    /**
+     * Publishes a DataSet, if the parent dataverse is published.
+     * @param dsIdentifier
+     * @param version Major/Minor
+     * @return A {@link DataverseResponse} with  an error message if Dataset could not be published.
+     */
+    DataverseResponse<PublishedDataset> publishDataset(Identifier dsIdentifier, Version version);
+
+    /**
+     * Delete a file with it's name and dataset {@link Identifier}.
+     * @param fileName filename in the dataverse
+     * @param dsIdentifier dataset identifier
+     * @throws SWORDException
+     * @throws URISyntaxException
+     */
+    void deleteFile(final String fileName, final Identifier dsIdentifier) throws URISyntaxException, SWORDException;
+
+    /**
+     * @param dataset The {@link Dataset} containing the updated DataSet data.
+     * @param id The {@link DataSetMetadataBlock} identifier
+     * @return A {@link DatasetVersion}
+     * @throws RestClientException
+     */
+    DatasetVersion updateDataset(Dataset dataset, Identifier id) throws RestClientException;
+
 }

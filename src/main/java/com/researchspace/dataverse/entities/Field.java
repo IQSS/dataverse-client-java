@@ -1,6 +1,3 @@
-/*
- * 
- */
 package com.researchspace.dataverse.entities;
 
 import lombok.AllArgsConstructor;
@@ -22,12 +19,17 @@ Copyright 2016 ResearchSpace
  See the License for the specific language governing permissions and
  limitations under the License.
 </pre>
-*/
+ */
+/**
+ * Metadata field structure.
+ * @author ltromel
+ */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CitationField {
-	private String typeName, typeClass;
-	private boolean multiple;
-	private Object value;
+public class Field {
+
+    private String typeName, typeClass;
+    private boolean multiple;
+    private Object value;
 }

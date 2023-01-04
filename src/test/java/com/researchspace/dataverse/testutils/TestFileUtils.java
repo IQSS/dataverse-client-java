@@ -1,12 +1,3 @@
-/*
- * 
- */
-package com.researchspace.dataverse.testutils;
-
-import java.io.File;
-import java.io.IOException;
-
-import org.apache.commons.io.FileUtils;
 /** <pre>
 Copyright 2016 ResearchSpace
 
@@ -21,16 +12,23 @@ Copyright 2016 ResearchSpace
  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  See the License for the specific language governing permissions and
  limitations under the License.
-</pre>
-*/
+</pre> */
+package com.researchspace.dataverse.testutils;
+
+import java.io.File;
+import java.io.IOException;
+
+import org.apache.commons.io.FileUtils;
+
+
 public class TestFileUtils {
-	
-	public static String getJsonFromFile (String filename) {
-		try {
-			return FileUtils.readFileToString(new File("src/test/resources/data/json", filename));
-		} catch (IOException e) {
-			throw new IllegalStateException("Couldn't read file " + filename);
-		}
-	}
+
+    public static String getJsonFromFile (final String filename) {
+        try {
+            return FileUtils.readFileToString(new File("src/test/resources/data/json", filename));
+        } catch (final IOException e) {
+            throw new IllegalStateException("Couldn't read file " + filename);
+        }
+    }
 
 }

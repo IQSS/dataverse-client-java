@@ -15,20 +15,32 @@ Copyright 2016 ResearchSpace
 </pre> */
 package com.researchspace.dataverse.entities.facade;
 
-import java.net.URI;
-
-import lombok.Builder;
-import lombok.Data;
-
 /**
- * Representation of one Dataset's topic classification for 'topicClassification' field.
+ * Listing of Kind Of Data for Dataset 'KindOfData' field.
  * @author ltromel
  */
-@Data
-@Builder
-public class DatasetTopicClassification {
+public enum DatasetKindOfData {
+    AUDIOVISUAL("Audiovisual"),
+    COLLECTION("Collection"),
+    DATASET("Dataset"),
+    EVENT("Event"),
+    IMAGE("Image"),
+    INTERACTIVE_RESOURCE("Interactive Resource"),
+    OODEL("Model"),
+    PHYSICAL_OBJECT("Physical Object"),
+    SERVICE("Service"),
+    SOFTWARE("Software"),
+    SOUND("Sound"),
+    TEXT("Text"),
+    WORKFLOW("Workflow"),
+    OTHER("Other");
 
-    private String topicClassValue, topicClassVocab;
-    private URI topicClassVocabURI;
+    private String displayName;
+    DatasetKindOfData (final String displayName) {
+        this.displayName = displayName;
+    }
+    public String getDisplayName() {
+        return displayName;
+    }
 
 }

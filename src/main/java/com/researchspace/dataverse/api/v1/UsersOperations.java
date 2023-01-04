@@ -17,24 +17,31 @@
  */
 package com.researchspace.dataverse.api.v1;
 
-import com.researchspace.dataverse.entities.DataverseResponse;
-import com.researchspace.dataverse.entities.DvMessage;
+import java.text.ParseException;
+import java.util.Date;
+
+import com.researchspace.springrest.ext.RestClientException;
 
 /**
- * Wrapper for InfoOperations:
- * <pre>
- * GET http://$SERVER/api/info/settings/:DatasetPublishPopupCustomText
- * and
- * url -X PUT -d "publish" https://demo.dataverse.org/api/admin/settings/:DatasetPublishPopupCustomText
- * </pre>
+ * Operations on Users (tokens).
  */
-public interface InfoOperations {
-
-    DvMessage getDatasetPublishPopupCustomText () ;
+public interface UsersOperations {
 
     /**
-     * Deprecated, does not work for client calls from non-Localhost URLs from Dataverse 4.8 onwards
+     * Get token expiration date.
+     * @return java.util.Date token expiration date.
+     * @throws ParseException
+     * @throws RestClientException
      */
-    DataverseResponse<Object> setDatasetPublishPopupCustomText (String text) ;
+    Date getTokenExpirationDate() throws ParseException;
+
+    /**
+     * Recreate user token.
+     * @return new token
+     * @throws Exception
+     */
+    String recreateToken();
+
+
 
 }

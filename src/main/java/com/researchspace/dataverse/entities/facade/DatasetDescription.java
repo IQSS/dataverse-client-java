@@ -1,16 +1,3 @@
-/*
- * 
- */
-package com.researchspace.dataverse.entities.facade;
-
-import java.util.Date;
-
-
-
-import lombok.Builder;
-import lombok.Data;
-import lombok.NonNull;
-
 /** <pre>
 Copyright 2016 ResearchSpace
 
@@ -26,12 +13,24 @@ Copyright 2016 ResearchSpace
  See the License for the specific language governing permissions and
  limitations under the License.
 </pre>
-*/
+ */
+package com.researchspace.dataverse.entities.facade;
+
+import java.util.Date;
+
+import lombok.Builder;
+import lombok.Data;
+import lombok.NonNull;
+
+/**
+ * Dataset description.
+ */
 @Data
 @Builder
 public class DatasetDescription {
-	
-	private @NonNull String  description;
-	private Date date;
+
+    private @NonNull String  description;
+    private Date date;
+    private String language;
 
 }

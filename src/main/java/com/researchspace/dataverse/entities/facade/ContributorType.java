@@ -1,9 +1,4 @@
-/*
- * 
- */
-package com.researchspace.dataverse.entities.facade;
-/**
- * /** <pre>
+/** <pre>
 Copyright 2016 ResearchSpace
 
  Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,11 +12,11 @@ Copyright 2016 ResearchSpace
  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  See the License for the specific language governing permissions and
  limitations under the License.
-</pre>
-
+</pre> */
+package com.researchspace.dataverse.entities.facade;
+/**
  * Listing of Contributor Types for Dataset 'Contributor' Citation field.
  * @author rspace
- *
  */
 public enum ContributorType {
     DataCollector("Data Collector"),
@@ -41,13 +36,13 @@ public enum ContributorType {
     Supervisor("Supervisor"),
     WorkPackageLeader("Work Package Leader"),
     Other("Other");
-	
-	private String displayName;
-	private ContributorType (String displayName) {
-		this.displayName = displayName;
-	}
-	public String getDisplayName() {
-		return displayName;
-	}
+
+    private String displayName;
+    ContributorType (final String displayName) {
+        this.displayName = displayName;
+    }
+    public String getDisplayName() {
+        return displayName;
+    }
 
 }

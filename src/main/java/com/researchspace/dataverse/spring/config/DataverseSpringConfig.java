@@ -1,17 +1,4 @@
-/*
- * 
- */
-package com.researchspace.dataverse.spring.config;
-
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Scope;
-
-import com.researchspace.dataverse.api.v1.DataverseAPI;
-import com.researchspace.dataverse.http.DataverseAPIImpl;
-
-/**
- * /** <pre>
+/** <pre>
 Copyright 2016 ResearchSpace
 
  Licensed under the Apache License, Version 2.0 (the "License");
@@ -25,18 +12,27 @@ Copyright 2016 ResearchSpace
  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  See the License for the specific language governing permissions and
  limitations under the License.
-</pre>
+</pre> */
+package com.researchspace.dataverse.spring.config;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Scope;
+
+import com.researchspace.dataverse.api.v1.DataverseAPI;
+import com.researchspace.dataverse.http.DataverseAPIImpl;
+
+/**
  * Wires up classes and produces Beans for this component.
  * @author rspace
- *
  */
 @Configuration
 public class DataverseSpringConfig {
-	
-	@Bean
-	@Scope(value="prototype")
-	DataverseAPI dataverseAPI(){
-		return new DataverseAPIImpl();
-	}
-	
+
+    @Bean
+    @Scope(value="prototype")
+    DataverseAPI dataverseAPI(){
+        return new DataverseAPIImpl();
+    }
+
 }

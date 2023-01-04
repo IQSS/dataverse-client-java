@@ -1,18 +1,3 @@
-/*
- * 
- */
-package com.researchspace.dataverse.http;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-
-import org.apache.commons.lang.StringUtils;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-
-import com.researchspace.dataverse.entities.DataverseResponse;
-import com.researchspace.dataverse.entities.DvMessage;
 /** <pre>
 Copyright 2016 ResearchSpace
 
@@ -28,26 +13,41 @@ Copyright 2016 ResearchSpace
  See the License for the specific language governing permissions and
  limitations under the License.
 </pre>
-*/
+ */
+package com.researchspace.dataverse.http;
+
+import static org.junit.Assert.assertTrue;
+
+import org.apache.commons.lang.StringUtils;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
+import com.researchspace.dataverse.entities.DvMessage;
+
+/**
+ * Info operations tests.
+ */
 public class InfoOperationsTest extends AbstractIntegrationTest {
 
-	private static final String PUBLISH_TEXT = "By default datasets are published with the";
+    private static final String PUBLISH_TEXT = "By default datasets are published with the";
 
-	@Before
-	public void setUp() throws Exception {
-		super.setUp();
-	}
+    @Override
+    @Before
+    public void setUp() throws Exception {
+        super.setUp();
+    }
 
-	@After
-	public void tearDown() throws Exception {
-	}
+    @After
+    public void tearDown() throws Exception {
+    }
 
-	@Test
-	public void testGetDatasetPublishPopupCustomText() {
-		DvMessage originalText = infoOps.getDatasetPublishPopupCustomText();
-		assertTrue("Message text was empty", !StringUtils.isEmpty(originalText.getMessage()));
-		assertTrue(originalText.getMessage().contains(PUBLISH_TEXT));
-			
-	}
+    @Test
+    public void testGetDatasetPublishPopupCustomText() {
+        final DvMessage originalText = infoOps.getDatasetPublishPopupCustomText();
+        assertTrue("Message text was empty", !StringUtils.isEmpty(originalText.getMessage()));
+        assertTrue(originalText.getMessage().contains(PUBLISH_TEXT));
+
+    }
 
 }
