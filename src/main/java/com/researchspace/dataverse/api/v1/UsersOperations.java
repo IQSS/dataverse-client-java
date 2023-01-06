@@ -18,7 +18,7 @@
 package com.researchspace.dataverse.api.v1;
 
 import java.text.ParseException;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 import com.researchspace.springrest.ext.RestClientException;
 
@@ -29,19 +29,18 @@ public interface UsersOperations {
 
     /**
      * Get token expiration date.
-     * @return java.util.Date token expiration date.
+     * @return java.time.LocalDateTime token expiration.
      * @throws ParseException
      * @throws RestClientException
      */
-    Date getTokenExpirationDate() throws ParseException;
+    LocalDateTime getTokenExpirationDate() throws ParseException;
 
     /**
-     * Recreate user token.
-     * @return new token
-     * @throws Exception
+     * Get token expiration text returned by dataverse.
+     * @return String as the form of <Token XXXXX expires on yyyy-MM-dd HH:mm:ss.SSS>.
+     * @throws ParseException
+     * @throws RestClientException
      */
-    String recreateToken();
-
-
+    String getTokenExpiration() throws ParseException;
 
 }

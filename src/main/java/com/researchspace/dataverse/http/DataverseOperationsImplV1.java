@@ -23,11 +23,10 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.text.DateFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import org.apache.abdera.model.Entry;
@@ -453,20 +452,21 @@ DataverseOperations, UsersOperations {
     }
 
     @Override
-    public Date getTokenExpirationDate() throws ParseException, RestClientException {
+    public LocalDateTime getTokenExpirationDate() throws ParseException, RestClientException {
         final String url = createAdminUrl("users", "token");
         final HttpEntity<String> entity = createHttpEntity("");
         final ParameterizedTypeReference<DataverseResponse<DvMessage>> type =
                 new ParameterizedTypeReference<DataverseResponse<DvMessage>>() {
         };
         final ResponseEntity<DataverseResponse<DvMessage>> resp = template.exchange(url, HttpMethod.GET, entity, type);
-        final DateFormat df = new SimpleDateFormat();
-        return df.parse(resp.getBody().getData().getMessage());
+        // Split the String given as <Token -token- expires on -date->
+        final String date = resp.getBody().getData().getMessage().split(" expires on ")[1];
+        return LocalDateTime.parse(date, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS"));
     }
 
     @Override
-    public String recreateToken() throws RestClientException {
-        final String url = createAdminUrl("users", "token", "recreate");
+    public String getTokenExpiration() throws ParseException, RestClientException {
+        final String url = createAdminUrl("users", "token");
         final HttpEntity<String> entity = createHttpEntity("");
         final ParameterizedTypeReference<DataverseResponse<DvMessage>> type =
                 new ParameterizedTypeReference<DataverseResponse<DvMessage>>() {
