@@ -1,14 +1,28 @@
 apply plugin: 'java'
 // enables 'install' task into repository
 apply plugin: 'maven'
+apply plugin: 'maven-publish'
 group = 'com.researchspace'
 sourceCompatibility = 1.8
-version = '0.1.10'
+version = '0.1.12'
 def springVersion='4.3.15.RELEASE'
 def jacksonVersion='2.6.7'
 
 repositories {
-    mavenCentral()  
+    maven {
+        url "$archivaInternal"
+        credentials {
+            username "$archivaUser"
+            password "$archivaPassword"
+        }
+    }
+    maven {
+        url "$archivaSnapshots"
+        credentials {
+            username "$archivaUser"
+            password "$archivaPassword"
+        }
+    }
 }
 
 sourceSets {
@@ -22,11 +36,11 @@ sourceSets {
     }
 }
 
-// these are unused SWORD transitive dependencies which are either obsolete or now included in the JDK
+// These are unused SWORD transitive dependencies which are either obsolete or now included in the JDK
 configurations {
-     all*.exclude group: 'javax.jms'
-     all*.exclude group: 'com.sun.jdmk'
-     all*.exclude group: 'com.sun.jmx'
+    all*.exclude group: 'javax.jms'
+    all*.exclude group: 'com.sun.jdmk'
+    all*.exclude group: 'com.sun.jmx'
     integrationTestCompile.extendsFrom testCompile
     integrationTestRuntime.extendsFrom testRuntime
 }
@@ -51,12 +65,42 @@ dependencies {
     testCompile   'org.slf4j:slf4j-simple:1.7.21'
 }
 
-test{
- testLogging.showStandardStreams = true
- //delegate command line properties through to Test JVM
- systemProperties = System.getProperties()
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+	        groupId 'com.researchspace'
+	        artifactId 'dataverse-client-java'
+	        version '0.1.12'
+	        
+            from components.java
+        }
+    }
+    repositories {
+        maven {
+            url "$archivaInternal"
+            credentials {
+                username "$archivaUser"
+                password "$archivaPassword"
+            }
+        }
+        maven {
+            url "$archivaSnapshots"
+            credentials {
+                username "$archivaUser"
+                password "$archivaPassword"
+            }
+        }
+        maven {
+            url "~/.m2/repository"
+        }
+    }
 }
 
+test {
+    testLogging.showStandardStreams = true
+    // Delegate command line properties through to Test JVM
+    systemProperties = System.getProperties()
+}
 
 task integrationTest(type: Test) {
     testClassesDir = sourceSets.integrationTest.output.classesDir
@@ -72,7 +116,7 @@ tasks.withType(Test) {
     reports.html.destination = file("${reporting.baseDir}/${name}")
 }
 
-//Lists dependencies
+// Lists dependencies
 task listJars << {
     configurations.compile.each { File file -> println file.name }
 }
