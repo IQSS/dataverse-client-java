@@ -276,18 +276,18 @@ public class DataverseOperationsImplV1 extends AbstractOpsImplV1 implements Data
 		return resp.getBody().getData();
 	}
 
-	private HttpEntity<String> createHttpEntity(String body) {
+	protected HttpEntity<String> createHttpEntity(String body) {
 		HttpHeaders headers = addAPIKeyToHeader();
 		HttpEntity<String> entity = new HttpEntity<String>(body, headers);
 		return entity;
 	}
 
-	private String getJsonFromFacade(DatasetFacade facade) {
+	protected String getJsonFromFacade(DatasetFacade facade) {
 		Dataset dataset = new DatasetBuilder().build(facade);
 		return marshalDataset(dataset);
 	}
 
-	private String marshalDataset(Object object) {
+	protected String marshalDataset(Object object) {
 		ObjectMapper mapper = new ObjectMapper();
 		String json = "";
 		try {

@@ -83,7 +83,7 @@ public abstract class AbstractOpsImplV1 {
 		return template;
 	}
 	
-	String createV1Url(String ... pathComponents) {
+	protected String createV1Url(String ... pathComponents) {
 		String url = serverAPIv1URL + "/" + StringUtils.join(pathComponents, "/") ;
 		log.info("URL is {}", url);
 		return url;
