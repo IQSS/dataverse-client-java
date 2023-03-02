@@ -1,5 +1,4 @@
 apply plugin: 'java'
-apply plugin: 'maven-publish'
 
 group = 'com.researchspace'
 sourceCompatibility = 1.8
@@ -9,52 +8,7 @@ def jacksonVersion='2.11.1'
 def lombokVersion='1.18.24'
 
 repositories {
-    maven {
-        url "$archivaInternal"
-        allowInsecureProtocol = true
-        credentials {
-            username "$archivaUser"
-            password "$archivaPassword"
-        }
-    }
-    maven {
-        url "$archivaSnapshots"
-        allowInsecureProtocol = true
-        credentials {
-            username "$archivaUser"
-            password "$archivaPassword"
-        }
-    }
-}
-
-publishing {
-    publications {
-        mavenJava(MavenPublication) {
-	        groupId 'com.researchspace'
-	        artifactId 'dataverse-client-java'
-	        version '1.0.0'
-	        
-            from components.java
-        }
-    }
-    repositories {
-        maven {
-            url "$archivaInternal"
-            allowInsecureProtocol = true
-            credentials {
-                username "$archivaUser"
-                password "$archivaPassword"
-            }
-        }
-        maven {
-            url "$archivaSnapshots"
-            allowInsecureProtocol = true
-            credentials {
-                username "$archivaUser"
-                password "$archivaPassword"
-            }
-        }
-    }
+    mavenCentral()  
 }
 
 configurations.all {
@@ -84,33 +38,33 @@ configurations {
 }
 
 dependencies {
-    implementation 'org.springframework:spring-web:' + springVersion
-    implementation 'org.springframework:spring-context:' + springVersion
-    implementation 'org.springframework:spring-core:' + springVersion
-    implementation 'com.fasterxml.jackson.core:jackson-annotations:' + jacksonVersion
-    implementation 'com.fasterxml.jackson.core:jackson-core:' + jacksonVersion
-    implementation 'com.fasterxml.jackson.core:jackson-databind:' + jacksonVersion
+    implementation 'org.springframework:spring-web:'+springVersion
+    implementation 'org.springframework:spring-context:'+springVersion
+    implementation 'org.springframework:spring-core:'+springVersion
+    implementation 'com.fasterxml.jackson.core:jackson-annotations:'+jacksonVersion
+    implementation 'com.fasterxml.jackson.core:jackson-core:'+jacksonVersion
+    implementation 'com.fasterxml.jackson.core:jackson-databind:'+jacksonVersion
+
     implementation 'org.projectlombok:lombok:' + lombokVersion
     annotationProcessor 'org.projectlombok:lombok:' + lombokVersion
-    testAnnotationProcessor 'org.projectlombok:lombok:' + lombokVersion
     implementation 'org.apache.commons:commons-lang3:3.12.0'
     implementation 'org.slf4j:slf4j-api:1.7.21'
     
-    // for SWORD-API. 
+    //for SWORD-API. 
     implementation 'org.swordapp:sword2-client:0.9.3'
     implementation 'org.apache.abdera:abdera-client:1.1.1'
  
     testImplementation   'junit:junit:4.13.2'
-    testImplementation   'org.springframework:spring-test:' + springVersion
+    testImplementation   'org.springframework:spring-test:'+springVersion
     testImplementation   'org.slf4j:slf4j-simple:1.7.36'
-
 }
 
-test {
-	testLogging.showStandardStreams = true
-	//delegate command line properties through to Test JVM
-	systemProperties = System.getProperties()
+test{
+ testLogging.showStandardStreams = true
+ //delegate command line properties through to Test JVM
+ systemProperties = System.getProperties()
 }
+
 
 task integrationTest(type: Test) {
     testClassesDirs = sourceSets.integrationTest.output
@@ -129,7 +83,6 @@ tasks.withType(Test) {
 //Lists dependencies
 task listJars {
     doLast {
-    	configurations.implementation.canBeResolved = true
-        configurations.implementation.each { File file -> println file.name }
+        configurations.compile.each { File file -> println file.name }
     }
 }
