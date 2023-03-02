@@ -16,8 +16,9 @@ Copyright 2016 ResearchSpace
  */
 package com.researchspace.dataverse.http;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import java.util.Arrays;
@@ -32,13 +33,22 @@ import com.researchspace.dataverse.entities.DataverseGet;
 import com.researchspace.dataverse.entities.DataversePost;
 import com.researchspace.dataverse.entities.DataverseResponse;
 import com.researchspace.dataverse.entities.DvMessage;
+import com.researchspace.springrest.ext.RestClientException;
 
 /**
  * Dataverse operations tests.
  */
 public class DataverseOperationsTest extends AbstractIntegrationTest {
 
+    /**
+     * Not found error.
+     */
+    private static final String NOT_FOUND = "Not Found";
 
+    /**
+     * Not found error code.
+     */
+    private static final Integer NOT_FOUND_CODE = 404;
 
     @Before
     public void setup() throws Exception {
@@ -73,21 +83,28 @@ public class DataverseOperationsTest extends AbstractIntegrationTest {
     }
 
     @Test
-    public void deleteUnknownDataverseHandled () {
-        final DataverseResponse<DvMessage> deleted = dataverseOps.deleteDataverse("ra");
-        assertTrue(deleted.getStatus().equals(ERROR_MSG));
-        assertNull(deleted.getData());
+    public void deleteUnknownDataverseHandled() {
+        RestClientException exception = null;
+        try {
+            dataverseOps.deleteDataverse("ra");
+        } catch (final RestClientException e) {
+            exception = e;
+            assertEquals(NOT_FOUND_CODE, e.getCode());
+            assertEquals(NOT_FOUND, e.getLocalizedMessage());
+        }
+        assertNotNull(exception);
     }
 
     @Test(expected=IllegalArgumentException.class)
-    public void createDataverseValidation () {
+    public void createDataverseValidation() {
         final String dvName = RandomStringUtils.randomAlphabetic(10);
         final DataversePost dv = createADataverse(dvName);
         dv.setAlias("");
         dataverseOps.createNewDataverse("rspace", dv);
     }
-    @Test(expected=IllegalArgumentException.class)
-    public void createDataverseValidationContactREquired () {
+
+    @Test(expected=NullPointerException.class)
+    public void createDataverseValidationContactRequired() {
         final String dvName = RandomStringUtils.randomAlphabetic(10);
         final DataversePost dv = createADataverse(dvName);
         dv.setDataverseContacts(null);
@@ -98,6 +115,6 @@ public class DataverseOperationsTest extends AbstractIntegrationTest {
     public void testGetDataverseById() {
         final DataverseGet dv = dataverseOps.getDataverseById(dataverseAlias);
         assertNotNull(dv.getId());
-        assertTrue(dv.getContactEmails().size() > 0);
+        assertFalse(dv.getContactEmails().isEmpty());
     }
 }

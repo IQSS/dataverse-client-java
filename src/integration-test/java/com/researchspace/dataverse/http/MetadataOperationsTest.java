@@ -16,41 +16,40 @@ Copyright 2016 ResearchSpace
  */
 package com.researchspace.dataverse.http;
 
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.springframework.web.client.RestClientException;
 
 import com.researchspace.dataverse.entities.DVField;
 import com.researchspace.dataverse.entities.MetadataBlock;
-
-import lombok.extern.slf4j.Slf4j;
+import com.researchspace.springrest.ext.RestClientException;
 
 
 /**
  * Metadata operations tests.
  */
-@Slf4j
 public class MetadataOperationsTest  extends AbstractIntegrationTest {
 
     private static final int MIN_BLOCK_SIZE = 6;
 
+    @Override
     @Before
-    public void setup() throws Exception {
+    public void setUp() throws Exception {
         super.setUp();
     }
 
     @Test
-    public void testGetMetdataBlockInfo() throws IOException {
+    public void testGetMetdataBlockInfo() {
         // metadat block size is variable
-        assertTrue( metadataOPs.getMetadataBlockInfo().size() >= MIN_BLOCK_SIZE);
+        assertTrue(metadataOPs.getMetadataBlockInfo().size() >= MIN_BLOCK_SIZE);
     }
 
     @Test(expected = RestClientException.class)
-    public void testGetMetdataByIdBlockInfoWithInvalidId() throws IOException {
+    public void testGetMetdataByIdBlockInfoWithInvalidId() {
         metadataOPs.getMetadataById("abcde");
     }
 
@@ -58,7 +57,8 @@ public class MetadataOperationsTest  extends AbstractIntegrationTest {
     public void testGetMetdataByIdBlockInfo() throws IOException {
         final MetadataBlock block = metadataOPs.getMetadataById("biomedical");
         for (final DVField fld : block.getFields().values()) {
-            log.info(fld.toString());
+            assertNotNull(fld);
+            //            log.info(fld.toString());
         }
     }
 }

@@ -35,4 +35,12 @@ public class SWORDException extends RuntimeException {
         super(msg);
     }
 
+    /**
+     * Construct a new instance of {@code RestClientException} with the given message.
+     * @param msg the message
+     */
+    public SWORDException(final String msg, final Exception e) {
+        super(msg, e.getCause());
+    }
+
 }

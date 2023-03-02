@@ -29,7 +29,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.researchspace.dataverse.entities.Dataset;
 
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class DatasetBuilderTest {
 
     DatasetBuilder builder;
@@ -48,6 +50,6 @@ public class DatasetBuilderTest {
         final ObjectWriter mapper = new ObjectMapper().writerWithDefaultPrettyPrinter();
         final Dataset dversion = builder.build(facade);
         final String json = mapper.writeValueAsString(dversion);
-        System.out.println(json);
+        log.info(json);
     }
 }

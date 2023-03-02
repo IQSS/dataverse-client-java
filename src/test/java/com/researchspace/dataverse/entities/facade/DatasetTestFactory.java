@@ -52,7 +52,8 @@ public class DatasetTestFactory {
                 .alternativeTitle("altTitle")
                 .alternativeURL(new URL("http://www.myrepo.com"))
                 .note("Some note")
-                .languages(Arrays.asList("English", "French"))
+                .kindsOfData(Arrays.asList(DatasetKindOfData.DATASET, DatasetKindOfData.COLLECTION))
+                .languages(Arrays.asList("English"))
                 .build();
     }
 

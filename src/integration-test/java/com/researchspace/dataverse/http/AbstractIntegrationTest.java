@@ -18,8 +18,9 @@ package com.researchspace.dataverse.http;
 
 import java.net.URL;
 
-import org.apache.commons.lang.StringUtils;
-import org.apache.commons.lang.Validate;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.Validate;
+import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.test.context.ContextConfiguration;
@@ -35,14 +36,11 @@ import com.researchspace.dataverse.api.v1.MetadataOperations;
 import com.researchspace.dataverse.api.v1.SearchOperations;
 import com.researchspace.dataverse.spring.config.DataverseSpringConfig;
 
-import lombok.extern.slf4j.Slf4j;
-
 /**
  * Integration tests.
  */
 @TestPropertySource(locations = "classpath:/test.properties")
 @ContextConfiguration(classes = { DataverseSpringConfig.class })
-@Slf4j
 public class AbstractIntegrationTest extends AbstractJUnit4SpringContextTests {
 
     DatasetOperations datasetOps;
@@ -69,7 +67,6 @@ public class AbstractIntegrationTest extends AbstractJUnit4SpringContextTests {
 
     public void setUp() throws Exception {
         validateServerCredentials();
-        log.info("serverURL: [{}], apiKey: [{}], dataverseId=[{}]", serverURL, apiKey, dataverseAlias);
         final URL uri = new URL(serverURL);
         final DataverseConfig cfg = new DataverseConfig(uri, apiKey, dataverseAlias);
         dataverseAPI.configure(cfg);
@@ -88,6 +85,11 @@ public class AbstractIntegrationTest extends AbstractJUnit4SpringContextTests {
                 "Dataverse alias must be set via command line -DdataverseAlias option or in test.properties");
         Validate.notEmpty(serverURL,
                 "Dataverse server URL must be set via command line -DdataverseServerURL option or in test.properties)");
+    }
+
+    @Test
+    public void test() {
+        // stop complaints about no methods
     }
 
 }

@@ -35,8 +35,8 @@ public class RestClientException extends RuntimeException {
 
     /**
      * Construct a new instance of {@code RestClientException} with the given message.
-     * @param msg the message
      * @param errorCode error code
+     * @param msg the message
      */
     public RestClientException(final Integer errorCode, final String msg) {
         super(msg);

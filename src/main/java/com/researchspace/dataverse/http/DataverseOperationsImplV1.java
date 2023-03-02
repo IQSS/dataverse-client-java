@@ -15,27 +15,32 @@ Copyright 2016 ResearchSpace
 </pre> */
 package com.researchspace.dataverse.http;
 
-import static org.apache.commons.lang.StringUtils.isEmpty;
-import static org.apache.commons.lang.Validate.isTrue;
-import static org.apache.commons.lang.Validate.noNullElements;
+import static org.apache.commons.lang3.StringUtils.isEmpty;
+import static org.apache.commons.lang3.Validate.isTrue;
+import static org.apache.commons.lang3.Validate.noNullElements;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.text.ParseException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.abdera.model.Entry;
-import org.apache.commons.lang.StringUtils;
 import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.core.io.AbstractResource;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.MultiValueMap;
 import org.swordapp.client.CollectionEntries;
 import org.swordapp.client.ProtocolViolationException;
 import org.swordapp.client.SWORDClientException;
@@ -49,6 +54,7 @@ import com.researchspace.dataverse.api.v1.InfoOperations;
 import com.researchspace.dataverse.api.v1.MetadataOperations;
 import com.researchspace.dataverse.api.v1.UsersOperations;
 import com.researchspace.dataverse.entities.Dataset;
+import com.researchspace.dataverse.entities.DatasetFileList;
 import com.researchspace.dataverse.entities.DatasetVersion;
 import com.researchspace.dataverse.entities.DataverseGet;
 import com.researchspace.dataverse.entities.DataverseObject;
@@ -75,13 +81,13 @@ public class DataverseOperationsImplV1 extends AbstractOpsImplV1
 implements DatasetOperations, MetadataOperations, InfoOperations,
 DataverseOperations, UsersOperations {
 
-
     /* (non-Javadoc)
      * @see com.researchspace.dataverse.http.DataverseAPI#getDataverseById(java.lang.String)
      */
     @Override
     public DataverseGet getDataverseById(final String dataverseAlias) {
         final String url = createV1Url("dataverses" , dataverseAlias);
+        log.debug(url);
         final HttpEntity<String> entity = createHttpEntity("");
         final ParameterizedTypeReference<DataverseResponse<DataverseGet>> type =
                 new ParameterizedTypeReference<DataverseResponse<DataverseGet>>() {
@@ -91,18 +97,17 @@ DataverseOperations, UsersOperations {
         return resp.getBody().getData();
     }
 
-
-
     @Override
     public DataverseResponse<DvMessage> deleteDataverse(final String dataverseAlias) {
         final String url = createV1Url("dataverses", dataverseAlias);
+        log.debug(url);
+
         final HttpEntity<String> entity = createHttpEntity("");
         final ParameterizedTypeReference<DataverseResponse<DvMessage>> type =
-                new ParameterizedTypeReference<DataverseResponse<DvMessage>>() {
-        };
-        final ResponseEntity<DataverseResponse<DvMessage>> resp = template.exchange(url, HttpMethod.DELETE, entity, type);
-        log.debug(resp.getBody().toString());
-        return resp.getBody();
+                new ParameterizedTypeReference<DataverseResponse<DvMessage>>() {};
+                final ResponseEntity<DataverseResponse<DvMessage>> resp = template.exchange(url, HttpMethod.DELETE, entity, type);
+                log.debug(resp.getBody().toString());
+                return resp.getBody();
 
     }
 
@@ -145,7 +150,7 @@ DataverseOperations, UsersOperations {
 
     @Override
     public Identifier createDataset(final String dataSetJson, final String dataverseAlias) throws RestClientException {
-        final String url = createV1Url("dataverses", dataverseAlias,"datasets");
+        final String url = createV1Url("dataverses", dataverseAlias, "datasets");
         final HttpEntity<String> entity = createHttpEntity(dataSetJson);
         final ParameterizedTypeReference<DataverseResponse<Identifier>> type =
                 new ParameterizedTypeReference<DataverseResponse<Identifier>>() {
@@ -196,7 +201,7 @@ DataverseOperations, UsersOperations {
      */
     @Override
     public Dataset getDataset(final Identifier dsIdentifier) throws RestClientException {
-        final String url = createV1Url("datasets",  dsIdentifier.getId() +"");
+        final String url = createV1Url("datasets",  dsIdentifier.getId() + "");
         final HttpEntity<String> entity = createHttpEntity("");
         final ParameterizedTypeReference<DataverseResponse<Dataset>> type =
                 new ParameterizedTypeReference<DataverseResponse<Dataset>>() {
@@ -211,7 +216,7 @@ DataverseOperations, UsersOperations {
      */
     @Override
     public List<DatasetVersion> getDatasetVersions (final Identifier dsIdentifier) throws RestClientException {
-        final String url = createV1Url("datasets",  dsIdentifier.getId() +"", "versions");
+        final String url = createV1Url("datasets",  dsIdentifier.getId() + "", "versions");
         final HttpEntity<String> entity = createHttpEntity("");
         final ParameterizedTypeReference<DataverseResponse<List<DatasetVersion>>> type =
                 new ParameterizedTypeReference<DataverseResponse<List<DatasetVersion>>>() {};
@@ -235,7 +240,7 @@ DataverseOperations, UsersOperations {
             log.error(msg);
             throw new SWORDException(msg);
         } catch (final SWORDError error) {
-            if (!StringUtils.isEmpty(error.getErrorBody())) {
+            if (!isEmpty(error.getErrorBody())) {
                 final String msg = String.format("SwordError: %s", error.getErrorBody());
                 log.error(msg);
                 throw new SWORDException(msg);
@@ -327,7 +332,7 @@ DataverseOperations, UsersOperations {
      */
     @Override
     public List<MetadataBlock> getMetadataBlockInfo() throws RestClientException {
-        final String url = createV1Url("metadatablocks" );
+        final String url = createV1Url("metadatablocks");
         final HttpHeaders headers = addAPIKeyToHeader();
         final HttpEntity<String> entity = new HttpEntity<>("parameters", headers);
         final ParameterizedTypeReference<DataverseResponse<List<MetadataBlock>>> type =
@@ -369,22 +374,26 @@ DataverseOperations, UsersOperations {
         final HttpEntity<String> entity = createHttpEntity("");
         final ParameterizedTypeReference<DataverseResponse<PublishedDataset>> type = new ParameterizedTypeReference<DataverseResponse<PublishedDataset>>() {
         };
-        final ResponseEntity<DataverseResponse<PublishedDataset>> resp = template.exchange(url, HttpMethod.POST, entity, type);
-        log.debug(resp.getBody().toString());
-        return resp.getBody();
+        try {
+            final ResponseEntity<DataverseResponse<PublishedDataset>> resp = template.exchange(url, HttpMethod.POST, entity, type);
+            log.debug(resp.getBody().toString());
+            return resp.getBody();
+        } catch (final RestClientException e) {
+            throw new RestClientException(e.getCode(), e.getMessage());
+        }
 
     }
 
     @Override
-    public DataverseResponse<DataversePost> publishDataverse(final String dvName) {
+    public DataverseResponse<DataversePost> publishDataverse(final String dvName) throws RestClientException {
         final String url = createV1Url("dataverses", dvName, "actions", ":publish");
         final HttpEntity<String> entity = createHttpEntity("");
         final ParameterizedTypeReference<DataverseResponse<DataversePost>> type = new ParameterizedTypeReference<DataverseResponse<DataversePost>>() {
         };
         final ResponseEntity<DataverseResponse<DataversePost>> resp = template.exchange(url, HttpMethod.POST, entity, type);
         log.debug(resp.getBody().toString());
+        handleError(resp);
         return resp.getBody();
-
     }
 
     @Override
@@ -422,7 +431,7 @@ DataverseOperations, UsersOperations {
             log.error(msg);
             throw new SWORDException(msg);
         } catch (final SWORDError error) {
-            if (!StringUtils.isEmpty(error.getErrorBody())) {
+            if (!isEmpty(error.getErrorBody())) {
                 final String msg = String.format("SwordError: %s", error.getErrorBody());
                 log.error(msg);
                 throw new SWORDException(msg);
@@ -441,7 +450,7 @@ DataverseOperations, UsersOperations {
             log.error("cause : {}", e.getCause());
             throw new SWORDException(e.getMessage());
         } catch (final SWORDError error) {
-            if (!StringUtils.isEmpty(error.getErrorBody())) {
+            if (!isEmpty(error.getErrorBody())) {
                 log.error("SwordError: {}", error.getErrorBody());
                 throw new SWORDException(error.getErrorBody());
             }
@@ -461,7 +470,13 @@ DataverseOperations, UsersOperations {
         final ResponseEntity<DataverseResponse<DvMessage>> resp = template.exchange(url, HttpMethod.GET, entity, type);
         // Split the String given as <Token -token- expires on -date->
         final String date = resp.getBody().getData().getMessage().split(" expires on ")[1];
-        return LocalDateTime.parse(date, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS"));
+        LocalDateTime time;
+        try {
+            time = LocalDateTime.parse(date, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS"));
+        } catch (final DateTimeParseException e) {
+            time = LocalDateTime.parse(date, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SS"));
+        }
+        return time;
     }
 
     @Override
@@ -475,4 +490,58 @@ DataverseOperations, UsersOperations {
         return resp.getBody().getData().getMessage();
     }
 
+    @Override
+    public DatasetFileList uploadNativeFile( final byte[] data, final FileUploadMetadata metadata, final Identifier dsIdentifier,  final String fileName){
+        final ByteArrayResource resource = new ByteArrayResource(data){
+            @Override
+            public String getFilename(){
+                return fileName;
+            }
+        };
+        return getDatasetFileList(metadata, dsIdentifier, resource);
+    }
+    @Override
+    public DatasetFileList uploadNativeFile(final InputStream data, final long contentLength, final FileUploadMetadata metadata, final Identifier dsIdentifier,  final String fileName) {
+        final InputStreamResource resource = new InputStreamResource(data) {
+            @Override
+            public String getFilename(){
+                return fileName;
+            }
+
+            @Override
+            public long contentLength() throws IOException {
+                return contentLength;
+            }
+        };
+        return getDatasetFileList(metadata, dsIdentifier,  resource);
+
+    }
+
+    private DatasetFileList getDatasetFileList(final FileUploadMetadata metadata, final Identifier dsIdentifier, final AbstractResource resource) {
+        final String url = createV1Url("datasets", ":persistentId", "add") + "?persistentId=" + dsIdentifier.getPersistentId();
+        final ParameterizedTypeReference<DataverseResponse<DatasetFileList>> type =
+                new ParameterizedTypeReference<DataverseResponse<DatasetFileList>>() {};
+                final HttpEntity<MultiValueMap<String, Object>> entity = new NativeFileUploader().createFileUploadEntity(metadata, apiKey, resource);
+                final ResponseEntity<DataverseResponse<DatasetFileList>> resp = template.exchange(url, HttpMethod.POST, entity, type);
+                log.debug("{}", resp.getBody());
+                handleError(resp);
+                return resp.getBody().getData();
+    }
+
+    @Override
+    public void uploadFile(final String doi, final InputStream file, final String filename) {
+        final SwordAPI uploader = new SwordAPI();
+        try {
+            uploader.deposit(file, filename, apiKey, new URI(serverURL), doi);
+        } catch (IOException | SWORDClientException  | ProtocolViolationException | URISyntaxException e) {
+            log.error("Couldn't upload file {} with doi {} : {}", filename, doi, e.getMessage());
+            throw new SWORDException("Couldn't upload file.", e);
+        } catch (final SWORDError e) {
+            if (!isEmpty(e.getErrorBody())) {
+                log.error("SwordError: {}", e.getErrorBody());
+                throw new SWORDException("SwordError", e);
+            }
+        }
+
+    }
 }

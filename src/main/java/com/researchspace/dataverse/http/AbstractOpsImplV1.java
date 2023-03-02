@@ -58,7 +58,7 @@ public abstract class AbstractOpsImplV1 {
 
         @Override
         public void handleError(final ClientHttpResponse response) throws IOException, RestClientException {
-            log.error("Error code returned %d with message [%s]",
+            log.error("Error code returned {} with message {}",
                     response.getStatusCode().value(),
                     response.getStatusText());
             throw new RestClientException(response.getStatusCode().value(), response.getStatusText());
@@ -102,22 +102,26 @@ public abstract class AbstractOpsImplV1 {
 
     String createV1Url(final String ... pathComponents) {
         final String url = serverAPIv1URL + "/" + StringUtils.join(pathComponents, "/") ;
-        log.info("URL is {}", url);
+        log.debug("URL is {}", url);
         return url;
     }
 
     String createAdminUrl(final String ... pathComponents) {
         final String url = serverAPIURL + "/" + StringUtils.join(pathComponents, "/") ;
-        log.info("URL is {}", url);
+        log.debug("URL is {}", url);
         return url;
     }
 
     HttpHeaders addAPIKeyToHeader() {
         final HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
-        headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON_UTF8));
-        headers.add(API_HEADER, apiKey);
+        headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
+        addApiKey(headers);
         return headers;
+    }
+
+    void addApiKey(final HttpHeaders headers) {
+        headers.add(API_HEADER, apiKey);
     }
 
 }

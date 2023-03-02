@@ -15,9 +15,10 @@ Copyright 2016 ResearchSpace
 </pre> */
 package com.researchspace.dataverse.search.entities;
 
+
 import java.util.EnumSet;
 
-import org.apache.commons.lang.Validate;
+import org.apache.commons.lang3.Validate;
 
 import lombok.Builder;
 import lombok.NonNull;
@@ -38,9 +39,9 @@ public class SearchConfig {
      * @author rspace
      */
     public static class SearchConfigBuilder {
-
         /**
          * Sets results per page. Maximum is 1000
+         *
          * @param perPage
          *            if &gt 1000, will set to 1000
          * @return
@@ -58,6 +59,7 @@ public class SearchConfig {
 
         /**
          * Sets results per page. Maximum is 1000
+         *
          * @param perPage
          *            if &gt 1000, will set to 1000
          * @return
@@ -75,10 +77,12 @@ public class SearchConfig {
     public static final int MAX_RESULTS_PER_PAGE = 1000;
     private EnumSet<SearchType> type;
     private @NonNull String q;
-    private String subtree, filterQuery;
+    private String subtree;
+    private String filterQuery;
     private SortBy sortBy;
     private SortOrder sortOrder;
     private int perPage, start;
-    private boolean showRelevance, showFacets;
+    private boolean showRelevance;
+    private boolean showFacets;
 
 }

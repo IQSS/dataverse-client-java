@@ -18,10 +18,12 @@
 package com.researchspace.dataverse.api.v1;
 
 import java.io.File;
+import java.io.InputStream;
 import java.net.URISyntaxException;
 import java.util.List;
 
 import com.researchspace.dataverse.entities.Dataset;
+import com.researchspace.dataverse.entities.DatasetFileList;
 import com.researchspace.dataverse.entities.DatasetVersion;
 import com.researchspace.dataverse.entities.DataverseResponse;
 import com.researchspace.dataverse.entities.DvMessage;
@@ -29,6 +31,7 @@ import com.researchspace.dataverse.entities.Identifier;
 import com.researchspace.dataverse.entities.PublishedDataset;
 import com.researchspace.dataverse.entities.Version;
 import com.researchspace.dataverse.entities.facade.DatasetFacade;
+import com.researchspace.dataverse.http.FileUploadMetadata;
 import com.researchspace.springrest.ext.RestClientException;
 import com.researchspace.springrest.ext.SWORDException;
 
@@ -44,6 +47,15 @@ public interface DatasetOperations {
      * @return A {@link DatasetVersion}
      */
     DatasetVersion updateDataset(DatasetFacade facade, Identifier id) throws RestClientException;
+
+    /**
+     * @param dataset The {@link Dataset} containing the updated DataSet data.
+     * @param id The {@link DataSetMetadataBlock} identifier
+     * @return A {@link DatasetVersion}
+     * @throws RestClientException
+     */
+    DatasetVersion updateDataset(Dataset dataset, Identifier id) throws RestClientException;
+
 
     /**
      * Retrieves a {@link Dataset} based on its Id.
@@ -103,11 +115,34 @@ public interface DatasetOperations {
     void deleteFile(final String fileName, final Identifier dsIdentifier) throws URISyntaxException, SWORDException;
 
     /**
-     * @param dataset The {@link Dataset} containing the updated DataSet data.
-     * @param id The {@link DataSetMetadataBlock} identifier
-     * @return A {@link DatasetVersion}
-     * @throws RestClientException
+     * Upload a file to a dataset using Dataverse's native API (not Sword)
+     * @param metadata Metadata to attach to the file upload
+     * @param dsIdentifier The persistent identifier of the dataset
+     * @param data bytes of data to upload
+     * @param fileName The name of the file to be created on Dataverse
+     * @return DatasetFileList information about the uploaded file.
      */
-    DatasetVersion updateDataset(Dataset dataset, Identifier id) throws RestClientException;
+    DatasetFileList uploadNativeFile( byte[] data, FileUploadMetadata metadata, Identifier dsIdentifier, String fileName);
+
+    /**
+     * Upload a file to a dataset using Dataverse's native API (not Sword).
+     * @param metadata Metadata to attach to the file upload
+     * @param contentLength The length of the stream
+     * @param dsIdentifier The persistent identifier of the dataset
+     * @param data bytes of data to upload
+     * @param fileName The name of the file to be created on Dataverse
+     * @return DatasetFileList information about the uploaded file.
+     */
+    DatasetFileList uploadNativeFile(InputStream data, long contentLength, FileUploadMetadata metadata,
+            Identifier dsIdentifier,  String fileName);
+
+    /**
+     * Uploads a file using a data stream.
+     *
+     * @param doi Identifier of the dataset that we are sending the data to.
+     * @param inputStream Stream of data to upload as a file in Dataverse.
+     * @param filename Contents of the field "name" that will appear as in Dataverse.
+     */
+    void uploadFile(String doi, InputStream inputStream, String filename);
 
 }

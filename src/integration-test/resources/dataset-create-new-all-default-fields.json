@@ -1,6 +1,6 @@
 {
   "datasetVersion": {
-    "license": "CC0",
+    "license": "CC0 1.0",
     "termsOfUse": "CC0 Waiver",
     "metadataBlocks": {
       "citation": {
@@ -700,10 +700,10 @@
           {
             "typeName": "kindOfData",
             "multiple": true,
-            "typeClass": "primitive",
+            "typeClass": "controlledVocabulary",
             "value": [
-              "KindOfData1",
-              "KindOfData2"
+              "Dataset",
+              "Collection"
             ]
           },
           {

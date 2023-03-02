@@ -27,8 +27,6 @@ import com.researchspace.dataverse.search.entities.SearchConfig;
 
 public class SearchConfigTest {
 
-    SearchConfig cfg;
-
     @Before
     public void setUp() throws Exception {
     }

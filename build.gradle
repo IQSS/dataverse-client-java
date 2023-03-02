@@ -1,16 +1,17 @@
 apply plugin: 'java'
-// enables 'install' task into repository
-apply plugin: 'maven'
 apply plugin: 'maven-publish'
+
 group = 'com.researchspace'
 sourceCompatibility = 1.8
-version = '0.1.12'
-def springVersion='4.3.15.RELEASE'
-def jacksonVersion='2.6.7'
+version = '1.0.0'
+def springVersion='5.3.24'
+def jacksonVersion='2.11.1'
+def lombokVersion='1.18.24'
 
 repositories {
     maven {
         url "$archivaInternal"
+        allowInsecureProtocol = true
         credentials {
             username "$archivaUser"
             password "$archivaPassword"
@@ -18,10 +19,47 @@ repositories {
     }
     maven {
         url "$archivaSnapshots"
+        allowInsecureProtocol = true
         credentials {
             username "$archivaUser"
             password "$archivaPassword"
         }
+    }
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+	        groupId 'com.researchspace'
+	        artifactId 'dataverse-client-java'
+	        version '1.0.0'
+	        
+            from components.java
+        }
+    }
+    repositories {
+        maven {
+            url "$archivaInternal"
+            allowInsecureProtocol = true
+            credentials {
+                username "$archivaUser"
+                password "$archivaPassword"
+            }
+        }
+        maven {
+            url "$archivaSnapshots"
+            allowInsecureProtocol = true
+            credentials {
+                username "$archivaUser"
+                password "$archivaPassword"
+            }
+        }
+    }
+}
+
+configurations.all {
+    resolutionStrategy {
+        force 'xml-apis:xml-apis:1.0.b2'
     }
 }
 
@@ -36,74 +74,46 @@ sourceSets {
     }
 }
 
-// These are unused SWORD transitive dependencies which are either obsolete or now included in the JDK
+// these are unused SWORD transitive dependencies which are either obsolete or now included in the JDK
 configurations {
-    all*.exclude group: 'javax.jms'
-    all*.exclude group: 'com.sun.jdmk'
-    all*.exclude group: 'com.sun.jmx'
-    integrationTestCompile.extendsFrom testCompile
+     all*.exclude group: 'javax.jms'
+     all*.exclude group: 'com.sun.jdmk'
+     all*.exclude group: 'com.sun.jmx'
+    integrationTestImplementation.extendsFrom testImplementation
     integrationTestRuntime.extendsFrom testRuntime
 }
 
 dependencies {
-    compile 'org.springframework:spring-web:'+springVersion
-    compile 'org.springframework:spring-core:'+springVersion
-    compile 'com.fasterxml.jackson.core:jackson-annotations:'+jacksonVersion
-    compile 'com.fasterxml.jackson.core:jackson-core:'+jacksonVersion
-    compile 'com.fasterxml.jackson.core:jackson-databind:'+jacksonVersion
-      
-    compile 'org.projectlombok:lombok:1.16.10'
-    compile 'commons-lang:commons-lang:2.6'
-    compile 'org.slf4j:slf4j-api:1.7.21'
+    implementation 'org.springframework:spring-web:' + springVersion
+    implementation 'org.springframework:spring-context:' + springVersion
+    implementation 'org.springframework:spring-core:' + springVersion
+    implementation 'com.fasterxml.jackson.core:jackson-annotations:' + jacksonVersion
+    implementation 'com.fasterxml.jackson.core:jackson-core:' + jacksonVersion
+    implementation 'com.fasterxml.jackson.core:jackson-databind:' + jacksonVersion
+    implementation 'org.projectlombok:lombok:' + lombokVersion
+    annotationProcessor 'org.projectlombok:lombok:' + lombokVersion
+    testAnnotationProcessor 'org.projectlombok:lombok:' + lombokVersion
+    implementation 'org.apache.commons:commons-lang3:3.12.0'
+    implementation 'org.slf4j:slf4j-api:1.7.21'
     
-    //for SWORD-API. 
-    compile 'org.swordapp:sword2-client:0.9.3'
-    compile 'org.apache.abdera:abdera-client:1.1.1'
+    // for SWORD-API. 
+    implementation 'org.swordapp:sword2-client:0.9.3'
+    implementation 'org.apache.abdera:abdera-client:1.1.1'
  
-    testCompile   'junit:junit:4.12'
-    testCompile   'org.springframework:spring-test:'+springVersion
-    testCompile   'org.slf4j:slf4j-simple:1.7.21'
-}
+    testImplementation   'junit:junit:4.13.2'
+    testImplementation   'org.springframework:spring-test:' + springVersion
+    testImplementation   'org.slf4j:slf4j-simple:1.7.36'
 
-publishing {
-    publications {
-        mavenJava(MavenPublication) {
-	        groupId 'com.researchspace'
-	        artifactId 'dataverse-client-java'
-	        version '0.1.12'
-	        
-            from components.java
-        }
-    }
-    repositories {
-        maven {
-            url "$archivaInternal"
-            credentials {
-                username "$archivaUser"
-                password "$archivaPassword"
-            }
-        }
-        maven {
-            url "$archivaSnapshots"
-            credentials {
-                username "$archivaUser"
-                password "$archivaPassword"
-            }
-        }
-        maven {
-            url "~/.m2/repository"
-        }
-    }
 }
 
 test {
-    testLogging.showStandardStreams = true
-    // Delegate command line properties through to Test JVM
-    systemProperties = System.getProperties()
+	testLogging.showStandardStreams = true
+	//delegate command line properties through to Test JVM
+	systemProperties = System.getProperties()
 }
 
 task integrationTest(type: Test) {
-    testClassesDir = sourceSets.integrationTest.output.classesDir
+    testClassesDirs = sourceSets.integrationTest.output
     classpath = sourceSets.integrationTest.runtimeClasspath
     outputs.upToDateWhen { false }
     systemProperties = System.getProperties()
@@ -116,7 +126,10 @@ tasks.withType(Test) {
     reports.html.destination = file("${reporting.baseDir}/${name}")
 }
 
-// Lists dependencies
-task listJars << {
-    configurations.compile.each { File file -> println file.name }
+//Lists dependencies
+task listJars {
+    doLast {
+    	configurations.implementation.canBeResolved = true
+        configurations.implementation.each { File file -> println file.name }
+    }
 }

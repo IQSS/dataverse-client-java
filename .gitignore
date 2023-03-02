@@ -6,5 +6,6 @@
 .project
 .settings/
 .gradle/
+.idea/
 /build.gradle
 /~

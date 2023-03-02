@@ -18,6 +18,7 @@ package com.researchspace.dataverse.sword;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URI;
 
 import org.swordapp.client.AuthCredentials;
@@ -41,9 +42,12 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class SwordAPI {
 
-    private static final String APPLICATION_ZIP = "application/zip";
-    private static final String ZIP_PACKAGING = "http://purl.org/net/sword/package/SimpleZip";
     private static final String SWORD_FRAGMENT = "/dvn/api/data-deposit/v1.1/swordv2/";
+
+    private static final String APPLICATION_ZIP = "application/zip";
+
+    private static final String ZIP_PACKAGING = "http://purl.org/net/sword/package/SimpleZip";
+
     /**
 
      * @param file
@@ -58,14 +62,35 @@ public class SwordAPI {
      */
     public DepositReceipt deposit(final File file, final String apiKey, final URI dataverseServer, final String doi)
             throws IOException, SWORDClientException, SWORDError, ProtocolViolationException {
+        return this.deposit(new FileInputStream(file), file.getName(), apiKey, dataverseServer, doi);
+    }
+
+    /**
+     * Creates a deposit object to upload a file into a dataverse instance using the SWORD library client.
+     *
+     * @param is Data coming as a stream.
+     * @param filename Name of the file to upload.
+     * @param apiKey Key used to authenticate actions into the goal dataverse instance.
+     * @param dataverseServer URL of the dataverse instance to attack.
+     * @param doi To identify the dataset that is the goal of the file upload.
+     * @return Information of the result of the upload via a {@code DepositReceipt} instance.
+     * @throws IOException Thrown when a IO error occurs, which is a general error.
+     * @throws SWORDClientException Thrown when an exception happens inside the SWORD client.
+     * @throws SWORDError Thrown when an exception happens inside the SWORD client.
+     * @throws ProtocolViolationException Thrown for unknown reasons.
+     */
+    public DepositReceipt deposit(final InputStream is, final String filename, final String apiKey, final URI dataverseServer, final String doi)
+            throws IOException, SWORDClientException, SWORDError, ProtocolViolationException {
         final SWORDClient cli = new SWORDClient();
         final Deposit dep = new Deposit();
-        dep.setFilename(file.getName());
-        dep.setFile(new FileInputStream(file));
+        dep.setFilename(filename);
+        dep.setFile(is);
         dep.setMimeType(APPLICATION_ZIP);
         dep.setPackaging(ZIP_PACKAGING);
+
         final AuthCredentials cred = new AuthCredentials(apiKey, "");
-        final String depositURI = dataverseServer.toString() + SWORD_FRAGMENT + "edit-media/study/doi:"
+
+        final String depositURI = dataverseServer.toString() + "/dvn/api/data-deposit/v1.1/swordv2/edit-media/study/doi:"
                 + doi;
         final DepositReceipt rct = cli.deposit(depositURI, dep, cred);
         log.info("Deposit received with status {}" ,rct.getStatusCode());
