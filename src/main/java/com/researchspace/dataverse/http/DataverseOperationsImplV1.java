@@ -139,6 +139,7 @@ DataverseOperations, UsersOperations {
     public Identifier createDataset(final DatasetFacade facade, final String dataverseAlias) throws RestClientException {
         final String url = createV1Url("dataverses", dataverseAlias, "datasets");
         final String json = getJsonFromFacade(facade);
+        log.info(json);
         final HttpEntity<String> entity = createHttpEntity(json);
         final ParameterizedTypeReference<DataverseResponse<Identifier>> type =
                 new ParameterizedTypeReference<DataverseResponse<Identifier>>() {

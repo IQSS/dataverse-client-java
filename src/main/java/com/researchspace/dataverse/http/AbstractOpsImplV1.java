@@ -15,8 +15,11 @@ Copyright 2016 ResearchSpace
 </pre> */
 package com.researchspace.dataverse.http;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.Arrays;
+import java.util.stream.Collectors;
 
 import org.apache.commons.lang.StringUtils;
 import org.springframework.http.HttpHeaders;
@@ -58,10 +61,12 @@ public abstract class AbstractOpsImplV1 {
 
         @Override
         public void handleError(final ClientHttpResponse response) throws IOException, RestClientException {
+            final BufferedReader in = new BufferedReader(new InputStreamReader(response.getBody()));
+            final String body = in.lines().collect(Collectors.joining("\n"));
             log.error("Error code returned {} with message {}",
                     response.getStatusCode().value(),
-                    response.getStatusText());
-            throw new RestClientException(response.getStatusCode().value(), response.getStatusText());
+                    body);
+            throw new RestClientException(response.getStatusCode().value(), body);
         }
     }
 
@@ -87,10 +92,11 @@ public abstract class AbstractOpsImplV1 {
     }
 
     <T> void handleError(final ResponseEntity<DataverseResponse<T>> resp) throws RestClientException {
-        log.debug("{}", resp.getBody());
+        log.debug(resp.getBody().toString());
         if (RestUtil.isError(resp.getStatusCode())) {
-            log.error("Error code returned %d with message [%s]", resp.getStatusCodeValue(),
-                    resp.getBody().getMessage());
+            log.info(resp.getBody().toString());
+            log.error(String.format("Error code returned %d with message [%s]", resp.getStatusCodeValue(),
+                    resp.getBody().getMessage()));
             throw new RestClientException(resp.getStatusCodeValue(), resp.getBody().getMessage());
         }
     }
