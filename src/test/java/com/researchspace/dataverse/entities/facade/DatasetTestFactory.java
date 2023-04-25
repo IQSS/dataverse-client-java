@@ -19,6 +19,7 @@ import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.time.Instant;
 import java.util.Arrays;
 import java.util.Date;
 
@@ -27,6 +28,9 @@ import java.util.Date;
  * @author rspace
  */
 public class DatasetTestFactory {
+
+    private static final Date SOME_DATE = Date.from(Instant.ofEpochMilli(1));
+
     /**
      * Creates a complex DataSet object
      * @return
@@ -43,7 +47,7 @@ public class DatasetTestFactory {
                 .topicClassification(buildATopicClassification("topic1"))
                 .publication(buildAPublication())
                 .producer(buildAProducer())
-                .productionDate(new Date())
+                .productionDate(SOME_DATE)
                 .productionPlace("Edinburgh, UK")
                 .contributor(buildAContributor("Fred")).contributor(buildAContributor("Tim"))
                 .subject("Chemistry")
@@ -96,7 +100,7 @@ public class DatasetTestFactory {
 
     private static DatasetDescription buildADesc() {
         return DatasetDescription.builder()
-                .date(new Date()).description("some desc")
+                .date(SOME_DATE).description("some desc")
                 .build();
     }
 

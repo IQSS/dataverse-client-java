@@ -82,7 +82,7 @@
               "typeName" : "dsDescriptionDate",
               "typeClass" : "primitive",
               "multiple" : false,
-              "value" : "2023-04-03"
+              "value" : "1970-01-01"
             },
             "dsDescriptionValue" : {
               "typeName" : "dsDescriptionValue",
@@ -238,7 +238,7 @@
           "typeName" : "productionDate",
           "typeClass" : "primitive",
           "multiple" : false,
-          "value" : "2023-04-03"
+          "value" : "1970-01-01"
         }, {
           "typeName" : "productionPlace",
           "typeClass" : "primitive",
@@ -364,8 +364,5 @@
   "identifier" : null,
   "protocol" : null,
   "authority" : null,
-  "persistentUrl" : null,
-  "doiId" : {
-    "present" : false
-  }
+  "persistentUrl" : null
 }

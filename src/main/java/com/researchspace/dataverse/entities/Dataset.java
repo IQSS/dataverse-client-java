@@ -6,6 +6,8 @@ package com.researchspace.dataverse.entities;
 import java.net.URL;
 import java.util.Optional;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -41,6 +43,7 @@ public class Dataset {
      * Getter for the DOI String used to identify a dataset for SWORD upload
      * @return an {@link Optional}. Will be <code>null</code> if <code>persistentURL</code> is not set.
      */
+    @JsonIgnore
     public Optional<String> getDoiId (){
         if(persistentUrl == null) {
             return Optional.empty();

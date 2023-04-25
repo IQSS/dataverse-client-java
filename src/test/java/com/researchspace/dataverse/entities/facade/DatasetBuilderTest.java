@@ -23,6 +23,7 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -49,6 +50,10 @@ public class DatasetBuilderTest {
         final ObjectWriter mapper = new ObjectMapper().writerWithDefaultPrettyPrinter();
         final Dataset dversion = builder.build(facade);
         final String json = mapper.writeValueAsString(dversion);
-        assertEquals(FileUtils.readFileToString(new File("src/integration-test/resources/dataset-builder-test.json")), json);
+        assertEquals(StringUtils.difference(
+                FileUtils.readFileToString(new File("src/integration-test/resources/dataset-builder-test.json")),
+                json),
+                FileUtils.readFileToString(new File("src/integration-test/resources/dataset-builder-test.json")),
+                json);
     }
 }
