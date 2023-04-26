@@ -33,7 +33,6 @@ import java.util.List;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.RandomStringUtils;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import com.researchspace.dataverse.entities.Dataset;
@@ -67,10 +66,8 @@ public class DatasetOperationsTest extends AbstractIntegrationTest {
         assertTrue(results.size() > 0);
     }
 
-    //TODO figure out why data is invalid
     @Test
-    @Ignore("this test fails with message: Error parsing Json: incorrect multiple   for field collectionMode")
-    public void testPostSampleDataset() throws IOException, InterruptedException, URISyntaxException {
+    public void testPostSampleDataset() throws IOException {
         final String toPost = FileUtils.readFileToString(exampleDatasetJson);
         final Identifier datasetId = dataverseOps.createDataset(toPost, dataverseAlias);
         assertNotNull(datasetId.getId());

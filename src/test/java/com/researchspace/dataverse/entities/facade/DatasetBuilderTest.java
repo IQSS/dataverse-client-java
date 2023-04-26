@@ -50,7 +50,7 @@ public class DatasetBuilderTest {
         final ObjectWriter mapper = new ObjectMapper().writerWithDefaultPrettyPrinter();
         final Dataset dversion = builder.build(facade);
         final String json = mapper.writeValueAsString(dversion);
-        assertEquals(StringUtils.difference(
+        assertEquals(StringUtils.difference("There are differences between output and expected : " +
                 FileUtils.readFileToString(new File("src/integration-test/resources/dataset-builder-test.json")),
                 json),
                 FileUtils.readFileToString(new File("src/integration-test/resources/dataset-builder-test.json")),

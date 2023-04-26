@@ -185,7 +185,7 @@
               "typeName" : "publicationURL",
               "typeClass" : "primitive",
               "multiple" : false,
-              "value" : "http:/pubmed.com/1234"
+              "value" : "http://pubmed.com/1234"
             }
           } ]
         }, {
@@ -225,13 +225,13 @@
               "typeName" : "producerLogoURL",
               "typeClass" : "primitive",
               "multiple" : false,
-              "value" : "http:/pubmed.logo.com/1234"
+              "value" : "http://pubmed.logo.com/1234"
             },
             "producerURL" : {
               "typeName" : "producerURL",
               "typeClass" : "primitive",
               "multiple" : false,
-              "value" : "http:/pubmed.com/1234"
+              "value" : "http://pubmed.com/1234"
             }
           } ]
         }, {
@@ -242,8 +242,8 @@
         }, {
           "typeName" : "productionPlace",
           "typeClass" : "primitive",
-          "multiple" : false,
-          "value" : "Edinburgh, UK"
+          "multiple" : true,
+          "value" : [ "Edinburgh, UK" ]
         }, {
           "typeName" : "contributor",
           "typeClass" : "compound",
@@ -345,7 +345,7 @@
           "value" : "http://www.myrepo.com"
         }, {
           "typeName" : "kindOfData",
-          "typeClass" : "controlledVocabulary",
+          "typeClass" : "primitive",
           "multiple" : true,
           "value" : [ "Dataset", "Collection" ]
         }, {

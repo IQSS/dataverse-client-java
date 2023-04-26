@@ -56,7 +56,7 @@ public class DatasetTestFactory {
                 .alternativeTitle("altTitle")
                 .alternativeURL(new URL("http://www.myrepo.com"))
                 .note("Some note")
-                .kindsOfData(Arrays.asList(DatasetKindOfData.DATASET, DatasetKindOfData.COLLECTION))
+                .kindsOfData(Arrays.asList("Dataset", "Collection"))
                 .languages(Arrays.asList("English"))
                 .build();
     }
@@ -73,8 +73,8 @@ public class DatasetTestFactory {
                 .name("a producer")
                 .abbreviation("abbr")
                 .affiliation("UoE")
-                .logoURL(new URL("http:///pubmed.logo.com/1234"))
-                .url(new URL("http:///pubmed.com/1234"))
+                .logoURL(new URL("http://pubmed.logo.com/1234"))
+                .url(new URL("http://pubmed.com/1234"))
                 .build();
     }
 
@@ -83,7 +83,7 @@ public class DatasetTestFactory {
                 .publicationCitation("citation")
                 .publicationIdNumber("12435")
                 .publicationIDType(PublicationIDType.ean13)
-                .publicationURL(new URL("http:///pubmed.com/1234"))
+                .publicationURL(new URL("http://pubmed.com/1234"))
                 .build();
     }
 

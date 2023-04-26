@@ -25,7 +25,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import com.researchspace.dataverse.entities.CitationType;
 import com.researchspace.dataverse.entities.Dataset;
@@ -145,8 +144,9 @@ public class DatasetBuilder {
     }
 
     private void addProductionPlace(final DatasetFacade facade, final List<Field> fields) {
-        if(!isEmpty(facade.getProductionPlace())){
-            final Field prodPlace = createPrimitiveSingleField("productionPlace", facade.getProductionPlace());
+        if(!facade.getProductionPlaces().isEmpty()){
+            final Field prodPlace = createPrimitiveMultipleField("productionPlace",
+                    facade.getProductionPlaces().toArray(new String[0]));
             fields.add(prodPlace);
         }
     }
@@ -175,8 +175,8 @@ public class DatasetBuilder {
 
     private void addKindOfData(final DatasetFacade facade, final List<Field> fields) {
         if (facade.getKindsOfData() != null) {
-            final Field kindOfData = createControlledVocabField(KIND_OF_DATA, true, facade.getKindsOfData().stream()
-                    .map(data -> data.getDisplayName()).collect(Collectors.toList()));
+            final Field kindOfData = createPrimitiveMultipleField(KIND_OF_DATA,
+                    facade.getKindsOfData().toArray(new String[0]));
             fields.add(kindOfData);
 
         }

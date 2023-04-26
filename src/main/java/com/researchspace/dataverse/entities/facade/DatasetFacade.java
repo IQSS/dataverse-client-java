@@ -16,7 +16,6 @@ Copyright 2016 ResearchSpace
 package com.researchspace.dataverse.entities.facade;
 
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -51,11 +50,11 @@ public class DatasetFacade   {
     private @Singular List<DatasetPublication> publications;
     private @Singular List<DatasetProducer> producers;
     private String note;
-    private List<String> languages = new ArrayList<>();
+    private List<String> languages;
     private Date productionDate;
-    private String productionPlace;
+    private @Singular("productionPlace") List<String> productionPlaces;
     private @Singular List<DatasetContributor> contributors;
-    private @Singular("kindOfData") List<DatasetKindOfData> kindsOfData;
+    private @Singular("kindOfData") List<String> kindsOfData;
     private @Singular("timePeriodCovered") List<DatasetTimePeriodCovered> timePeriodsCovered;
 
     // Geospatial metadata
@@ -65,7 +64,7 @@ public class DatasetFacade   {
      * Returns a copy if the internally stored Date
      * @return
      */
-    public Date getProductionDate (){
+    public Date getProductionDate () {
         if(productionDate != null){
             return new Date(productionDate.getTime());
         } else {
@@ -78,9 +77,10 @@ public class DatasetFacade   {
      * @param date
      */
     public void setProductionDate(final Date date) {
-        productionDate = new Date (date.getTime());
+        productionDate = new Date(date.getTime());
     }
-    /*
+
+    /**
      * For testing
      */
     DatasetFacade() {
