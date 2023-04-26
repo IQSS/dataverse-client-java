@@ -1,5 +1,5 @@
 /*
- * 
+ *
  */
 package com.researchspace.dataverse.entities;
 
@@ -22,12 +22,20 @@ Copyright 2016 ResearchSpace
  See the License for the specific language governing permissions and
  limitations under the License.
 </pre>
-*/
+ */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class Identifier {
-	private Long id;
-	private String persistentId;
+    private Long id;
+    private String persistentId;
+
+    /**
+     * One argument constructor (compatibility).
+     * @param datasetId
+     */
+    public Identifier(final Long datasetId) {
+        id = datasetId;
+    }
 
 }

@@ -1,0 +1,368 @@
+{
+  "datasetVersion" : {
+    "id" : null,
+    "versionState" : null,
+    "productionDate" : null,
+    "termsOfUse" : null,
+    "lastUpdateTime" : null,
+    "createTime" : null,
+    "metadataBlocks" : {
+      "geospatial" : {
+        "displayName" : "Geospatial Metadata",
+        "fields" : [ ]
+      },
+      "citation" : {
+        "displayName" : "Citation Metadata",
+        "fields" : [ {
+          "typeName" : "title",
+          "typeClass" : "primitive",
+          "multiple" : false,
+          "value" : "title1"
+        }, {
+          "typeName" : "author",
+          "typeClass" : "compound",
+          "multiple" : true,
+          "value" : [ {
+            "authorName" : {
+              "typeName" : "authorName",
+              "typeClass" : "primitive",
+              "multiple" : false,
+              "value" : "Fred Blogs"
+            },
+            "authorIdentifier" : {
+              "typeName" : "authorIdentifier",
+              "typeClass" : "primitive",
+              "multiple" : false,
+              "value" : "1234-5678"
+            },
+            "authorIdentifierScheme" : {
+              "typeName" : "authorIdentifierScheme",
+              "typeClass" : "controlledVocabulary",
+              "multiple" : false,
+              "value" : "ORCID"
+            },
+            "authorAffiliation" : {
+              "typeName" : "authorAffiliation",
+              "typeClass" : "primitive",
+              "multiple" : false,
+              "value" : "RSpace"
+            }
+          }, {
+            "authorName" : {
+              "typeName" : "authorName",
+              "typeClass" : "primitive",
+              "multiple" : false,
+              "value" : "John  Smith"
+            },
+            "authorIdentifier" : {
+              "typeName" : "authorIdentifier",
+              "typeClass" : "primitive",
+              "multiple" : false,
+              "value" : "1234-5678"
+            },
+            "authorIdentifierScheme" : {
+              "typeName" : "authorIdentifierScheme",
+              "typeClass" : "controlledVocabulary",
+              "multiple" : false,
+              "value" : "ISNI"
+            },
+            "authorAffiliation" : {
+              "typeName" : "authorAffiliation",
+              "typeClass" : "primitive",
+              "multiple" : false,
+              "value" : "Dataverse"
+            }
+          } ]
+        }, {
+          "typeName" : "dsDescription",
+          "typeClass" : "compound",
+          "multiple" : true,
+          "value" : [ {
+            "dsDescriptionDate" : {
+              "typeName" : "dsDescriptionDate",
+              "typeClass" : "primitive",
+              "multiple" : false,
+              "value" : "1970-01-01"
+            },
+            "dsDescriptionValue" : {
+              "typeName" : "dsDescriptionValue",
+              "typeClass" : "primitive",
+              "multiple" : false,
+              "value" : "some desc"
+            }
+          } ]
+        }, {
+          "typeName" : "keyword",
+          "typeClass" : "compound",
+          "multiple" : true,
+          "value" : [ {
+            "keywordVocabulary" : {
+              "typeName" : "keywordVocabulary",
+              "typeClass" : "primitive",
+              "multiple" : false,
+              "value" : "keywordVocab"
+            },
+            "keywordVocabularyURI" : {
+              "typeName" : "keywordVocabularyURI",
+              "typeClass" : "primitive",
+              "multiple" : false,
+              "value" : "http://vocab.com"
+            },
+            "keywordValue" : {
+              "typeName" : "keywordValue",
+              "typeClass" : "primitive",
+              "multiple" : false,
+              "value" : "key1"
+            }
+          }, {
+            "keywordVocabulary" : {
+              "typeName" : "keywordVocabulary",
+              "typeClass" : "primitive",
+              "multiple" : false,
+              "value" : "keywordVocab"
+            },
+            "keywordVocabularyURI" : {
+              "typeName" : "keywordVocabularyURI",
+              "typeClass" : "primitive",
+              "multiple" : false,
+              "value" : "http://vocab.com"
+            },
+            "keywordValue" : {
+              "typeName" : "keywordValue",
+              "typeClass" : "primitive",
+              "multiple" : false,
+              "value" : "key2"
+            }
+          } ]
+        }, {
+          "typeName" : "topicClassification",
+          "typeClass" : "compound",
+          "multiple" : true,
+          "value" : [ {
+            "topicClassVocab" : {
+              "typeName" : "topicClassVocab",
+              "typeClass" : "primitive",
+              "multiple" : false,
+              "value" : "a topic vocab"
+            },
+            "topicClassVocabURI" : {
+              "typeName" : "topicClassVocabURI",
+              "typeClass" : "primitive",
+              "multiple" : false,
+              "value" : "http://www.vocab.org"
+            },
+            "topicClassValue" : {
+              "typeName" : "topicClassValue",
+              "typeClass" : "primitive",
+              "multiple" : false,
+              "value" : "topic1"
+            }
+          } ]
+        }, {
+          "typeName" : "publication",
+          "typeClass" : "compound",
+          "multiple" : true,
+          "value" : [ {
+            "publicationIDType" : {
+              "typeName" : "publicationIDType",
+              "typeClass" : "controlledVocabulary",
+              "multiple" : false,
+              "value" : "ean13"
+            },
+            "publicationIDNumber" : {
+              "typeName" : "publicationIDNumber",
+              "typeClass" : "primitive",
+              "multiple" : false,
+              "value" : "12435"
+            },
+            "publicationCitation" : {
+              "typeName" : "publicationCitation",
+              "typeClass" : "primitive",
+              "multiple" : false,
+              "value" : "citation"
+            },
+            "publicationURL" : {
+              "typeName" : "publicationURL",
+              "typeClass" : "primitive",
+              "multiple" : false,
+              "value" : "http://pubmed.com/1234"
+            }
+          } ]
+        }, {
+          "typeName" : "language",
+          "typeClass" : "controlledVocabulary",
+          "multiple" : true,
+          "value" : [ "English" ]
+        }, {
+          "typeName" : "notesText",
+          "typeClass" : "primitive",
+          "multiple" : false,
+          "value" : "Some note"
+        }, {
+          "typeName" : "producer",
+          "typeClass" : "compound",
+          "multiple" : true,
+          "value" : [ {
+            "producerAffiliation" : {
+              "typeName" : "producerAffiliation",
+              "typeClass" : "primitive",
+              "multiple" : false,
+              "value" : "UoE"
+            },
+            "producerAbbreviation" : {
+              "typeName" : "producerAbbreviation",
+              "typeClass" : "primitive",
+              "multiple" : false,
+              "value" : "abbr"
+            },
+            "producerName" : {
+              "typeName" : "producerName",
+              "typeClass" : "primitive",
+              "multiple" : false,
+              "value" : "a producer"
+            },
+            "producerLogoURL" : {
+              "typeName" : "producerLogoURL",
+              "typeClass" : "primitive",
+              "multiple" : false,
+              "value" : "http://pubmed.logo.com/1234"
+            },
+            "producerURL" : {
+              "typeName" : "producerURL",
+              "typeClass" : "primitive",
+              "multiple" : false,
+              "value" : "http://pubmed.com/1234"
+            }
+          } ]
+        }, {
+          "typeName" : "productionDate",
+          "typeClass" : "primitive",
+          "multiple" : false,
+          "value" : "1970-01-01"
+        }, {
+          "typeName" : "productionPlace",
+          "typeClass" : "primitive",
+          "multiple" : true,
+          "value" : [ "Edinburgh, UK" ]
+        }, {
+          "typeName" : "contributor",
+          "typeClass" : "compound",
+          "multiple" : true,
+          "value" : [ {
+            "contributorType" : {
+              "typeName" : "contributorType",
+              "typeClass" : "controlledVocabulary",
+              "multiple" : false,
+              "value" : "Project Leader"
+            },
+            "contributorName" : {
+              "typeName" : "contributorName",
+              "typeClass" : "primitive",
+              "multiple" : false,
+              "value" : "Fred"
+            }
+          }, {
+            "contributorType" : {
+              "typeName" : "contributorType",
+              "typeClass" : "controlledVocabulary",
+              "multiple" : false,
+              "value" : "Project Leader"
+            },
+            "contributorName" : {
+              "typeName" : "contributorName",
+              "typeClass" : "primitive",
+              "multiple" : false,
+              "value" : "Tim"
+            }
+          } ]
+        }, {
+          "typeName" : "subject",
+          "typeClass" : "controlledVocabulary",
+          "multiple" : true,
+          "value" : [ "Chemistry" ]
+        }, {
+          "typeName" : "datasetContact",
+          "typeClass" : "compound",
+          "multiple" : true,
+          "value" : [ {
+            "datasetContactEmail" : {
+              "typeName" : "datasetContactEmail",
+              "typeClass" : "primitive",
+              "multiple" : false,
+              "value" : "contact@email.com"
+            },
+            "datasetContactAffiliation" : {
+              "typeName" : "datasetContactAffiliation",
+              "typeClass" : "primitive",
+              "multiple" : false,
+              "value" : "Some place"
+            },
+            "datasetContactName" : {
+              "typeName" : "datasetContactName",
+              "typeClass" : "primitive",
+              "multiple" : false,
+              "value" : "Sarah Contact"
+            }
+          }, {
+            "datasetContactEmail" : {
+              "typeName" : "datasetContactEmail",
+              "typeClass" : "primitive",
+              "multiple" : false,
+              "value" : "contact2@email.com"
+            },
+            "datasetContactAffiliation" : {
+              "typeName" : "datasetContactAffiliation",
+              "typeClass" : "primitive",
+              "multiple" : false,
+              "value" : "Another place"
+            },
+            "datasetContactName" : {
+              "typeName" : "datasetContactName",
+              "typeClass" : "primitive",
+              "multiple" : false,
+              "value" : "Brian Contact2"
+            }
+          } ]
+        }, {
+          "typeName" : "depositor",
+          "typeClass" : "primitive",
+          "multiple" : false,
+          "value" : "A depositor"
+        }, {
+          "typeName" : "subtitle",
+          "typeClass" : "primitive",
+          "multiple" : false,
+          "value" : " A subtitle"
+        }, {
+          "typeName" : "alternativeTitle",
+          "typeClass" : "primitive",
+          "multiple" : false,
+          "value" : "altTitle"
+        }, {
+          "typeName" : "alternativeURL",
+          "typeClass" : "primitive",
+          "multiple" : false,
+          "value" : "http://www.myrepo.com"
+        }, {
+          "typeName" : "kindOfData",
+          "typeClass" : "primitive",
+          "multiple" : true,
+          "value" : [ "Dataset", "Collection" ]
+        }, {
+          "typeName" : "timePeriodCovered",
+          "typeClass" : "compound",
+          "multiple" : true,
+          "value" : [ ]
+        } ]
+      }
+    },
+    "versionNumber" : 0,
+    "versionMinorNumber" : 0
+  },
+  "latestVersion" : null,
+  "id" : null,
+  "identifier" : null,
+  "protocol" : null,
+  "authority" : null,
+  "persistentUrl" : null
+}

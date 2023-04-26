@@ -1,16 +1,5 @@
-/*
- * 
- */
-package com.researchspace.dataverse.api.v1;
-
-import java.net.URL;
-
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.ToString;
 /**
- <pre>
+<pre>
   Copyright 2016 ResearchSpace
 
    Licensed under the Apache License, Version 2.0 (the "License");
@@ -25,22 +14,34 @@ import lombok.ToString;
    See the License for the specific language governing permissions and
    limitations under the License.
  </pre>
+ */
+package com.researchspace.dataverse.api.v1;
+
+import java.net.URL;
+
+import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.ToString;
+/**
  * Configures the server, apikey and root dataverse alias
  * @author rspace
- *
  */
 @EqualsAndHashCode(of={"serverURL"})
 @AllArgsConstructor
 @ToString()
 public class DataverseConfig {
 
-	private @Getter URL serverURL;
-	
-	/**
-	 * The API Key provided from Dataverse account
-	 * @return the apiKey
-	 */
-	private @Getter String apiKey;
-	private @Getter String repositoryName;	
+    private @Getter
+    final URL serverURL;
+
+    /**
+     * The API Key provided from Dataverse account
+     * @return the apiKey
+     */
+    private @Getter
+    final String apiKey;
+    private @Getter
+    final String repositoryName;
 
 }

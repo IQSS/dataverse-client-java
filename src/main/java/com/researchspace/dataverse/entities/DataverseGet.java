@@ -5,8 +5,8 @@ import java.util.List;
 import java.util.Map;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.Data;
 /** <pre>
 Copyright 2016 ResearchSpace
@@ -23,41 +23,42 @@ Copyright 2016 ResearchSpace
  See the License for the specific language governing permissions and
  limitations under the License.
 </pre>
-*/
+ */
 @Data
 @JsonFormat
 public class DataverseGet {
-	private String id;
-	private String alias;
-	private String name;
-	private String affiliation;
-	private String permissionRoot;
-	private String description;
-	private String ownerId;
-	private Date creationDate;
+    private String id;
+    private String alias;
+    private String name;
+    private String affiliation;
+    private String permissionRoot;
+    private String description;
+    private String ownerId;
+    private Date creationDate;
 
-	/**
-	 * This can be a list of Strings or objects [displayOrder, contactEmail].
-	 * Parsing as Object means that deserialisation won't fail
-	 */
-	private List<Object> dataverseContacts = new ArrayList<>();
+    /**
+     * This can be a list of Strings or objects [displayOrder, contactEmail].
+     * Parsing as Object means that deserialisation won't fail
+     */
+    private List<Object> dataverseContacts = new ArrayList<>();
 
-	/**
-	 * Gets list of contact emails independent of underlying representation
-	 * @return
-	 */
-	@JsonIgnore
-	public List<String> getContactEmails(){
-		List<String> rc = new ArrayList<>();
-		for (Object o: dataverseContacts) {
-			if (o instanceof  String) {
-				rc.add((String) o);
-			} else {
-				Map<String, String> object = (Map)o;
-				rc.add(object.getOrDefault("contactEmail", ""));
-			}
-		}
-		return rc;
-	}
+    /**
+     * Gets list of contact emails independent of underlying representation
+     * @return
+     */
+    @JsonIgnore
+    public List<String> getContactEmails(){
+        final List<String> rc = new ArrayList<>();
+        for (final Object o: dataverseContacts) {
+            if (o instanceof  String) {
+                rc.add((String) o);
+            } else {
+                @SuppressWarnings("unchecked")
+                final Map<String, String> object = (Map<String, String>) o;
+                rc.add(object.getOrDefault("contactEmail", ""));
+            }
+        }
+        return rc;
+    }
 
 }

@@ -464,9 +464,9 @@
           },
           {
             "typeName": "productionPlace",
-            "multiple": false,
+            "multiple": true,
             "typeClass": "primitive",
-            "value": "ProductionPlace"
+            "value": ["ProductionPlace"]
           },
           {
             "typeName": "contributor",
@@ -702,8 +702,8 @@
             "multiple": true,
             "typeClass": "primitive",
             "value": [
-              "KindOfData1",
-              "KindOfData2"
+              "Dataset",
+              "Collection"
             ]
           },
           {
@@ -909,13 +909,13 @@
                   "typeName": "northLongitude",
                   "multiple": false,
                   "typeClass": "primitive",
-                  "value": "30"
+                  "value": "40"
                 },
                 "southLongitude": {
                   "typeName": "southLongitude",
                   "multiple": false,
                   "typeClass": "primitive",
-                  "value": "40"
+                  "value": "30"
                 }
               },
               {
@@ -935,13 +935,13 @@
                   "typeName": "northLongitude",
                   "multiple": false,
                   "typeClass": "primitive",
-                  "value": "70"
+                  "value": "80"
                 },
                 "southLongitude": {
                   "typeName": "southLongitude",
                   "multiple": false,
                   "typeClass": "primitive",
-                  "value": "80"
+                  "value": "70"
                 }
               }
             ]
@@ -1026,9 +1026,9 @@
           },
           {
             "typeName": "collectionMode",
-            "multiple": false,
+            "multiple": true,
             "typeClass": "primitive",
-            "value": "CollectionMode"
+            "value": ["CollectionMode"]
           },
           {
             "typeName": "researchInstrument",

@@ -1,10 +1,12 @@
 /*
- * 
+ *
  */
 package com.researchspace.dataverse.entities;
 
 import java.net.URL;
 import java.util.Optional;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -24,25 +26,29 @@ Copyright 2016 ResearchSpace
  See the License for the specific language governing permissions and
  limitations under the License.
 </pre>
-*/
+ */
 @Data
 @AllArgsConstructor()
 @NoArgsConstructor()
 public class Dataset {
-	private DatasetVersion datasetVersion, latestVersion;
-	private Long id;
-	private String identifier, protocol, authority;
-	private URL persistentUrl;
-	
-	/**
-	 * Getter for the DOI String used to identify a dataset for SWORD upload
-	 * @return an {@link Optional}. Will be <code>null</code> if <code>persistentURL</code> is not set.
-	 */
-	public Optional<String> getDoiId (){
-		if(persistentUrl == null) {
-			return Optional.empty();
-		} else {
-			return Optional.of(getPersistentUrl().getPath().substring(1));
-		}
-	}
+    private DatasetVersion datasetVersion;
+    private DatasetVersion latestVersion;
+    private Long id;
+    private String identifier;
+    private String protocol;
+    private String authority;
+    private URL persistentUrl;
+
+    /**
+     * Getter for the DOI String used to identify a dataset for SWORD upload
+     * @return an {@link Optional}. Will be <code>null</code> if <code>persistentURL</code> is not set.
+     */
+    @JsonIgnore
+    public Optional<String> getDoiId (){
+        if(persistentUrl == null) {
+            return Optional.empty();
+        } else {
+            return Optional.of(getPersistentUrl().getPath().substring(1));
+        }
+    }
 }

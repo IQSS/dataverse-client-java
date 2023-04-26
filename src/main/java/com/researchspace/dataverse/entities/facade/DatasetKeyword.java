@@ -1,14 +1,3 @@
-/*
- * 
- */
-package com.researchspace.dataverse.entities.facade;
-
-import java.net.URI;
-
-import lombok.Builder;
-import lombok.Data;
-import lombok.NonNull;
-
 /** <pre>
 Copyright 2016 ResearchSpace
 
@@ -23,15 +12,25 @@ Copyright 2016 ResearchSpace
  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  See the License for the specific language governing permissions and
  limitations under the License.
-</pre>
-*/
+</pre> */
+package com.researchspace.dataverse.entities.facade;
+
+import java.net.URI;
+
+import lombok.Builder;
+import lombok.Data;
+import lombok.NonNull;
+
+/**
+ * Dataset keyword.
+ */
 @Builder
 @Data
 public class DatasetKeyword {
-	
-	private @NonNull String value;
-	private String vocabulary;
-	private URI vocabularyURI;
-	
+
+    private @NonNull String value;
+    private String vocabulary;
+    private URI vocabularyURI;
+
 
 }

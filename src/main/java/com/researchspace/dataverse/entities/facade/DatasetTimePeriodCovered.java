@@ -1,9 +1,3 @@
-/*
- * 
- */
-package com.researchspace.dataverse.entities;
-
-import lombok.Data;
 /** <pre>
 Copyright 2016 ResearchSpace
 
@@ -18,11 +12,23 @@ Copyright 2016 ResearchSpace
  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  See the License for the specific language governing permissions and
  limitations under the License.
-</pre>
-*/
+</pre> */
+package com.researchspace.dataverse.entities.facade;
+
+import java.util.Date;
+
+import lombok.Builder;
+import lombok.Data;
+import lombok.NonNull;
+
+/**
+ * Dataset time bounds for 'timePeriodCovered' field.
+ * @author ltromel
+ */
 @Data
-public class DataSetMetadataBlock {
-	
-	private Citation citation;
+@Builder
+public class DatasetTimePeriodCovered {
+
+    private @NonNull Date timePeriodCoveredStart, timePeriodCoveredEnd;
 
 }

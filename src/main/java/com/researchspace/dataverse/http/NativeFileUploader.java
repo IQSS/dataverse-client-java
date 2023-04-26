@@ -12,25 +12,25 @@ import org.springframework.util.MultiValueMap;
  */
 public class NativeFileUploader {
 
-    public HttpEntity<MultiValueMap<String, Object>> createFileUploadEntity(FileUploadMetadata metadata, String apiKey, AbstractResource resource){
+    public HttpEntity<MultiValueMap<String, Object>> createFileUploadEntity(final FileUploadMetadata metadata, final String apiKey, final AbstractResource resource){
 
-        MultiValueMap<String,Object> multipartRequest = new LinkedMultiValueMap<>();
+        final MultiValueMap<String,Object> multipartRequest = new LinkedMultiValueMap<>();
 
-        HttpHeaders requestHeaders = new HttpHeaders();
-        requestHeaders.add(AbstractOpsImplV1.apiHeader, apiKey);
+        final HttpHeaders requestHeaders = new HttpHeaders();
+        requestHeaders.add(AbstractOpsImplV1.API_HEADER, apiKey);
         requestHeaders.setContentType(MediaType.MULTIPART_FORM_DATA);//Main request's headers
 
-        HttpHeaders requestHeadersAttachment = new HttpHeaders();
+        final HttpHeaders requestHeadersAttachment = new HttpHeaders();
 
-        HttpEntity attachmentPart = new HttpEntity<>(resource,requestHeadersAttachment);
+        final HttpEntity<AbstractResource> attachmentPart = new HttpEntity<>(resource, requestHeadersAttachment);
         multipartRequest.set("file",attachmentPart);
 
-        HttpHeaders requestHeadersJSON = new HttpHeaders();
+        final HttpHeaders requestHeadersJSON = new HttpHeaders();
         requestHeadersJSON.setContentType(MediaType.APPLICATION_JSON);
-        HttpEntity<FileUploadMetadata> requestEntityJSON = new HttpEntity<>(metadata, requestHeadersJSON);
+        final HttpEntity<FileUploadMetadata> requestEntityJSON = new HttpEntity<>(metadata, requestHeadersJSON);
         multipartRequest.set("jsonData",requestEntityJSON);
 
-        HttpEntity<MultiValueMap<String,Object>> requestEntity = new HttpEntity<>(multipartRequest,requestHeaders);//final request
+        final HttpEntity<MultiValueMap<String,Object>> requestEntity = new HttpEntity<>(multipartRequest,requestHeaders);//final request
         return requestEntity;
 
     }

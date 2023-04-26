@@ -1,8 +1,3 @@
-/*
- * 
- */
-package com.researchspace.dataverse.entities.facade;
-
 /** <pre>
 Copyright 2016 ResearchSpace
 
@@ -17,10 +12,14 @@ Copyright 2016 ResearchSpace
  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  See the License for the specific language governing permissions and
  limitations under the License.
-</pre>
-*/
+</pre> */
+package com.researchspace.dataverse.entities.facade;
+
+/**
+ * Accepted types list for 'publicationIDType' field.
+ */
 public enum PublicationIDType {
-	
-	ark, arXiv, bibcode, doi, ean13, eissn, handle, isbn, issn, istc, lissn, lsid, pmid, purl, upc, url, urn
+
+    ark, arXiv, bibcode, doi, ean13, eissn, handle, isbn, issn, istc, lissn, lsid, pmid, purl, upc, url, urn
 
 }

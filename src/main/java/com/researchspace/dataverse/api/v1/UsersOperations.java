@@ -17,29 +17,30 @@
  */
 package com.researchspace.dataverse.api.v1;
 
-import java.util.List;
+import java.text.ParseException;
+import java.time.LocalDateTime;
 
-import com.researchspace.dataverse.entities.MetadataBlock;
+import com.researchspace.springrest.ext.RestClientException;
 
 /**
- * Operations on Metadatas.
+ * Operations on Users (tokens).
  */
-public interface MetadataOperations {
+public interface UsersOperations {
 
     /**
-     * Return data about the block whose identifier is passed.
-     *  identifier can either be the block’s id, or its name:
-     *  <p/>
-     * <strong>Possible bug </strong>Doesn't actually work for numeric ids, only name
-     * @param name The MetadataBlock name
-     * @return
+     * Get token expiration date.
+     * @return java.time.LocalDateTime token expiration.
+     * @throws ParseException
+     * @throws RestClientException
      */
-    MetadataBlock getMetadataById(String name);
+    LocalDateTime getTokenExpirationDate() throws ParseException;
 
     /**
-     * Lists brief info about all metadata blocks registered in the system:
-     * @return a {@link List} of {@link MetadataBlock}
+     * Get token expiration text returned by dataverse.
+     * @return String as the form of <Token XXXXX expires on yyyy-MM-dd HH:mm:ss.SSS>.
+     * @throws ParseException
+     * @throws RestClientException
      */
-    List<MetadataBlock> getMetadataBlockInfo();
+    String getTokenExpiration() throws ParseException;
 
 }

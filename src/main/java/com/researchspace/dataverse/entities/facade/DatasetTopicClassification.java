@@ -1,12 +1,3 @@
-/*
- * 
- */
-package com.researchspace.dataverse.entities.facade;
-
-import java.net.URI;
-
-import lombok.Builder;
-import lombok.Data;
 /** <pre>
 Copyright 2016 ResearchSpace
 
@@ -21,13 +12,23 @@ Copyright 2016 ResearchSpace
  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  See the License for the specific language governing permissions and
  limitations under the License.
-</pre>
-*/
+</pre> */
+package com.researchspace.dataverse.entities.facade;
+
+import java.net.URI;
+
+import lombok.Builder;
+import lombok.Data;
+
+/**
+ * Representation of one Dataset's topic classification for 'topicClassification' field.
+ * @author ltromel
+ */
 @Data
 @Builder
 public class DatasetTopicClassification {
-	
-	private String topicClassValue, topicClassVocab;
-	private URI topicClassVocabURI;
+
+    private String topicClassValue, topicClassVocab;
+    private URI topicClassVocabURI;
 
 }

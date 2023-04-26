@@ -1,12 +1,3 @@
-/*
- * 
- */
-package com.researchspace.dataverse.entities.facade;
-
-import lombok.Builder;
-import lombok.Data;
-import lombok.NonNull;
-
 /** <pre>
 Copyright 2016 ResearchSpace
 
@@ -22,11 +13,20 @@ Copyright 2016 ResearchSpace
  See the License for the specific language governing permissions and
  limitations under the License.
 </pre>
-*/
+ */
+package com.researchspace.dataverse.entities.facade;
+
+import lombok.Builder;
+import lombok.Data;
+import lombok.NonNull;
+
+/**
+ * Dataset contact.
+ */
 @Data
 @Builder
-public class DatasetContact {	
-	private @NonNull String datasetContactEmail;
-	private String datasetContactAffiliation, datasetContactName;
+public class DatasetContact {
+    private @NonNull String datasetContactEmail;
+    private String datasetContactAffiliation, datasetContactName;
 
 }

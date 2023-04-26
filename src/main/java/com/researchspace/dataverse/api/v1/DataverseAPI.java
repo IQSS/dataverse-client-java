@@ -1,10 +1,5 @@
-/*
- * 
- */
-package com.researchspace.dataverse.api.v1;
-
 /**
- * <pre>
+<pre>
   Copyright 2016 ResearchSpace
 
    Licensed under the Apache License, Version 2.0 (the "License");
@@ -19,43 +14,57 @@ package com.researchspace.dataverse.api.v1;
    See the License for the specific language governing permissions and
    limitations under the License.
  </pre>
- Top-level entry point into the Dataverse Level1 API
+ */
+package com.researchspace.dataverse.api.v1;
+
+/**
+ * Top-level entry point into the Dataverse Level1 API
  * @author rspace
  *
  */
 public interface DataverseAPI {
 
-	/**
-	 * Gets class for performing DatasetOperations
-	 * @return
-	 */
-	DatasetOperations getDatasetOperations ();
-	
-	/**
-	 * Gets class for performing Metadata Operations
-	 * @return
-	 */
-    MetadataOperations getMetadataOperations ();
-	
     /**
-	 * Gets class for performing Dataverse Operations
-	 * @return
-	 */
-	DataverseOperations getDataverseOperations ();
-	
-	/**
-	 * Configures the connection settings.
-	 * @param config
-	 */
-	void configure (DataverseConfig config);
-	
-	InfoOperations getInfoOperations();
-	
-	/**
-	 * Accesses the Search API
-	 * @return
-	 */
-	SearchOperations getSearchOperations();
+     * Gets class for performing DatasetOperations
+     * @return DatasetOperations
+     */
+    DatasetOperations getDatasetOperations();
+
+    /**
+     * Gets class for performing Metadata Operations
+     * @return MetadataOperations
+     */
+    MetadataOperations getMetadataOperations();
+
+    /**
+     * Gets class for performing Dataverse Operations
+     * @return DataverseOperations
+     */
+    DataverseOperations getDataverseOperations();
+
+    /**
+     * Configures the connection settings.
+     * @param config
+     */
+    void configure(DataverseConfig config);
+
+    /**
+     * Get class for performing Info Operations.
+     * @return InfoOperations
+     */
+    InfoOperations getInfoOperations();
+
+    /**
+     * Get class for performing Search Operations.
+     * @return SearchOperations
+     */
+    SearchOperations getSearchOperations();
+
+    /**
+     * Get class for performing Users Operations.
+     * @return UsersOperations
+     */
+    UsersOperations getUsersOperations();
 
 
 }

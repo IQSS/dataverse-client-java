@@ -1,11 +1,3 @@
-/*
- * 
- */
-package com.researchspace.dataverse.entities.facade;
-
-import lombok.Builder;
-import lombok.Data;
-
 /** <pre>
 Copyright 2016 ResearchSpace
 
@@ -21,12 +13,20 @@ Copyright 2016 ResearchSpace
  See the License for the specific language governing permissions and
  limitations under the License.
 </pre>
-*/
+ */
+package com.researchspace.dataverse.entities.facade;
+
+import lombok.Builder;
+import lombok.Data;
+
+/**
+ * Dataset contributor.
+ */
 @Data
 @Builder
 public class DatasetContributor {
-	
-	private String name;
-	private ContributorType type;
+
+    private String name;
+    private ContributorType type;
 
 }

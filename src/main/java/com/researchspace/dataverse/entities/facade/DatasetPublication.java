@@ -1,12 +1,3 @@
-/*
- * 
- */
-package com.researchspace.dataverse.entities.facade;
-
-import java.net.URL;
-
-import lombok.Builder;
-import lombok.Data;
 /** <pre>
 Copyright 2016 ResearchSpace
 
@@ -21,14 +12,22 @@ Copyright 2016 ResearchSpace
  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  See the License for the specific language governing permissions and
  limitations under the License.
-</pre>
-*/
+</pre> */
+package com.researchspace.dataverse.entities.facade;
+
+import java.net.URL;
+
+import lombok.Builder;
+import lombok.Data;
+/**
+ * Dataset publication
+ */
 @Data
 @Builder
 public class DatasetPublication {
-	
-	private String publicationCitation, publicationIdNumber;
-	private PublicationIDType publicationIDType;
-	private URL publicationURL;
+
+    private String publicationCitation, publicationIdNumber;
+    private PublicationIDType publicationIDType;
+    private URL publicationURL;
 
 }

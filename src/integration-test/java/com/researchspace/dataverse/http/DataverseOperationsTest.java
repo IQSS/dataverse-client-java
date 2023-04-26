@@ -1,18 +1,3 @@
-/*
- * 
- */
-package com.researchspace.dataverse.http;
-
-import com.researchspace.dataverse.entities.*;
-import org.apache.commons.lang.RandomStringUtils;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-
-import java.util.Arrays;
-
-import static org.junit.Assert.*;
 /** <pre>
 Copyright 2016 ResearchSpace
 
@@ -28,69 +13,126 @@ Copyright 2016 ResearchSpace
  See the License for the specific language governing permissions and
  limitations under the License.
 </pre>
-*/
+ */
+package com.researchspace.dataverse.http;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+
+import java.util.Arrays;
+
+import org.apache.commons.lang.RandomStringUtils;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
+import com.researchspace.dataverse.entities.DataverseContacts;
+import com.researchspace.dataverse.entities.DataverseGet;
+import com.researchspace.dataverse.entities.DataversePost;
+import com.researchspace.dataverse.entities.DataverseResponse;
+import com.researchspace.dataverse.entities.DvMessage;
+import com.researchspace.springrest.ext.RestClientException;
+
+/**
+ * Dataverse operations tests.
+ */
 public class DataverseOperationsTest extends AbstractIntegrationTest {
 
-	
+    /**
+     * Not permitted error.
+     */
+    private static final String UNAUTHORIZED = "is not permitted to perform requested action";
 
-	@Before
-	public void setup() throws Exception {
-		super.setUp();
-	}
-	
-	@After
-	public void tearDown() throws Exception {
-	}
+    /**
+     * Not permitted error code.
+     */
+    private static final Integer UNAUTHORIZED_CODE = 401;
 
-	@Test
-	public void createPublishAndDeleteNewDataverse(){
-		String dvName = RandomStringUtils.randomAlphabetic(10);
-		DataversePost dv = createADataverse(dvName);
-		DataverseResponse<DataversePost>  success = dataverseOps.createNewDataverse(dataverseAlias, dv);
-		assertNotNull(success.getData());
-		assertNotNull(success.getData().getId());
-		
-		dataverseOps.publishDataverse(dvName);
-		
-		DataverseResponse<DvMessage> deleted = dataverseOps.deleteDataverse(dvName);
-		assertTrue(deleted.getStatus().equals("OK"));
-		assertNotNull(deleted.getData());	
-	}
+    /**
+     * Not published error.
+     */
+    private static final String NOT_PUBLISHED = "may not be published because its host dataverse";
 
-	static DataversePost createADataverse(String dvName) {
-		DataversePost dv = new DataversePost();
-		dv.setAlias(dvName);
-		dv.setName("Test Instance " + dvName);
-		dv.setDataverseContacts(Arrays.asList(new DataverseContacts("a@b.com")));
-		return dv;
-	}
+    /**
+     * Not published part 2 error.
+     */
+    private static final String NOT_PUBLISHED_2 = "has not been published";
 
-	@Test
-	public void deleteUnknownDataverseHandled () {		
-		DataverseResponse<DvMessage> deleted = dataverseOps.deleteDataverse("ra");
-		assertTrue(deleted.getStatus().equals(ERROR_MSG));
-		assertNull(deleted.getData());
-	}
-	
-	@Test(expected=IllegalArgumentException.class)
-	public void createDataverseValidation () {		
-		String dvName = RandomStringUtils.randomAlphabetic(10);
-		DataversePost dv = createADataverse(dvName);
-		dv.setAlias("");
-		dataverseOps.createNewDataverse("rspace", dv);
-	}
-	@Test
-	public void createDataverseValidationContactRequired () {
-		String dvName = RandomStringUtils.randomAlphabetic(10);
-		DataversePost dv = createADataverse(dvName);
-		dv.setDataverseContacts(null);
-		Assert.assertThrows(NullPointerException.class, ()->dataverseOps.createNewDataverse("rspace", dv));
-	}
+    @Before
+    public void setup() throws Exception {
+        super.setUp();
+    }
 
-	@Test
-	public void testGetDataverseById() {
-		DataverseGet dv = dataverseOps.getDataverseById(dataverseAlias);
-		assertNotNull(dv.getId());
-		assertTrue(dv.getContactEmails().size() > 0);
-	}
+    @After
+    public void tearDown() throws Exception {
+    }
+
+    @Test
+    public void createPublishAndDeleteNewDataverse(){
+        final String dvName = RandomStringUtils.randomAlphabetic(10);
+        final DataversePost dv = createADataverse(dvName);
+        final DataverseResponse<DataversePost>  success = dataverseOps.createNewDataverse(dataverseAlias, dv);
+        assertNotNull(success.getData());
+        assertNotNull(success.getData().getId());
+        try {
+
+            dataverseOps.publishDataverse(dvName);
+        } catch (final RestClientException e) {
+            assertTrue("[" + e.getLocalizedMessage() + "] should contain ["
+                    + NOT_PUBLISHED + "] & [" + NOT_PUBLISHED_2 + "]",
+                    e.getLocalizedMessage().contains(NOT_PUBLISHED)
+                    && e.getLocalizedMessage().contains(NOT_PUBLISHED_2));
+        }
+
+        final DataverseResponse<DvMessage> deleted = dataverseOps.deleteDataverse(dvName);
+        assertTrue(deleted.getStatus().equals("OK"));
+        assertNotNull(deleted.getData());
+    }
+
+    static DataversePost createADataverse(final String dvName) {
+        final DataversePost dv = new DataversePost();
+        dv.setAlias(dvName);
+        dv.setName("Test Instance " + dvName);
+        dv.setDataverseContacts(Arrays.asList(new DataverseContacts("a@b.com")));
+        return dv;
+    }
+
+    @Test
+    public void deleteUnknownDataverseHandled() {
+        RestClientException exception = null;
+        try {
+            dataverseOps.deleteDataverse("ra");
+        } catch (final RestClientException e) {
+            exception = e;
+            assertEquals(UNAUTHORIZED_CODE, e.getCode());
+            assertTrue("[" + e.getLocalizedMessage() + "] should contain [" + UNAUTHORIZED + "]",
+                    e.getLocalizedMessage().contains(UNAUTHORIZED));
+        }
+        assertNotNull(exception);
+    }
+
+    @Test(expected=IllegalArgumentException.class)
+    public void createDataverseValidation() {
+        final String dvName = RandomStringUtils.randomAlphabetic(10);
+        final DataversePost dv = createADataverse(dvName);
+        dv.setAlias("");
+        dataverseOps.createNewDataverse("rspace", dv);
+    }
+
+    @Test(expected=NullPointerException.class)
+    public void createDataverseValidationContactRequired() {
+        final String dvName = RandomStringUtils.randomAlphabetic(10);
+        final DataversePost dv = createADataverse(dvName);
+        dv.setDataverseContacts(null);
+        dataverseOps.createNewDataverse("rspace", dv);
+    }
+
+    @Test
+    public void testGetDataverseById() {
+        final DataverseGet dv = dataverseOps.getDataverseById(dataverseAlias);
+        assertNotNull(dv.getId());
+        assertFalse(dv.getContactEmails().isEmpty());
+    }
 }

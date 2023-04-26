@@ -1,9 +1,10 @@
 /*
- * 
+ *
  */
 package com.researchspace.dataverse.entities;
 
 import java.util.Date;
+import java.util.Map;
 
 import lombok.Data;
 /** <pre>
@@ -21,15 +22,16 @@ Copyright 2016 ResearchSpace
  See the License for the specific language governing permissions and
  limitations under the License.
 </pre>
-*/
+ */
 @Data
 public class DatasetVersion {
-	private Long id;
-	private String versionState;
-	private String productionDate;
-	private Date lastUpdateTime;
-	private Date createTime;
-	private DataSetMetadataBlock metadataBlocks;
-	private int versionNumber, versionMinorNumber;
-
+    private Long id;
+    private String versionState;
+    private String productionDate;
+    private String termsOfUse;
+    private Date lastUpdateTime;
+    private Date createTime;
+    private Map<String, DatasetMetadataBlock> metadataBlocks;
+    private int versionNumber;
+    private int versionMinorNumber;
 }
