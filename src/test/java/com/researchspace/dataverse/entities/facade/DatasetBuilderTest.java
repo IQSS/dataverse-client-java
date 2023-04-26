@@ -16,22 +16,22 @@ Copyright 2016 ResearchSpace
 package com.researchspace.dataverse.entities.facade;
 
 import static com.researchspace.dataverse.entities.facade.DatasetTestFactory.createFacade;
+import static org.junit.Assert.assertEquals;
 
-import java.net.MalformedURLException;
+import java.io.File;
+import java.io.IOException;
 import java.net.URISyntaxException;
 
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.researchspace.dataverse.entities.Dataset;
 
-import lombok.extern.slf4j.Slf4j;
-
-@Slf4j
 public class DatasetBuilderTest {
 
     DatasetBuilder builder;
@@ -45,11 +45,15 @@ public class DatasetBuilderTest {
     }
 
     @Test
-    public void test() throws JsonProcessingException, MalformedURLException, URISyntaxException {
+    public void test() throws URISyntaxException, IOException {
         final DatasetFacade facade = createFacade();
         final ObjectWriter mapper = new ObjectMapper().writerWithDefaultPrettyPrinter();
         final Dataset dversion = builder.build(facade);
         final String json = mapper.writeValueAsString(dversion);
-        log.info(json);
+        assertEquals(StringUtils.difference("There are differences between output and expected : " +
+                FileUtils.readFileToString(new File("src/integration-test/resources/dataset-builder-test.json")),
+                json),
+                FileUtils.readFileToString(new File("src/integration-test/resources/dataset-builder-test.json")),
+                json);
     }
 }

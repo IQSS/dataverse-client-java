@@ -41,14 +41,24 @@ import com.researchspace.springrest.ext.RestClientException;
 public class DataverseOperationsTest extends AbstractIntegrationTest {
 
     /**
-     * Not found error.
+     * Not permitted error.
      */
-    private static final String NOT_FOUND = "Not Found";
+    private static final String UNAUTHORIZED = "is not permitted to perform requested action";
 
     /**
-     * Not found error code.
+     * Not permitted error code.
      */
-    private static final Integer NOT_FOUND_CODE = 404;
+    private static final Integer UNAUTHORIZED_CODE = 401;
+
+    /**
+     * Not published error.
+     */
+    private static final String NOT_PUBLISHED = "may not be published because its host dataverse";
+
+    /**
+     * Not published part 2 error.
+     */
+    private static final String NOT_PUBLISHED_2 = "has not been published";
 
     @Before
     public void setup() throws Exception {
@@ -66,8 +76,15 @@ public class DataverseOperationsTest extends AbstractIntegrationTest {
         final DataverseResponse<DataversePost>  success = dataverseOps.createNewDataverse(dataverseAlias, dv);
         assertNotNull(success.getData());
         assertNotNull(success.getData().getId());
+        try {
 
-        dataverseOps.publishDataverse(dvName);
+            dataverseOps.publishDataverse(dvName);
+        } catch (final RestClientException e) {
+            assertTrue("[" + e.getLocalizedMessage() + "] should contain ["
+                    + NOT_PUBLISHED + "] & [" + NOT_PUBLISHED_2 + "]",
+                    e.getLocalizedMessage().contains(NOT_PUBLISHED)
+                    && e.getLocalizedMessage().contains(NOT_PUBLISHED_2));
+        }
 
         final DataverseResponse<DvMessage> deleted = dataverseOps.deleteDataverse(dvName);
         assertTrue(deleted.getStatus().equals("OK"));
@@ -89,8 +106,9 @@ public class DataverseOperationsTest extends AbstractIntegrationTest {
             dataverseOps.deleteDataverse("ra");
         } catch (final RestClientException e) {
             exception = e;
-            assertEquals(NOT_FOUND_CODE, e.getCode());
-            assertEquals(NOT_FOUND, e.getLocalizedMessage());
+            assertEquals(UNAUTHORIZED_CODE, e.getCode());
+            assertTrue("[" + e.getLocalizedMessage() + "] should contain [" + UNAUTHORIZED + "]",
+                    e.getLocalizedMessage().contains(UNAUTHORIZED));
         }
         assertNotNull(exception);
     }
