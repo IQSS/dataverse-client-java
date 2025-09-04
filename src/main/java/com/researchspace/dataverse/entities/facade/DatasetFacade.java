@@ -50,6 +50,7 @@ public class DatasetFacade   {
 	private Date productionDate;
 	private String productionPlace;
 	private @Singular List<DatasetContributor> contributors;
+	private String metadataLanguage;
 	
 	/**
 	 * Returns a copy if the internally stored Date

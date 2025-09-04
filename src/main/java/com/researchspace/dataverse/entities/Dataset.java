@@ -33,6 +33,7 @@ public class Dataset {
 	private Long id;
 	private String identifier, protocol, authority;
 	private URL persistentUrl;
+	private String metadataLanguage;
 	
 	/**
 	 * Getter for the DOI String used to identify a dataset for SWORD upload
