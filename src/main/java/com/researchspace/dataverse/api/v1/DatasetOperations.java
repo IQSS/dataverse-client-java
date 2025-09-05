@@ -83,7 +83,7 @@ public interface DatasetOperations {
 	 * @param doi The DOI of the  Dataset
 	 * @param file The file to add to the DataSet
 	 */
-	void uploadFile(String doi, File file);
+	void uploadFile(String doi, File file, String protocol);
 
 	/**
 	 * Uploads a file using a data stream.
@@ -92,7 +92,7 @@ public interface DatasetOperations {
 	 * @param inputStream Stream of data to upload as a file in Dataverse.
 	 * @param filename Contents of the field "name" that will appear as in Dataverse.
 	 */
-	void uploadFile(String doi, InputStream inputStream, String filename);
+	void uploadFile(String doi, InputStream inputStream, String filename, String protocol);
 
 	/**
 	 * Deletes a {@link Dataset}  
