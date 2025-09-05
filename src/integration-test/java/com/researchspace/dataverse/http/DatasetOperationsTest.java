@@ -20,6 +20,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static com.researchspace.dataverse.entities.facade.DatasetTestFactory.createFacade;
+import static com.researchspace.dataverse.entities.facade.DatasetTestFactory.createFacadeWithMetadataLanguage;
 import static org.junit.Assert.*;
 
 
@@ -38,14 +39,14 @@ Copyright 2016 ResearchSpace
  See the License for the specific language governing permissions and
  limitations under the License.
 </pre>
-*/
+ */
 
 public class DatasetOperationsTest extends AbstractIntegrationTest {
-	
+
 	@Before
 	public void setup() throws Exception {
 		super.setUp();
-	}	
+	}
 
 	File exampleDatasetJson = new File("src/integration-test/resources/dataset-create-new-all-default-fields.json");
 	@Test
@@ -117,9 +118,9 @@ public class DatasetOperationsTest extends AbstractIntegrationTest {
 		DatasetFacade facade = createFacade();
 		//create a new, unpublished Dataverse
 		String newAlias = RandomStringUtils.randomAlphabetic(10);
-    	DataversePost toCreate = DataverseOperationsTest.createADataverse(newAlias);
-    	DataversePost newDV = dataverseOps.createNewDataverse(dataverseAlias, toCreate).getData();
-		
+		DataversePost toCreate = DataverseOperationsTest.createADataverse(newAlias);
+		DataversePost newDV = dataverseOps.createNewDataverse(dataverseAlias, toCreate).getData();
+
 		// create Dataset in child dataverse
 		Identifier datasetId = dataverseOps.createDataset(facade, newDV.getAlias());
 		assertNotNull(datasetId.getId());
@@ -127,12 +128,12 @@ public class DatasetOperationsTest extends AbstractIntegrationTest {
 		Dataset ds = datasetOps.getDataset(datasetId);
 		String doiId = ds.getDoiId().get();
 		datasetOps.uploadFile(doiId, getTestFile());
-		
+
 		//publishing will fail, as parent DV is not published
 		DataverseResponse<PublishedDataset> response = datasetOps.publishDataset (datasetId, Version.MAJOR);
 		assertNull(response.getData());
 		assertNotNull(response.getMessage());
-		
+
 		facade.setTitle("Updated title2");
 		datasetOps.updateDataset(facade, datasetId);
 		List<DatasetVersion> versions = datasetOps.getDatasetVersions(datasetId);
@@ -141,7 +142,15 @@ public class DatasetOperationsTest extends AbstractIntegrationTest {
 		String msg = datasetOps.deleteDataset(datasetId).getMessage();
 		dataverseOps.deleteDataverse(newAlias);
 		assertNotNull(msg);
-		
+
+	}
+
+	@Test
+	public void testCreateDatasetWithMetadataLanguage() {
+		DatasetFacade facade = createFacadeWithMetadataLanguage();
+		Identifier datasetId = dataverseOps.createDataset(facade, dataverseAlias);
+		assertNotNull(datasetId.getId());
+		assertNotNull(datasetId.getPersistentId());
 	}
 
 	private File getTestFile() {
