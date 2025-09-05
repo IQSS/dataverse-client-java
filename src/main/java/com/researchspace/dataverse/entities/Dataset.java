@@ -36,7 +36,7 @@ public class Dataset {
 	private String metadataLanguage;
 	
 	/**
-	 * Getter for the DOI String used to identify a dataset for SWORD upload
+	 * Getter for the DOI String or other persistent identifier used to identify a dataset for SWORD upload
 	 * @return an {@link Optional}. Will be <code>null</code> if <code>persistentURL</code> is not set.
 	 */
 	public Optional<String> getDoiId (){
