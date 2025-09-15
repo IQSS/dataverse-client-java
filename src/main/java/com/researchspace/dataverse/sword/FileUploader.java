@@ -56,9 +56,9 @@ public class FileUploader {
 	 * @throws SWORDError
 	 * @throws ProtocolViolationException
 	 */
-	public DepositReceipt deposit(File file, String apiKey, URI dataverseServer, String doi)
+	public DepositReceipt deposit(File file, String apiKey, URI dataverseServer, String doi, String protocol)
 			throws IOException, SWORDClientException, SWORDError, ProtocolViolationException {
-		return this.deposit(new FileInputStream(file), file.getName(), apiKey, dataverseServer, doi);
+		return this.deposit(new FileInputStream(file), file.getName(), apiKey, dataverseServer, doi, protocol);
 	}
 
 
@@ -70,13 +70,14 @@ public class FileUploader {
 	 * @param apiKey Key used to authenticate actions into the goal dataverse instance.
 	 * @param dataverseServer URL of the dataverse instance to attack.
 	 * @param doi To identify the dataset that is the goal of the file upload.
+	 * @param protocol The protocol used for persistent identification
 	 * @return Information of the result of the upload via a {@code DepositReceipt} instance.
 	 * @throws IOException Thrown when a IO error occurs, which is a general error.
 	 * @throws SWORDClientException Thrown when an exception happens inside the SWORD client.
 	 * @throws SWORDError Thrown when an exception happens inside the SWORD client.
 	 * @throws ProtocolViolationException Thrown for unknown reasons.
 	 */
-	public DepositReceipt deposit(InputStream is, String filename, String apiKey, URI dataverseServer, String doi)
+	public DepositReceipt deposit(InputStream is, String filename, String apiKey, URI dataverseServer, String doi, String protocol)
 			throws IOException, SWORDClientException, SWORDError, ProtocolViolationException {
 		SWORDClient cli = new SWORDClient();
 		Deposit dep = new Deposit();
@@ -87,8 +88,8 @@ public class FileUploader {
 
 		AuthCredentials cred = new AuthCredentials(apiKey, "");
 
-		String depositURI = dataverseServer.toString() + "/dvn/api/data-deposit/v1.1/swordv2/edit-media/study/doi:"
-				+ doi;
+		String depositURI = dataverseServer.toString() + "/dvn/api/data-deposit/v1.1/swordv2/edit-media/study/"
+		 + protocol + ":" + doi;
 		DepositReceipt rct = cli.deposit(depositURI, dep, cred);
 		log.info("Deposit received with status {}" ,rct.getStatusCode());
 		return rct;

@@ -84,6 +84,10 @@ public class DatasetBuilder {
 		citation.setFields(fields);
 		Dataset toSubmit = new Dataset();
 		toSubmit.setDatasetVersion(dv);
+		String metadataLanguage = facade.getMetadataLanguage();
+		if (metadataLanguage != null) {
+			toSubmit.setMetadataLanguage(facade.getMetadataLanguage());
+		}
 		return toSubmit;
 	}
 
