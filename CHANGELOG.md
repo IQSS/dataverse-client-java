@@ -1,5 +1,9 @@
 Significant changes since 0.1.0
 
+1.2.0 2025-09-15
+
+- feature: added options to set metadataLanguages and different PID protocols #28 #29
+
 1.1.0 In progress
 
 - feature: Support upload of files to a dataset using native API. #16
