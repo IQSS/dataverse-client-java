@@ -237,21 +237,21 @@ public class DataverseOperationsImplV1 extends AbstractOpsImplV1 implements Data
 	 * @see com.researchspace.dataverse.http.DataverseAPI#uploadFile(java.lang.String, java.io.File)
 	 */
 	@Override
-	public void uploadFile (String doi, File file) {
+	public void uploadFile (String doi, File file, String protocol) {
 		try {
-			this.uploadFile(doi, new FileInputStream(file), file.getName());
+			this.uploadFile(doi, new FileInputStream(file), file.getName(), protocol);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
 	}
 
 	@Override
-	public void uploadFile(String doi, InputStream file, String filename) {
+	public void uploadFile(String doi, InputStream file, String filename, String protocol) {
 		FileUploader uploader = new FileUploader();
 		try {
-			uploader.deposit(file, filename, apiKey, new URI(serverURL), doi);
+			uploader.deposit(file, filename, apiKey, new URI(serverURL), doi, protocol);
 		} catch (IOException | SWORDClientException  | ProtocolViolationException | URISyntaxException e) {
-			log.error("Couldn't upload file {} with doi {} : {}", filename, doi.toString(), e.getMessage());
+			log.error("Couldn't upload file {} with {} {} : {}", filename, protocol, doi.toString(), e.getMessage());
 			throw new RestClientException(e.getMessage());
 		} catch (SWORDError error) {
 			if (!StringUtils.isEmpty(error.getErrorBody())) {

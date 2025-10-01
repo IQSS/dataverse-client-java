@@ -127,7 +127,7 @@ public class DatasetOperationsTest extends AbstractIntegrationTest {
 		assertNotNull(datasetId.getPersistentId());
 		Dataset ds = datasetOps.getDataset(datasetId);
 		String doiId = ds.getDoiId().get();
-		datasetOps.uploadFile(doiId, getTestFile());
+		datasetOps.uploadFile(doiId, getTestFile(), ds.getProtocol());
 
 		//publishing will fail, as parent DV is not published
 		DataverseResponse<PublishedDataset> response = datasetOps.publishDataset (datasetId, Version.MAJOR);
@@ -151,6 +151,14 @@ public class DatasetOperationsTest extends AbstractIntegrationTest {
 		Identifier datasetId = dataverseOps.createDataset(facade, dataverseAlias);
 		assertNotNull(datasetId.getId());
 		assertNotNull(datasetId.getPersistentId());
+	}
+
+	@Test
+	public void testUploadFile() {
+		DatasetFacade facade = createFacadeWithMetadataLanguage();
+		Identifier datasetId = dataverseOps.createDataset(facade, dataverseAlias);
+		Dataset ds = datasetOps.getDataset(datasetId);
+		datasetOps.uploadFile(ds.getDoiId().get(), getTestFile(), ds.getProtocol());
 	}
 
 	private File getTestFile() {

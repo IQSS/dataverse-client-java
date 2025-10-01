@@ -68,6 +68,7 @@ public class DatasetTestFactory {
 				.subject("Chemistry")
 				.languages(Arrays.asList(new String[] { "English", "French" }))
 				.depositor("A depositor")
+				.contact(buildAContact())
 				.build();
 	}
 
