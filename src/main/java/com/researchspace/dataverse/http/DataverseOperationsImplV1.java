@@ -417,7 +417,7 @@ public class DataverseOperationsImplV1 extends AbstractOpsImplV1 implements Data
 	
 	@Override
 	public DataverseResponse<List<Map<String, String>>> getDataverseMetadataLanguage(String alias) {
-		String url = createV1Url("dataverses", alias, "metadataLanguage");
+		String url = createV1Url("dataverses", alias, "allowedMetadataLanguages");
 		HttpEntity<String> entity = createHttpEntity("");
 		ParameterizedTypeReference<DataverseResponse<List<Map<String, String>>>> type = new ParameterizedTypeReference<DataverseResponse<List<Map<String, String>>>>() {
 		};
