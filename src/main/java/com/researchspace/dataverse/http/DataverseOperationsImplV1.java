@@ -33,6 +33,7 @@ import java.io.*;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
+import java.util.Map;
 
 import static org.apache.commons.lang3.StringUtils.isEmpty;
 import static org.apache.commons.lang3.Validate.isTrue;
@@ -412,5 +413,18 @@ public class DataverseOperationsImplV1 extends AbstractOpsImplV1 implements Data
 		ResponseEntity<DataverseResponse<Object>> resp = template.exchange(url, HttpMethod.PUT, entity, type);
 		log.debug(resp.getBody().toString());
 		return resp.getBody();
-	}	
+	}
+	
+	@Override
+	public DataverseResponse<List<Map<String, String>>> getDataverseMetadataLanguage(String alias) {
+		String url = createV1Url("dataverses", alias, "allowedMetadataLanguages");
+		HttpEntity<String> entity = createHttpEntity("");
+		ParameterizedTypeReference<DataverseResponse<List<Map<String, String>>>> type = new ParameterizedTypeReference<DataverseResponse<List<Map<String, String>>>>() {
+		};
+		ResponseEntity<DataverseResponse<List<Map<String, String>>>> resp = template.exchange(url, HttpMethod.GET,
+				entity, type);
+		log.debug(resp.getBody().toString());
+		return resp.getBody();
+
+	}
 }

@@ -5,6 +5,7 @@ package com.researchspace.dataverse.api.v1;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 import com.researchspace.dataverse.entities.DataversePost;
 import com.researchspace.dataverse.entities.DataverseGet;
@@ -86,5 +87,7 @@ public interface DataverseOperations {
 	 * @return The updated {@link DataversePost} object
 	 */
 	DataverseResponse<DataversePost> publishDataverse(String dataverseAlias);
+
+	DataverseResponse<List<Map<String, String>>> getDataverseMetadataLanguage(String alias);
 
 }

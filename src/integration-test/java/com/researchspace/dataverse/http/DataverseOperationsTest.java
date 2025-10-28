@@ -11,6 +11,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 
 import static org.junit.Assert.*;
 /** <pre>
@@ -92,5 +94,13 @@ public class DataverseOperationsTest extends AbstractIntegrationTest {
 		DataverseGet dv = dataverseOps.getDataverseById(dataverseAlias);
 		assertNotNull(dv.getId());
 		assertTrue(dv.getContactEmails().size() > 0);
+	}
+
+	@Test
+	public void testGetDatasetMetadataLanguage() {
+		// only works if dataverseAlias belongs to a dataverse collection with enlish as its metadatalanguage
+		DataverseResponse<List<Map<String, String>>> langMap = dataverseOps
+				.getDataverseMetadataLanguage(dataverseAlias);
+		assertEquals("en", langMap.getData().get(0).get("locale"));
 	}
 }
