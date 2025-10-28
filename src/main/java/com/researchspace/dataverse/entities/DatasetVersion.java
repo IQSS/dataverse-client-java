@@ -5,6 +5,8 @@ package com.researchspace.dataverse.entities;
 
 import java.util.Date;
 
+import com.researchspace.dataverse.entities.facade.License;
+
 import lombok.Data;
 /** <pre>
 Copyright 2016 ResearchSpace
@@ -31,5 +33,5 @@ public class DatasetVersion {
 	private Date createTime;
 	private DataSetMetadataBlock metadataBlocks;
 	private int versionNumber, versionMinorNumber;
-
+	private License license;
 }

@@ -82,6 +82,10 @@ public class DatasetBuilder {
 		dv.setMetadataBlocks(blocks);
 		blocks.setCitation(citation);
 		citation.setFields(fields);
+		License license = facade.getLicense();
+		if (license != null) {
+			dv.setLicense(license);
+		}
 		Dataset toSubmit = new Dataset();
 		toSubmit.setDatasetVersion(dv);
 		String metadataLanguage = facade.getMetadataLanguage();
