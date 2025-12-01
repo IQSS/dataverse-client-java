@@ -8,6 +8,7 @@ import java.net.URL;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 /**
  <pre>
@@ -32,6 +33,7 @@ import lombok.ToString;
 @EqualsAndHashCode(of={"serverURL"})
 @AllArgsConstructor
 @ToString()
+@NoArgsConstructor
 public class DataverseConfig {
 
 	private @Getter URL serverURL;

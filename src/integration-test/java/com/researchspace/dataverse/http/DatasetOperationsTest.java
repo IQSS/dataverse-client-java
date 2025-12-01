@@ -5,6 +5,8 @@ package com.researchspace.dataverse.http;
 
 import com.researchspace.dataverse.entities.*;
 import com.researchspace.dataverse.entities.facade.DatasetFacade;
+import com.researchspace.dataverse.entities.facade.License;
+
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.RandomStringUtils;
 import org.junit.Before;
@@ -15,6 +17,7 @@ import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Arrays;
 import java.util.List;
@@ -159,6 +162,15 @@ public class DatasetOperationsTest extends AbstractIntegrationTest {
 		Identifier datasetId = dataverseOps.createDataset(facade, dataverseAlias);
 		Dataset ds = datasetOps.getDataset(datasetId);
 		datasetOps.uploadFile(ds.getDoiId().get(), getTestFile(), ds.getProtocol());
+	}
+
+	@Test
+	public void testCreateDatasetWithLicense() throws URISyntaxException {
+		DatasetFacade facade = createFacadeWithMetadataLanguage();
+		facade.setLicense(new License("CC0 1.0", new URI("http://creativecommons.org/publicdomain/zero/1.0")));
+		Identifier datasetId = dataverseOps.createDataset(facade, dataverseAlias);
+		Dataset ds = datasetOps.getDataset(datasetId);
+		assertEquals("CC0 1.0", ds.getLatestVersion().getLicense().getName());
 	}
 
 	private File getTestFile() {
