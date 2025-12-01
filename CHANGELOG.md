@@ -1,5 +1,10 @@
 Significant changes since 0.1.0
 
+1.3.0 2025-12-01
+
+- feature: added 'license' field to DatasetFacade/DatasetVersion #32
+- feature: added DataverseOperation to support querying for allowed metadata language(s) #31 
+
 1.2.0 2025-09-15
 
 - feature: added options to set metadataLanguages and different PID protocols #28 #29
