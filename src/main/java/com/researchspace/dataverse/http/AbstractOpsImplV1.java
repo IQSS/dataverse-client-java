@@ -67,7 +67,7 @@ public abstract class AbstractOpsImplV1 {
 		setServerURL(config.getServerURL().toString());		
 	}
 	
-	 <T> void handleError(ResponseEntity<DataverseResponse<T>> resp) {
+	protected <T> void handleError(ResponseEntity<DataverseResponse<T>> resp) {
 		log.debug("{}", resp.getBody());
 		if (RestUtil.isError(resp.getStatusCode())) {
 			String msg = String.format("Error  code returned %d with message [%s]", resp.getStatusCodeValue(),
@@ -83,7 +83,7 @@ public abstract class AbstractOpsImplV1 {
 		return template;
 	}
 	
-	String createV1Url(String ... pathComponents) {
+	protected String createV1Url(String ... pathComponents) {
 		String url = serverAPIv1URL + "/" + StringUtils.join(pathComponents, "/") ;
 		log.info("URL is {}", url);
 		return url;

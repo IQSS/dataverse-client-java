@@ -95,7 +95,7 @@ public class DatasetBuilder {
 		return toSubmit;
 	}
 
-	private List<CitationField> createFields(DatasetFacade facade, Citation citation) {
+	protected List<CitationField> createFields(DatasetFacade facade, Citation citation) {
 		List<CitationField> fields = new ArrayList<>();
 		//mandatory fields
 		addTitle(facade, fields);	
@@ -125,14 +125,14 @@ public class DatasetBuilder {
 
 	
 
-	private void addProductionDate(DatasetFacade facade, List<CitationField> fields) {
+	protected void addProductionDate(DatasetFacade facade, List<CitationField> fields) {
 		if( facade.getProductionDate() != null) {
 			CitationField prodDate = createPrimitiveSingleField("productionDate", isoDate(facade.getProductionDate()));
 			fields.add(prodDate);
 		}
 	}
 	
-	private void addProductionPlace(DatasetFacade facade, List<CitationField> fields) {
+	protected void addProductionPlace(DatasetFacade facade, List<CitationField> fields) {
 		if(!isEmpty(facade.getProductionPlace())){
 			CitationField prodPlace = createPrimitiveSingleField("productionPlace", facade.getProductionPlace());
 			fields.add(prodPlace);
@@ -140,47 +140,47 @@ public class DatasetBuilder {
 	}
 	
 
-	private void addLanguages(DatasetFacade facade, List<CitationField> fields) {
+	protected void addLanguages(DatasetFacade facade, List<CitationField> fields) {
 		if (!facade.getLanguages().isEmpty()) {
 			CitationField field = createControlledVocabField("language", true, facade.getLanguages());
 			fields.add(field);
 		}
 	}
 
-	private void addNotes(DatasetFacade facade, List<CitationField> fields) {
+	protected void addNotes(DatasetFacade facade, List<CitationField> fields) {
 		if(!isEmpty(facade.getNote())){
 			CitationField altUrl = createPrimitiveSingleField("notesText", facade.getNote());
 			fields.add(altUrl);
 		}		
 	}
 
-	private void addAlternativeURL(DatasetFacade facade, List<CitationField> fields) {
+	protected void addAlternativeURL(DatasetFacade facade, List<CitationField> fields) {
 		if (facade.getAlternativeURL() != null) {
 			CitationField altUrl = createPrimitiveSingleField("alternativeURL", facade.getAlternativeURL().toString());
 			fields.add(altUrl);
 		}
 	}
 
-	private void addAlternativeTitle(DatasetFacade facade, List<CitationField> fields) {
+	protected void addAlternativeTitle(DatasetFacade facade, List<CitationField> fields) {
 		if (!isEmpty(facade.getAlternativeTitle())) {
 			CitationField title = createPrimitiveSingleField("alternativeTitle", facade.getAlternativeTitle());
 			fields.add(title);
 		}
 	}
 
-	private void addSubTitle(DatasetFacade facade, List<CitationField> fields) {
+	protected void addSubTitle(DatasetFacade facade, List<CitationField> fields) {
 		if (!isEmpty(facade.getSubtitle())) {
 			CitationField subtitle = createPrimitiveSingleField("subtitle", facade.getSubtitle());
 			fields.add(subtitle);
 		}
 	}
 
-	private void addSubject(DatasetFacade facade, List<CitationField> fields) {
+	protected void addSubject(DatasetFacade facade, List<CitationField> fields) {
 		CitationField subject = createControlledVocabField("subject", true, Arrays.asList(facade.getSubject()));
 		fields.add(subject);
 	}
 
-	private void addDescription(DatasetFacade facade, List<CitationField> fields) {
+	protected void addDescription(DatasetFacade facade, List<CitationField> fields) {
 		List<DatasetDescription> descs = facade.getDescriptions();
 		List<Map<String, Object>> descList = new ArrayList<>();
 		for (DatasetDescription desc: descs) {
@@ -198,7 +198,7 @@ public class DatasetBuilder {
 		fields.add(desc);
 	}
 	
-	private void addTopicClassifications(DatasetFacade facade, List<CitationField> fields) {
+	protected void addTopicClassifications(DatasetFacade facade, List<CitationField> fields) {
 		List<DatasetTopicClassification> topics = facade.getTopicClassifications();
 		List<Map<String, Object>> topicsList = new ArrayList<>();
 		for (DatasetTopicClassification topic: topics) {
@@ -212,7 +212,7 @@ public class DatasetBuilder {
 		fields.add(topicClassifn);	
 	}
 	
-	private void addProducers(DatasetFacade facade, List<CitationField> fields) {
+	protected void addProducers(DatasetFacade facade, List<CitationField> fields) {
 		List<DatasetProducer> topics = facade.getProducers();
 		List<Map<String, Object>> topicsList = new ArrayList<>();
 		for (DatasetProducer topic: topics) {
@@ -228,7 +228,7 @@ public class DatasetBuilder {
 		fields.add(topicClassifn);			
 	}
 	
-	private void addContributor(DatasetFacade facade, List<CitationField> fields) {
+	protected void addContributor(DatasetFacade facade, List<CitationField> fields) {
 		List<DatasetContributor> contribs = facade.getContributors();
 		List<Map<String, Object>> contribList = new ArrayList<>();
 		for (DatasetContributor contrib: contribs) {
@@ -245,7 +245,7 @@ public class DatasetBuilder {
 		fields.add(topicClassifn);			
 	}
 	
-	private void addPublications(DatasetFacade facade, List<CitationField> fields) {
+	protected void addPublications(DatasetFacade facade, List<CitationField> fields) {
 		List<DatasetPublication> publications = facade.getPublications();
 		List<Map<String, Object>> list = new ArrayList<>();
 		for (DatasetPublication publication: publications) {
@@ -264,7 +264,7 @@ public class DatasetBuilder {
 		fields.add(publication);	
 	}
 	
-	private void addKeywords(DatasetFacade facade, List<CitationField> fields) {
+	protected void addKeywords(DatasetFacade facade, List<CitationField> fields) {
 		List<DatasetKeyword> keywords = facade.getKeywords();
 		List<Map<String, Object>> keysList = new ArrayList<>();
 		for (DatasetKeyword keyword: keywords) {
@@ -281,11 +281,11 @@ public class DatasetBuilder {
 		
 	}
 
-	private String isoDate(Date date) {
+	protected String isoDate(Date date) {
 		return String.format("%tF", date);
 	}
 
-	private void addContacts (DatasetFacade facade, List<CitationField> fields) {
+	protected void addContacts (DatasetFacade facade, List<CitationField> fields) {
 		List<DatasetContact> contacts = facade.getContacts();
 		List<Map<String, Object>> contactsList = new ArrayList<>();
 		for (DatasetContact contact : contacts) {
@@ -300,7 +300,7 @@ public class DatasetBuilder {
 		fields.add(contact);
 	}
 
-	private void addAuthors (DatasetFacade facade, List<CitationField> fields) {
+	protected void addAuthors (DatasetFacade facade, List<CitationField> fields) {
 		List<DatasetAuthor> authors = facade.getAuthors();
 		List<Map<String, Object>> authorsMap = new ArrayList<>();
 		for (DatasetAuthor author : authors) {
@@ -321,19 +321,19 @@ public class DatasetBuilder {
 		fields.add(toAdd);
 	}
 
-	private void addOptionalPrimitiveField(String value,  Map<String, Object> map, String field) {
+	protected void addOptionalPrimitiveField(String value,  Map<String, Object> map, String field) {
 		if (!isEmpty(value)) {
 			CitationField affil = createPrimitiveSingleField(field, value);
 			map.put(field, affil);
 		}
 	}
 
-	private void addTitle(DatasetFacade facade, List<CitationField> fields) {
+	protected void addTitle(DatasetFacade facade, List<CitationField> fields) {
 		CitationField title = createPrimitiveSingleField("title", facade.getTitle());
 		fields.add(title);
 	}
 
-	private void addDepositor(DatasetFacade facade, List<CitationField> fields) {
+	protected void addDepositor(DatasetFacade facade, List<CitationField> fields) {
 		CitationField deposit = createPrimitiveSingleField("depositor", facade.getDepositor());
 		fields.add(deposit);
 	}
