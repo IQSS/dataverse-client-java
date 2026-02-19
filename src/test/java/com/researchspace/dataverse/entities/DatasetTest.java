@@ -6,9 +6,11 @@ package com.researchspace.dataverse.entities;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -47,6 +49,17 @@ public class DatasetTest {
 		assertFalse(ds.getDoiId().isPresent());
 		ds.setPersistentUrl(new URL(EXAMPLE_DOI_URL));
 		assertEquals(EXPECTED_DOI_ID, ds.getDoiId().get());
+	}
+	@Test
+	public void testJacksonBehaviour() throws IOException {
+		Dataset dataverseDataset = new Dataset();
+		dataverseDataset.setId(1L);
+		dataverseDataset.setPersistentUrl(new URL("http://localhost:8080/api/datasets/1/versions/1.1"));
+		ObjectMapper objectMapper = new ObjectMapper();
+		objectMapper.registerModule(new Jdk8Module());
+		String json = "";
+			json = objectMapper.writeValueAsString(dataverseDataset);
+			System.out.println(json);
 	}
 
 }

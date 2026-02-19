@@ -5,6 +5,7 @@ package com.researchspace.dataverse.entities.facade;
 
 import static com.researchspace.dataverse.entities.facade.DatasetTestFactory.*;
 
+import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 
@@ -49,9 +50,11 @@ public class DatasetBuilderTest {
 	@Test
 	public void test() throws JsonProcessingException, MalformedURLException, URISyntaxException {
 		DatasetFacade facade = createFacade();
-		ObjectWriter mapper = new ObjectMapper().writerWithDefaultPrettyPrinter();
+		ObjectMapper mapper = new ObjectMapper();
+		mapper.registerModule(new Jdk8Module());
+		ObjectWriter ow = mapper.writer().withDefaultPrettyPrinter();
 		Dataset dversion = builder.build(facade);
-	    String json =   mapper.writeValueAsString(dversion);
+	    String json =   ow.writeValueAsString(dversion);
 	    System.out.println(json);		
 	}
 }
