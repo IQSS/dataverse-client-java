@@ -2,7 +2,7 @@ apply plugin: 'java'
 
 group = 'com.researchspace'
 sourceCompatibility = 1.8
-version = 'RSDEV-955-jackson-upgrade'
+version = '1.4.0'
 def springVersion='5.3.24'
 def jacksonVersion='2.20.0'
 def jacksonAnnotationsVersion='2.20'
