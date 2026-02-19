@@ -5,6 +5,7 @@ package com.researchspace.dataverse.http;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 import com.researchspace.dataverse.api.v1.DatasetOperations;
 import com.researchspace.dataverse.api.v1.DataverseOperations;
 import com.researchspace.dataverse.api.v1.InfoOperations;
@@ -290,14 +291,14 @@ public class DataverseOperationsImplV1 extends AbstractOpsImplV1 implements Data
 
 	private String marshalDataset(Object object) {
 		ObjectMapper mapper = new ObjectMapper();
+		mapper.registerModule(new Jdk8Module());
 		String json = "";
-		try {
-			json = mapper.writeValueAsString(object);
-		} catch (JsonProcessingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return json;
+    try {
+      json = mapper.writeValueAsString(object);
+    } catch (JsonProcessingException e) {
+      throw new RuntimeException(e);
+    }
+    return json;
 	}
 
 	/* (non-Javadoc)
