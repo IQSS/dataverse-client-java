@@ -3,12 +3,15 @@
  */
 package com.researchspace.dataverse.entities.facade;
 
-import lombok.*;
-
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NonNull;
+import lombok.Singular;
 /**
  * /** <pre>
 Copyright 2016 ResearchSpace
@@ -51,6 +54,7 @@ public class DatasetFacade   {
 	private String productionPlace;
 	private @Singular List<DatasetContributor> contributors;
 	private String metadataLanguage;
+	private @Singular List<String> otherReferences;
 	private License license;
 
 	/**

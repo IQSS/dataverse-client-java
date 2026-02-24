@@ -1,5 +1,9 @@
 Significant changes since 0.1.0
 
+1.4.1 2026-02-19
+
+- feature: Add `OtherReferences` field when building Dataset
+
 1.4.0 2026-02-19
 
 - feature: upgraded Jackson dependencies and registered JdkModule with ObjectMapper so that Optional fields can be serialised

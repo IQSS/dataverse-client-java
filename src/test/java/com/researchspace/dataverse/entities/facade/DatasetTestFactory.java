@@ -56,6 +56,7 @@ public class DatasetTestFactory {
 				.alternativeURL(new URL("https://www.myrepo.com"))
 				.note("Some note")
 				.languages(Arrays.asList(new String[] { "English", "French" }))
+				.otherReference("https://raid.org/10.12345/NICO26")
 				.build();
 	}
 
@@ -68,6 +69,7 @@ public class DatasetTestFactory {
 				.subject("Chemistry")
 				.languages(Arrays.asList(new String[] { "English", "French" }))
 				.depositor("A depositor")
+				.otherReference("https://raid.org/10.12345/NICO26")
 				.contact(buildAContact())
 				.build();
 	}
