@@ -6,19 +6,18 @@ package com.researchspace.dataverse.entities.facade;
 import static java.util.Arrays.asList;
 import static org.apache.commons.lang.StringUtils.isEmpty;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import com.researchspace.dataverse.entities.Citation;
 import com.researchspace.dataverse.entities.CitationField;
 import com.researchspace.dataverse.entities.CitationType;
 import com.researchspace.dataverse.entities.DataSetMetadataBlock;
 import com.researchspace.dataverse.entities.Dataset;
 import com.researchspace.dataverse.entities.DatasetVersion;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * /** <pre>
@@ -71,6 +70,7 @@ public class DatasetBuilder {
 	private static final String AUTHOR_IDENTIFIER = "authorIdentifier";
 	private static final String AUTHOR_AFFILIATION = "authorAffiliation";
 	private static final String AUTHOR_NAME = "authorName";
+	private static final String OTHER_REFERENCES = "otherReferences";
 
 	public Dataset build(DatasetFacade facade) {
 		DatasetVersion dv = new DatasetVersion();
@@ -92,6 +92,7 @@ public class DatasetBuilder {
 		if (metadataLanguage != null) {
 			toSubmit.setMetadataLanguage(facade.getMetadataLanguage());
 		}
+
 		return toSubmit;
 	}
 
@@ -118,6 +119,7 @@ public class DatasetBuilder {
 		addSubTitle(facade, fields);
 		addAlternativeTitle(facade, fields);
 		addAlternativeURL(facade, fields);
+		addOtherReferences(facade, fields);
 		return fields;
 	}
 
@@ -143,6 +145,14 @@ public class DatasetBuilder {
 	private void addLanguages(DatasetFacade facade, List<CitationField> fields) {
 		if (!facade.getLanguages().isEmpty()) {
 			CitationField field = createControlledVocabField("language", true, facade.getLanguages());
+			fields.add(field);
+		}
+	}
+
+	private void addOtherReferences(DatasetFacade facade, List<CitationField> fields) {
+		if (facade.getOtherReferences() != null && !facade.getOtherReferences().isEmpty()) {
+			CitationField field = createPrimitiveMultipleField(
+					OTHER_REFERENCES, facade.getOtherReferences().toArray(new String[0]));
 			fields.add(field);
 		}
 	}

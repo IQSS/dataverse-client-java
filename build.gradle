@@ -1,8 +1,12 @@
+plugins {
+    id 'maven-publish'
+}
+
 apply plugin: 'java'
 
-group = 'com.researchspace'
+group = 'com.github.IQSS'
 sourceCompatibility = 1.8
-version = '1.4.0'
+version = '1.4.1'
 def springVersion='5.3.24'
 def jacksonVersion='2.20.0'
 def jacksonAnnotationsVersion='2.20'
@@ -88,4 +92,15 @@ task listJars {
     doLast {
         configurations.compile.each { File file -> println file.name }
     }
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            groupId = 'com.github.IQSS'
+            artifactId = 'dataverse-client-java'
+
+            from components.java
+        }
+    }
+}
 }
