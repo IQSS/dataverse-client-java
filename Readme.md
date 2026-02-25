@@ -39,6 +39,9 @@ As a minimum, you'll need to specify an API key on the command line to run the t
 You can also override the Dataverse server URL and Id with your own settings by setting them on the command line:
 
     ./gradlew clean integrationTest  -DdataverseServerURL=https://my.dataverse.org -DdataverseApiKey=xxx-xxx-xxx -DdataverseAlias=MY-DEMO-DATAVERSE
+
+Note that some tests are requiring dataverse to support particular configuration options (e.g. `metadataLanguages` option), so will fail if target dataverse doesn't support them.
+When updating the code, please first check the baseline number of failures when running against your dataverse instance, then ensure that there are no new failures after your changes. 
     
 ### Installing into a Maven repository
 
@@ -56,9 +59,9 @@ If using Maven, add this to your pom.xml file (thanks AleixMT).
 
 <dependencies>
   <dependency>
-    <groupId>com.github.IQSS</groupId>
+    <groupId>com.github.iqss</groupId>
     <artifactId>dataverse-client-java</artifactId>
-    <version>master-SNAPSHOT</version>
+    <version>v1.4.2</version>
   </dependency>
 </dependencies>`
 ```
