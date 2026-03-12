@@ -4,9 +4,9 @@ plugins {
 
 apply plugin: 'java'
 
-group = 'com.github.iqss'
+group = 'com.github.rspace-os'
 sourceCompatibility = 1.8
-version = 'v2.0.0'
+version = 'RSDEV-955-client-SNAPSHOT'
 def springVersion='5.3.39'
 def jacksonVersion='2.20.0'
 def jacksonAnnotationsVersion='2.20'
@@ -84,7 +84,7 @@ task listJars {
 publishing {
     publications {
         maven(MavenPublication) {
-            groupId = 'com.github.iqss'
+            groupId = 'com.github.rspace-os'
             artifactId = 'dataverse-client-java'
 
             from components.java

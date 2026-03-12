@@ -9,6 +9,8 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
+
 /**
  * /** <pre>
 Copyright 2016 ResearchSpace
@@ -57,6 +59,7 @@ public class DatasetTestFactory {
 				.note("Some note")
 				.languages(Arrays.asList(new String[] { "English", "French" }))
 				.otherReference("https://raid.org/10.12345/NICO26")
+				.relatedMaterial(List.of("https://doi.org/10.82316/kfwc-xd82", "https://doi.org/10.82316/3fz7-mr43"))
 				.build();
 	}
 
