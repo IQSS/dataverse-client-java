@@ -1,5 +1,8 @@
 Significant changes since 0.1.0
 
+2.0.1 2026-03-19
+- feature: Add `relatedMaterial` when building Dataset
+
 2.0.0 2026-03-16
 - breaking change: removed SWORD dependency and sword-related upload methods from DatasetOperations interface; more details in [Migration Guide](Migration_Guide_V1_to_V2.md)
 - dependencies: minor version updates of `commons-lang3`, `commons-io` and `spring` versions

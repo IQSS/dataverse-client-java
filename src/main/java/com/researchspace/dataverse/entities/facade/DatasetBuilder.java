@@ -71,6 +71,7 @@ public class DatasetBuilder {
 	private static final String AUTHOR_AFFILIATION = "authorAffiliation";
 	private static final String AUTHOR_NAME = "authorName";
 	private static final String OTHER_REFERENCES = "otherReferences";
+	private static final String RELATED_MATERIAL = "relatedMaterial";
 
 	public Dataset build(DatasetFacade facade) {
 		DatasetVersion dv = new DatasetVersion();
@@ -120,12 +121,10 @@ public class DatasetBuilder {
 		addAlternativeTitle(facade, fields);
 		addAlternativeURL(facade, fields);
 		addOtherReferences(facade, fields);
+		addRelatedMaterial(facade, fields);
 		return fields;
 	}
 
-	
-
-	
 
 	private void addProductionDate(DatasetFacade facade, List<CitationField> fields) {
 		if( facade.getProductionDate() != null) {
@@ -153,6 +152,15 @@ public class DatasetBuilder {
 		if (facade.getOtherReferences() != null && !facade.getOtherReferences().isEmpty()) {
 			CitationField field = createPrimitiveMultipleField(
 					OTHER_REFERENCES, facade.getOtherReferences().toArray(new String[0]));
+			fields.add(field);
+		}
+	}
+
+
+	private void addRelatedMaterial(DatasetFacade facade, List<CitationField> fields) {
+		if (facade.getRelatedMaterial() != null && !facade.getRelatedMaterial().isEmpty()) {
+			CitationField field = createPrimitiveMultipleField(
+					RELATED_MATERIAL, facade.getRelatedMaterial().toArray(new String[0]));
 			fields.add(field);
 		}
 	}

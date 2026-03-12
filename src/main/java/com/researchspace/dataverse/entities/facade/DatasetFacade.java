@@ -55,6 +55,7 @@ public class DatasetFacade   {
 	private @Singular List<DatasetContributor> contributors;
 	private String metadataLanguage;
 	private @Singular List<String> otherReferences;
+	private List<String> relatedMaterial;
 	private License license;
 
 	/**

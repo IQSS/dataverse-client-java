@@ -3,58 +3,83 @@
  */
 package com.researchspace.dataverse.entities.facade;
 
-import static com.researchspace.dataverse.entities.facade.DatasetTestFactory.*;
-
-import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
-import java.net.MalformedURLException;
-import java.net.URISyntaxException;
-
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import static com.researchspace.dataverse.entities.facade.DatasetTestFactory.IGSN_ITEM_1;
+import static com.researchspace.dataverse.entities.facade.DatasetTestFactory.IGSN_ITEM_2;
+import static com.researchspace.dataverse.entities.facade.DatasetTestFactory.createFacade;
+import static org.junit.Assert.assertEquals;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
+import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
+import com.researchspace.dataverse.entities.CitationField;
 import com.researchspace.dataverse.entities.Dataset;
-import com.researchspace.dataverse.entities.facade.DatasetBuilder;
-import com.researchspace.dataverse.entities.facade.DatasetFacade;
-/** <pre>
-Copyright 2016 ResearchSpace
+import java.net.MalformedURLException;
+import java.net.URISyntaxException;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 
- Licensed under the Apache License, Version 2.0 (the "License");
- you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
-
-     http://www.apache.org/licenses/LICENSE-2.0
-
- Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- See the License for the specific language governing permissions and
- limitations under the License.
-</pre>
-*/
+/**
+ * <pre>
+ * Copyright 2016 ResearchSpace
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * </pre>
+ */
 public class DatasetBuilderTest {
 
-	DatasetBuilder builder;
-	@Before
-	public void setUp() throws Exception {
-		builder = new DatasetBuilder();
-	}
+  DatasetBuilder builder;
 
-	@After
-	public void tearDown() throws Exception {
-	}
+  @Before
+  public void setUp() throws Exception {
+    builder = new DatasetBuilder();
+  }
 
-	@Test
-	public void test() throws JsonProcessingException, MalformedURLException, URISyntaxException {
-		DatasetFacade facade = createFacade();
-		ObjectMapper mapper = new ObjectMapper();
-		mapper.registerModule(new Jdk8Module());
-		ObjectWriter ow = mapper.writer().withDefaultPrettyPrinter();
-		Dataset dversion = builder.build(facade);
-	    String json =   ow.writeValueAsString(dversion);
-	    System.out.println(json);
-	}
+  @After
+  public void tearDown() throws Exception {
+  }
+
+  @Test
+  public void test() throws JsonProcessingException, MalformedURLException, URISyntaxException {
+    DatasetFacade facade = createFacade();
+    ObjectMapper mapper = new ObjectMapper();
+    mapper.registerModule(new Jdk8Module());
+    ObjectWriter ow = mapper.writer().withDefaultPrettyPrinter();
+    Dataset dversion = builder.build(facade);
+    String json = ow.writeValueAsString(dversion);
+    assertEquals(20,
+        dversion.getDatasetVersion().getMetadataBlocks().getCitation().getFields().size());
+    System.out.println(json);
+  }
+
+  @Test
+  public void testBuildingRelatedMaterial()
+      throws MalformedURLException, URISyntaxException {
+    // GIVEN
+    DatasetFacade facade = createFacade();
+    ObjectMapper mapper = new ObjectMapper();
+    mapper.registerModule(new Jdk8Module());
+    // WHEN
+    Dataset dversion = builder.build(facade);
+
+    CitationField relatedMaterialField = dversion.getDatasetVersion().getMetadataBlocks()
+        .getCitation().getFields().get(19);
+    Object[] igsnSet = (Object[]) relatedMaterialField.getValue();
+
+    // THEN
+    assertEquals(2, igsnSet.length);
+    assertEquals(IGSN_ITEM_1, igsnSet[0]);
+    assertEquals(IGSN_ITEM_2, igsnSet[1]);
+  }
 }

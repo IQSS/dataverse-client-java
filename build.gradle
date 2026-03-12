@@ -6,7 +6,7 @@ apply plugin: 'java'
 
 group = 'com.github.iqss'
 sourceCompatibility = 1.8
-version = 'v2.0.0'
+version = 'v2.0.1'
 def springVersion='5.3.39'
 def jacksonVersion='2.20.0'
 def jacksonAnnotationsVersion='2.20'
