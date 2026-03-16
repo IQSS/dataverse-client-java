@@ -1,4 +1,4 @@
-Version 2.0.0. removes the SWORD protocol as an upload mechanism.
+Version 2.0.0 removes the SWORD protocol as an upload mechanism.
 
 * SWORD library (`org.swordapp:sword2-client`) is no longer a dependency of the project.
 
