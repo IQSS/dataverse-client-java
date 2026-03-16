@@ -3,6 +3,10 @@
  */
 package com.researchspace.dataverse.http;
 
+import static org.apache.commons.lang3.StringUtils.isEmpty;
+import static org.apache.commons.lang3.Validate.isTrue;
+import static org.apache.commons.lang3.Validate.noNullElements;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
@@ -10,11 +14,25 @@ import com.researchspace.dataverse.api.v1.DatasetOperations;
 import com.researchspace.dataverse.api.v1.DataverseOperations;
 import com.researchspace.dataverse.api.v1.InfoOperations;
 import com.researchspace.dataverse.api.v1.MetadataOperations;
-import com.researchspace.dataverse.entities.*;
+import com.researchspace.dataverse.entities.Dataset;
+import com.researchspace.dataverse.entities.DatasetFileList;
+import com.researchspace.dataverse.entities.DatasetVersion;
+import com.researchspace.dataverse.entities.DataverseGet;
+import com.researchspace.dataverse.entities.DataverseObject;
+import com.researchspace.dataverse.entities.DataversePost;
+import com.researchspace.dataverse.entities.DataverseResponse;
+import com.researchspace.dataverse.entities.DvMessage;
+import com.researchspace.dataverse.entities.Identifier;
+import com.researchspace.dataverse.entities.MetadataBlock;
+import com.researchspace.dataverse.entities.PublishedDataset;
+import com.researchspace.dataverse.entities.Version;
 import com.researchspace.dataverse.entities.facade.DatasetBuilder;
 import com.researchspace.dataverse.entities.facade.DatasetFacade;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.List;
+import java.util.Map;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.core.io.AbstractResource;
 import org.springframework.core.io.ByteArrayResource;
@@ -24,17 +42,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.MultiValueMap;
-import org.springframework.web.client.RestClientException;
 
-import java.io.*;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.List;
-import java.util.Map;
-
-import static org.apache.commons.lang3.StringUtils.isEmpty;
-import static org.apache.commons.lang3.Validate.isTrue;
-import static org.apache.commons.lang3.Validate.noNullElements;
 /**  Copyright 2016 ResearchSpace
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -52,9 +60,6 @@ limitations under the License.
 */
 @Slf4j
 public class DataverseOperationsImplV1 extends AbstractOpsImplV1 implements DatasetOperations, MetadataOperations, InfoOperations, DataverseOperations {
-
-	
-
 
 	/* (non-Javadoc)
 	 * @see com.researchspace.dataverse.http.DataverseAPI#getDataverseById(java.lang.String)
@@ -87,7 +92,6 @@ public class DataverseOperationsImplV1 extends AbstractOpsImplV1 implements Data
 		ResponseEntity<DataverseResponse<DvMessage>> resp = template.exchange(url, HttpMethod.DELETE, entity, type);
 		log.debug(resp.getBody().toString());
 		return resp.getBody();
-		
 	}
 	
 	@Override
@@ -98,7 +102,6 @@ public class DataverseOperationsImplV1 extends AbstractOpsImplV1 implements Data
 		isTrue(!isEmpty(toCreate.getAlias()), "Alias must be specified");
 		String url = createV1Url("dataverses", parentDv);
 
-		
 		String json = marshalDataset(toCreate);
 		HttpEntity<String> entity = createHttpEntity(json);
 		ParameterizedTypeReference<DataverseResponse<DataversePost>> type = new ParameterizedTypeReference<DataverseResponse<DataversePost>>() {
@@ -107,7 +110,6 @@ public class DataverseOperationsImplV1 extends AbstractOpsImplV1 implements Data
 		log.debug(resp.getBody().toString());
 		handleError(resp);
 		return resp.getBody();
-		
 	}
 
 	/* (non-Javadoc)
@@ -139,7 +141,6 @@ public class DataverseOperationsImplV1 extends AbstractOpsImplV1 implements Data
 		return resp.getBody().getData();
 	}
 
-
 	/* (non-Javadoc)
 	 * @see com.researchspace.dataverse.http.DataverseAPI#updateDataset(com.researchspace.dataverse.entities.facade.DatasetFacade, com.researchspace.dataverse.entities.Identifier)
 	 */
@@ -150,7 +151,6 @@ public class DataverseOperationsImplV1 extends AbstractOpsImplV1 implements Data
 		Dataset ds = new DatasetBuilder().build(facade);
 		String json = marshalDataset(ds.getDatasetVersion());
 		
-		
 		HttpEntity<String> entity = createHttpEntity(json);
 		ParameterizedTypeReference<DataverseResponse<DatasetVersion>> type = new ParameterizedTypeReference<DataverseResponse<DatasetVersion>>() {
 		};
@@ -158,7 +158,6 @@ public class DataverseOperationsImplV1 extends AbstractOpsImplV1 implements Data
 		
 		handleError(resp);
 		return resp.getBody().getData();
-		
 	}
 	
 	/* (non-Javadoc)
@@ -216,7 +215,6 @@ public class DataverseOperationsImplV1 extends AbstractOpsImplV1 implements Data
 			}
 		};
 		return getDatasetFileList(metadata, dsIdentifier,  resource);
-
 	}
 
 	private DatasetFileList getDatasetFileList(FileUploadMetadata metadata, Identifier dsIdentifier, AbstractResource resource) {
@@ -329,8 +327,6 @@ public class DataverseOperationsImplV1 extends AbstractOpsImplV1 implements Data
 		return resp.getBody().getData();
 	}
 
-	
-
 	/* (non-Javadoc)
 	 * @see com.researchspace.dataverse.http.DataverseAPI#publishDataset(com.researchspace.dataverse.entities.Identifier, com.researchspace.dataverse.entities.Version)
 	 */
@@ -345,7 +341,6 @@ public class DataverseOperationsImplV1 extends AbstractOpsImplV1 implements Data
 		ResponseEntity<DataverseResponse<PublishedDataset>> resp = template.exchange(url, HttpMethod.POST, entity, type);
 		log.debug(resp.getBody().toString());
     	return resp.getBody();
-		
 	}
 
 	@Override
@@ -357,7 +352,6 @@ public class DataverseOperationsImplV1 extends AbstractOpsImplV1 implements Data
 		ResponseEntity<DataverseResponse<DataversePost>> resp = template.exchange(url, HttpMethod.POST, entity, type);
 		log.debug(resp.getBody().toString());
 		return resp.getBody();
-		
 	}
 
 	@Override
@@ -369,7 +363,6 @@ public class DataverseOperationsImplV1 extends AbstractOpsImplV1 implements Data
 		ResponseEntity<DataverseResponse<DvMessage>> resp = template.exchange(url, HttpMethod.GET, entity, type);
 		log.debug(resp.getBody().toString());
 		return resp.getBody().getData();
-		
 	}
 
 	@Override
@@ -393,6 +386,6 @@ public class DataverseOperationsImplV1 extends AbstractOpsImplV1 implements Data
 				entity, type);
 		log.debug(resp.getBody().toString());
 		return resp.getBody();
-
 	}
+
 }
