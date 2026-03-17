@@ -3,31 +3,39 @@
  */
 package com.researchspace.dataverse.http;
 
-import com.researchspace.dataverse.entities.*;
+import static com.researchspace.dataverse.entities.facade.DatasetTestFactory.createFacade;
+import static com.researchspace.dataverse.entities.facade.DatasetTestFactory.createFacadeWithMetadataLanguage;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+
+import com.researchspace.dataverse.entities.Dataset;
+import com.researchspace.dataverse.entities.DatasetFile;
+import com.researchspace.dataverse.entities.DatasetFileList;
+import com.researchspace.dataverse.entities.DatasetVersion;
+import com.researchspace.dataverse.entities.DataverseObject;
+import com.researchspace.dataverse.entities.DataversePost;
+import com.researchspace.dataverse.entities.DataverseResponse;
+import com.researchspace.dataverse.entities.Identifier;
+import com.researchspace.dataverse.entities.PublishedDataset;
+import com.researchspace.dataverse.entities.Version;
 import com.researchspace.dataverse.entities.facade.DatasetFacade;
 import com.researchspace.dataverse.entities.facade.License;
-
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.nio.file.Files;
+import java.util.Arrays;
+import java.util.List;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
-
-import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.util.Arrays;
-import java.util.List;
-
-import static com.researchspace.dataverse.entities.facade.DatasetTestFactory.createFacade;
-import static com.researchspace.dataverse.entities.facade.DatasetTestFactory.createFacadeWithMetadataLanguage;
-import static org.junit.Assert.*;
 
 
 /** <pre>
